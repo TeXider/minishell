@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 09:25:05 by almighty          #+#    #+#             */
-/*   Updated: 2025/10/17 09:22:12 by almighty         ###   ########.fr       */
+/*   Updated: 2025/10/21 18:13:00 by tpanou-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,8 @@ bool	safe_lalloc(char ***dst, size_t len, t_env *env);
 bool	safe_cmdlalloc(t_cmd **dst, size_t len, t_env *env);
 //
 bool	get_arg_expand_len(char **arg, size_t *len, char sep, t_env *env);
-bool	arg_expand(t_get_arg_core *gac, char **argv_ptr, char **arg, t_env *env);
+bool	arg_expand(t_get_arg_core *gac, char **argv_ptr, char **arg,
+		t_env *env);
 void	redir_expand(char **redir, char *name,
 				t_get_redir_name *grn, t_env *env);
 bool	get_redir_expand_len(char **redir, size_t *len,

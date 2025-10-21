@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 08:54:12 by almighty          #+#    #+#             */
-/*   Updated: 2025/10/15 13:11:38 by almighty         ###   ########.fr       */
+/*   Updated: 2025/10/21 18:12:29 by tpanou-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ static inline void	exec_cmd(t_cmd *cmd, t_pipes *pipes, t_env *env)
 	create_error("execve()", SYS_ERR, env);
 }
 
-static inline bool	handle_fork(pid_t *pid, t_pipes *pipes, char *line, t_env *env)
+static inline bool	handle_fork(pid_t *pid, t_pipes *pipes, char *line,
+		t_env *env)
 {
 	t_cmd	cmd;
 	

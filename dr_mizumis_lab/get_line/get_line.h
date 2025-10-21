@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_line.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 11:24:12 by almighty          #+#    #+#             */
-/*   Updated: 2025/10/17 13:51:28 by almighty         ###   ########.fr       */
+/*   Updated: 2025/10/21 18:34:03 by tpanou-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 # define P_READ 0
 # define P_WRITE 1
 # define CULPRIT_LENGTH 32
+# define LINE_SIZE 1024
 
 typedef struct termios t_term;
 
@@ -49,6 +50,17 @@ typedef struct s_cmd
 	bool	append_mode;
 }	t_cmd;
 
+typedef struct s_line
+{
+	char	curr_char;
+	char	*buffer;
+	size_t	index;
+	size_t	count;
+	size_t	len;
+	struct s_line	*next;
+	struct s_line	*prev;
+}	t_line;
+
 typedef struct s_env
 {
 	char	**envp;
@@ -56,6 +68,8 @@ typedef struct s_env
 	char	*empty_list[2];
 	t_term	old_term;
 	t_term	term;
+	t_line	*history;
+	t_line	*line;
 	t_err	err;
 	char	culprit[CULPRIT_LENGTH];
 }	t_env;

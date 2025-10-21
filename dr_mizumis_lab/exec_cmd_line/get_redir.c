@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_redir.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/29 10:02:10 by almighty          #+#    #+#             */
-/*   Updated: 2025/10/15 11:43:18 by almighty         ###   ########.fr       */
+/*   Updated: 2025/10/21 18:11:17 by tpanou-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ static inline void	grnl_init(t_get_redir_name_len *grnl)
 	grnl->sep = ' ';
 }
 
-static inline bool	get_redir_name_len(char *redir, size_t *len, bool is_hdoc, t_env *env)
+static inline bool	get_redir_name_len(char *redir, size_t *len, bool is_hdoc,
+		t_env *env)
 {
 	t_get_redir_name_len	grnl;
 	
@@ -91,8 +92,7 @@ bool	get_redir(char **redir, t_cmd *res, t_env *env)
 	fd = open_redir(name, type, (status == -2), env);
 	if (fd == -1)
 		return (true);
-	if (close_prev_redir(res, type, env))
-		return (true);
+	close_prev_redir(res, type, env);
 	res->fd_in += (fd - res->fd_in) * (type <= IN);
 	res->append_mode = (type == APPND || (res->append_mode && type >= OUT));
 	res->fd_out += (fd - res->fd_out) * (type >= OUT);
