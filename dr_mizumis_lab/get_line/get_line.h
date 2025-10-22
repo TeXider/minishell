@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_line.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 11:24:12 by almighty          #+#    #+#             */
-/*   Updated: 2025/10/21 18:34:03 by tpanou-d         ###   ########.fr       */
+/*   Updated: 2025/10/22 12:33:12 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,12 @@
 # define P_WRITE 1
 # define CULPRIT_LENGTH 32
 # define LINE_SIZE 1024
+# define ESC_CHAR 27
+# define DEL_CHAR 127
+# define ARROW_UP -1
+# define ARROW_DOWN -2
+# define ARROW_RIGHT -3
+# define ARROW_LEFT -4
 
 typedef struct termios t_term;
 
@@ -52,13 +58,16 @@ typedef struct s_cmd
 
 typedef struct s_line
 {
-	char	curr_char;
-	char	*buffer;
-	size_t	index;
-	size_t	count;
-	size_t	len;
+	char			curr_char;
+	bool			reading_esc_seq;
+	char			*buffer;
+	size_t			index;
+	size_t			count;
+	size_t			len;
 	struct s_line	*next;
 	struct s_line	*prev;
+	struct s_line	*alter_version;
+	bool			is_alter_version;
 }	t_line;
 
 typedef struct s_env
@@ -69,12 +78,11 @@ typedef struct s_env
 	t_term	old_term;
 	t_term	term;
 	t_line	*history;
-	t_line	*line;
 	t_err	err;
 	char	culprit[CULPRIT_LENGTH];
 }	t_env;
 
-bool	init_get_line(t_env *env);
+bool	init_get_line(t_line *line, t_env *env);
 bool	create_error(char *culprit, t_err err, t_env *env);
 
 #endif

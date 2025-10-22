@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 09:25:05 by almighty          #+#    #+#             */
-/*   Updated: 2025/10/17 10:34:24 by almighty         ###   ########.fr       */
+/*   Updated: 2025/10/22 12:02:10 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,11 @@ typedef struct s_cmd
 	char	*path;
 	char	**argv;
 	int		fd_in;
+	bool	is_fd_in_hdoc;
 	int		fd_out;
 	bool	is_fd_in_pipe;
 	bool	is_fd_out_pipe;
 	bool	append_mode;
-	bool	is_hdoc;
 }	t_cmd;
 
 typedef struct s_env

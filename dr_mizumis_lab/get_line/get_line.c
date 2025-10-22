@@ -3,67 +3,77 @@
 /*                                                        :::      ::::::::   */
 /*   get_line.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 11:23:11 by almighty          #+#    #+#             */
-/*   Updated: 2025/10/21 18:36:31 by tpanou-d         ###   ########.fr       */
+/*   Updated: 2025/10/22 12:31:56 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_line.h"
 
-inline bool	init_get_line(t_env *env)
+inline bool	add_curr_char(t_line **line, t_env *env)
 {
-	if (!isatty(FD_IN))
-		return (create_error("FD_IN is not a TTY", TERM_ERR, env));
-	if (tcgetattr(FD_IN, &env->old_term))
-		return (create_error("tcgetattr()", TERM_ERR, env));
-	env->term = env->old_term;
-	env->term.c_iflag &= ~(INLCR | IGNCR | ICRNL);
-	env->term.c_lflag &= ~(ECHO | ECHONL | ICANON | IEXTEN);
-	if (tcsetattr(FD_IN, TCSANOW, &env->term))
-		return (create_error("tcsetattr()", TERM_ERR, env));
-	if (create_history_entry(env))
-		return (true);
-	env->line->count = LINE_SIZE;
-	env->line->buffer[0] = '\0';
-	env->line->curr_char = '\0';
-	return (false);
+	if ((*line)->index == (*line)->count - 1)	
+	{
+		(*line)->buffer[(*line)->index] = (*line)->curr_char;
+		(*line)->index++;
+		(*line)->count++;
+		write(1, &(*line)->curr_char, 1);
+	}
+	else
+	{
+		reset_line_output(*line);
+		move_rest_of_buff_to_left(*line);
+		(*line)->buffer[(*line)->index] = (*line)->curr_char;
+		(*line)->index++;
+		(*line)->count++;
+		show_line_output(*line);
+	}
+	return (set_correct_line_len(line, env));
 }
-
-inline bool	end_get_line(t_line *line, t_env *env)
+inline bool	handle_special_char(t_line **line, t_env *env)
 {
-	safe_free(line->buffer);
-	return (true);
+	if ((*line)->curr_char == ESC_CHAR || (*line)->reading_esc_seq)
+		get_esc_seq(*line);
+	else if ((*line)->curr_char == DEL_CHAR)
+		delete_char(line, env);
+	else if ((*line)->curr_char == ARROW_UP)
+		history_prev(line, env);
+	else if ((*line)->curr_char == ARROW_DOWN)
+		history_next(line, env);
+	else if ((*line)->curr_char == ARROW_RIGHT)
+		move_index_right(*line, env);
+	else if ((*line)->curr_char == ARROW_LEFT)
+		move_index_left(*line, env);
+	return (false);
 }
 
 inline bool	get_line(char **dst, char *prompt, t_env *env)
 {
-	if (init_get_line(env))
+	t_line	*line;
+
+	if (init_get_line(&line, env))
 		return (true);
 	print_str(prompt);
-	while (env->line->curr_char != '\r')
+	while (line->curr_char != '\r')
 	{
-		if (read(0, &env->line->curr_char, 1) == -1)
+		if (read(0, &line->curr_char, 1) == -1)
 			return (create_error("read()", SYS_ERR, env)
 				| handle_get_line_error(env));
-		else if (is_special_char(env->line->curr_char))
+		else if (is_special_char(line->curr_char))
 		{
-			if (handle_special_char(env))
+			if (handle_special_char(&line, env))
 				return (handle_get_line_error(env));
 		}
 		else
 		{
-			if (add_curr_char(env))
+			if ((line->next && !line->alter_version
+				&& set_alter_version(env))
+				|| add_curr_char(&line, env))
 				return (handle_get_line_error(env));
-			write(1, &env->line->curr_char, 1);
 		}
 	}
-	*dst = env->line->buffer;
+	*dst = line->buffer;
 	return (false);
 }
-/*
-	when starting get_line, copy-on-write history
-	until execution. Then, add the new entry to history and restore
-	env->line to history
-*/

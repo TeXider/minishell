@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 09:33:57 by almighty          #+#    #+#             */
-/*   Updated: 2025/10/17 12:03:33 by almighty         ###   ########.fr       */
+/*   Updated: 2025/10/22 12:00:23 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,13 @@ bool	get_argv_len(char *cmd, t_cmd *res, size_t *argv_len, t_env *env)
 		{
 			if (get_hdoc(&cmd, res, env))
 				return (true);
+			res->is_fd_in_hdoc = true;
 		}
 		else if (*cmd == '>' || *cmd == '<')
+		{
 			go_to_end_of_redir(&cmd, env);
+			res->is_fd_in_hdoc = false;
+		}
 		else if (*cmd != ' ')
 			count_arg(&cmd, argv_len, env);
 		else
