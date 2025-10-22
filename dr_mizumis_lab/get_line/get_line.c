@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 11:23:11 by almighty          #+#    #+#             */
-/*   Updated: 2025/10/22 12:31:56 by almighty         ###   ########.fr       */
+/*   Updated: 2025/10/22 12:50:46 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,9 @@ inline bool	handle_special_char(t_line **line, t_env *env)
 {
 	if ((*line)->curr_char == ESC_CHAR || (*line)->reading_esc_seq)
 		get_esc_seq(*line);
-	else if ((*line)->curr_char == DEL_CHAR)
-		delete_char(line, env);
+	else if ((*line)->curr_char == RETURN)
+		delete_char(line, CURR_CHAR
+			| (CTRL * ((*line)->curr_char == CTRL_RETURN)), env);
 	else if ((*line)->curr_char == ARROW_UP)
 		history_prev(line, env);
 	else if ((*line)->curr_char == ARROW_DOWN)
@@ -46,6 +47,11 @@ inline bool	handle_special_char(t_line **line, t_env *env)
 		move_index_right(*line, env);
 	else if ((*line)->curr_char == ARROW_LEFT)
 		move_index_left(*line, env);
+	else if ((*line)->curr_char == DEL)
+		delete_char(line, NEXT_CHAR | (CTRL * ((*line)->curr_char == CTRL_DEL)),
+			env);
+	else if ((*line)->curr_char == '\r')
+		write(1, "\n", 1);
 	return (false);
 }
 

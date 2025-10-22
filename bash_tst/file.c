@@ -1,9 +1,14 @@
-#include <stdio.h>
+#include <unistd.h>
+#include <termios.h>
 
 int main(int argc, char **argv)
 {
-    printf("%d\n", argc - 1);
-	for (size_t i = 0; argv[i + 1]; i++)
-		printf("%s\n", argv[i + 1]);
-	
+	struct termios term;
+
+	tcgetattr(STDIN_FILENO, &term);
+	term.c_iflag &= ~(INLCR | IGNCR | ICRNL);
+	term.c_lflag &= ~(ECHO | ECHONL | ICANON | IEXTEN);
+	tcsetattr(STDIN_FILENO, TCSANOW, &term);
+	write(1, "chibrax""chibrute", 16);
+	write(1, "\r\n", 2);
 }

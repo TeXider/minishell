@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 11:24:12 by almighty          #+#    #+#             */
-/*   Updated: 2025/10/22 12:33:12 by almighty         ###   ########.fr       */
+/*   Updated: 2025/10/22 12:43:08 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,17 @@
 # define CULPRIT_LENGTH 32
 # define LINE_SIZE 1024
 # define ESC_CHAR 27
-# define DEL_CHAR 127
+# define RETURN 127
 # define ARROW_UP -1
 # define ARROW_DOWN -2
 # define ARROW_RIGHT -3
 # define ARROW_LEFT -4
+# define DEL -5
+# define CTRL_RETURN -6
+# define CTRL_DEL -7
+# define CURR_CHAR 0
+# define NEXT_CHAR 1
+# define CTRL 2
 
 typedef struct termios t_term;
 
