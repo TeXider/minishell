@@ -6,35 +6,38 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 08:35:29 by almighty          #+#    #+#             */
-/*   Updated: 2025/10/22 12:33:24 by almighty         ###   ########.fr       */
+/*   Updated: 2025/10/23 09:28:00 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_line.h"
 
-inline bool	safe_line_alloc(t_line **line, t_env *env)
+inline bool	safe_line_alloc(t_line **line, size_t len, t_env *env)
 {
 	*line = malloc(sizeof(t_line));
 	if (!*line)
 		return (create_error("malloc()", SYS_ERR, env));
-	(*line)->len = LINE_SIZE;
+	if (safe_challoc((*line)->buffer, len, env))
+		return (create_error("malloc()", SYS_ERR, env));
+	(*line)->len = len;
 	(*line)->count = 0;
 	(*line)->index = 0;
 	(*line)->curr_char = '\0';
+	return (false);
 }
 
 inline bool	init_get_line(t_line **line, t_env *env)
 {
-	if (!isatty(FD_IN))
+	if (!isatty(STD_IN))
 		return (create_error("FD_IN is not a TTY", TERM_ERR, env));
-	if (tcgetattr(FD_IN, &env->old_term))
+	if (tcgetattr(STD_IN, &env->old_term))
 		return (create_error("tcgetattr()", TERM_ERR, env));
 	env->term = env->old_term;
 	env->term.c_iflag &= ~(INLCR | IGNCR | ICRNL);
 	env->term.c_lflag &= ~(ECHO | ECHONL | ICANON | IEXTEN);
-	if (tcsetattr(FD_IN, TCSANOW, &env->term))
+	if (tcsetattr(STD_IN, TCSANOW, &env->term))
 		return (create_error("tcsetattr()", TERM_ERR, env));
-	if (safe_line_alloc(line, env))
+	if (safe_line_alloc(line, LINE_SIZE, env))
 		return (true);
 	return (false);
 }
@@ -43,7 +46,7 @@ inline bool	switch_line_version(t_line **line, t_env *env)
 {
 	if (!(*line)->alter_version)
 	{ 
-		if (safe_line_alloc(&(*line)->alter_version, env))
+		if (safe_line_alloc(&(*line)->alter_version, (*line)->len, env))
 			return (true);
 		(*line)->alter_version->next = (*line)->next;
 		(*line)->alter_version->prev = (*line)->prev;
@@ -55,7 +58,7 @@ inline bool	switch_line_version(t_line **line, t_env *env)
 
 inline bool	end_get_line(t_line **line, t_env *env)
 {
-	if (tcsetattr(FD_IN, TCSANOW, &env->old_term))
+	if (tcsetattr(STD_IN, TCSANOW, &env->old_term))
 		return (create_error("tcsetattr()", TERM_ERR, env));
 	return (false);
 }

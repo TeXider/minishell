@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 11:24:12 by almighty          #+#    #+#             */
-/*   Updated: 2025/10/22 12:43:08 by almighty         ###   ########.fr       */
+/*   Updated: 2025/10/23 10:32:29 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,10 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <termios.h>
+# include <sys/ioctl.h>
 
-# define FD_IN 0
-# define FD_OUT 1
+# define STD_IN 0
+# define STD_OUT 1
 # define FD_ERR 2
 # define FD_NULL -1
 # define P_READ 0
@@ -39,8 +40,11 @@
 # define CURR_CHAR 0
 # define NEXT_CHAR 1
 # define CTRL 2
+# define START 0
+# define END 1
 
 typedef struct termios t_term;
+typedef unsigned short int	t_usint;
 
 typedef enum e_err
 {
@@ -84,11 +88,19 @@ typedef struct s_env
 	t_term	old_term;
 	t_term	term;
 	t_line	*history;
+	size_t	prompt_len;
+	t_usint	win_cols;
+	t_usint win_rows;
 	t_err	err;
 	char	culprit[CULPRIT_LENGTH];
 }	t_env;
 
-bool	init_get_line(t_line *line, t_env *env);
 bool	create_error(char *culprit, t_err err, t_env *env);
+bool	safe_line_alloc(t_line **line, size_t len, t_env *env);
+bool	init_get_line(t_line **line, t_env *env);
+bool	switch_line_version(t_line **line, t_env *env);
+bool	end_get_line(t_line **line, t_env *env);
+bool	is_special_char(char c);
+bool	safe_challoc(char **dst, size_t len, t_env *env);
 
 #endif
