@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 08:58:05 by almighty          #+#    #+#             */
-/*   Updated: 2025/10/24 11:19:10 by almighty         ###   ########.fr       */
+/*   Updated: 2025/10/24 12:46:50 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,17 @@ inline bool	get_term_cols(int *term_cols, t_env *env)
 	return (false);
 }
 
-inline void	move_cursor(ssize_t distance, int *curr_col, int term_cols)
+inline void	move_cursor(ssize_t distance, t_line *line, int term_cols,
+	t_env *env)
 {
+	int		col;
 	size_t	i;
 
+	col = get_curr_col(line, term_cols, env);
 	while (distance)
 	{
-		if ((distance < 0 && *curr_col == 0)
-			|| (distance > 0 && *curr_col + 1 == term_cols))
+		if ((distance < 0 && col == 0)
+			|| (distance > 0 && col + 1 == term_cols))
 		{
 			write(1, "\x1b[A\x1b[B" + 3 * (distance > 0), 3);
 			i = -1;
@@ -43,9 +46,9 @@ inline void	move_cursor(ssize_t distance, int *curr_col, int term_cols)
 		}
 		else
 			write(1, "\x1b[C\x1b[D" + 3 * (distance < 0), 3);
-		*curr_col += 1 - 2 * (distance < 0);
-		*curr_col += term_cols * (*curr_col < 0);
-		*curr_col %= term_cols;
+		col += 1 - 2 * (distance < 0);
+		col += term_cols * (col < 0);
+		col %= term_cols;
 		distance += 1 - 2 * (distance > 0);
 	}
 }
@@ -53,30 +56,26 @@ inline void	move_cursor(ssize_t distance, int *curr_col, int term_cols)
 inline void	reset_line_output(t_line *line, int term_cols, t_env *env)
 {
 	size_t	i;
-	int	curr_col;
 	
 	if (line->count == 0)
 		return ;
-	curr_col = get_curr_col(line, term_cols, env);
-	move_cursor(line->count - line->index, &curr_col, term_cols);
+	move_cursor(line->count - line->index, line, term_cols, env);
 	i = -1;
 	while (++i < line->count)
 	{
 		write(1, "\b \b", 3);
-		move_cursor(-1, &curr_col, term_cols);
+		move_cursor(-1, line, term_cols, env);
 	}
 }
 
 //assume cursor just after prompt
 inline void	show_line_output(t_line *line, int term_cols, t_env *env)
 {
-	int		curr_col;
 	size_t	i;
 
 	i = -1;
 	while (++i < line->count)
 		write(1, line->buffer + i, 1);
-	curr_col = get_curr_col(line, term_cols, env);
-	move_cursor(line->count, &curr_col, term_cols);
+	move_cursor(0, line, term_cols, env);
 	line->index = line->count;
 }

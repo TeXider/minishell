@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 11:23:11 by almighty          #+#    #+#             */
-/*   Updated: 2025/10/24 11:07:42 by almighty         ###   ########.fr       */
+/*   Updated: 2025/10/24 12:45:03 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,15 @@
 static inline bool	handle_get_line_error(t_env *env)
 {
 	return (env != NULL);
+}
+
+static inline void	move_index(t_line *line, int term_cols, t_env *env)
+{
+	move_cursor(((line->curr_char == ARROW_RIGHT) * (line->index < line->count)
+		- (line->curr_char == ARROW_LEFT) * (line->index > 0)), line,
+		term_cols, env);
+	line->index += ((line->curr_char == ARROW_RIGHT) * (line->index < line->count)
+		- (line->curr_char == ARROW_LEFT) * (line->index > 0));
 }
 
 static inline bool	add_curr_char(t_line **line, t_env *env)
@@ -30,7 +39,6 @@ static inline bool	add_curr_char(t_line **line, t_env *env)
 		(*line)->count++;
 		write(1, &(*line)->curr_char, 1);
 		write(1, "\n", get_curr_col(*line, term_cols, env) == term_cols - 1);
-		//move_cursor(get_curr_col(*line, term_cols, env) == term_cols - 1, &(int) { 0 }, term_cols);
 	}
 	else
 	{
@@ -43,6 +51,7 @@ static inline bool	add_curr_char(t_line **line, t_env *env)
 	}
 	return (/*set_correct_line_len(line, env)*/false);
 }
+
 // static inline bool	handle_special_char(t_line **line, t_env *env)
 // {
 // 	int	term_cols;
@@ -70,14 +79,34 @@ static inline bool	add_curr_char(t_line **line, t_env *env)
 // 	return (false);
 // }
 
-// static inline bool	handle_special_char(t_line **line, t_env *env)
-// {
-// 	if ((*line)->curr_char == RETURN)
-// 		delete_char(line, env);
-// 	else if ((*line)->curr_char == '\r')
-// 		write(1, "\n", 1);
-// 	return (false);
-// }
+static inline void	get_esc_seq(t_line *line)
+{
+	char	seq[3];
+	
+	read(0, seq, 2);
+	if (seq[1] == 'D')
+		line->curr_char = ARROW_LEFT;
+	else if (seq[1] == 'C')
+		line->curr_char = ARROW_RIGHT;
+}
+
+static inline bool	handle_special_char(t_line **line, t_env *env)
+{
+	int	term_cols;
+	
+	if (get_term_cols(&term_cols, env))
+		return (true);
+	if ((*line)->curr_char == '\x1b')
+		get_esc_seq(*line);
+	// if ((*line)->curr_char == RETURN)
+	// 	delete_char(line, env);
+	if ((*line)->curr_char == ARROW_RIGHT
+		|| (*line)->curr_char == ARROW_LEFT)
+		move_index(*line, term_cols, env);
+	else if ((*line)->curr_char == '\r')
+		write(1, "\n", 1);
+	return (false);
+}
 
 bool	get_line(char **dst, char *prompt, t_env *env)
 {
@@ -91,11 +120,11 @@ bool	get_line(char **dst, char *prompt, t_env *env)
 		if (read(0, &line->curr_char, 1) == -1)
 			return (create_error("read()", SYS_ERR, env)
 				| handle_get_line_error(env));
-		// if (is_special_char(line->curr_char))
-		// {
-		// 	if (handle_special_char(&line, env))
-		// 		return (handle_get_line_error(env));
-		// }
+		if (is_special_char(line->curr_char))
+		{
+			if (handle_special_char(&line, env))
+				return (handle_get_line_error(env));
+		}
 		else if (/*(line->next && !line->alter_version
 				&& set_alter_version(env))
 				|| */line->curr_char != '\r' && add_curr_char(&line, env))

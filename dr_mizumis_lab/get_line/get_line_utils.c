@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 08:35:29 by almighty          #+#    #+#             */
-/*   Updated: 2025/10/24 09:32:11 by almighty         ###   ########.fr       */
+/*   Updated: 2025/10/24 12:26:09 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ inline bool	init_get_line(t_line **line, t_env *env)
 // 	return (false);
 // }
 
-// inline bool	is_special_char(char c)
-// {
-// 	return (c < ' ' || c > '~');
-// }
+inline bool	is_special_char(char c)
+{
+	return (c < ' ' || c > '~');
+}
