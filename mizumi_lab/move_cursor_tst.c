@@ -21,9 +21,9 @@ bool	move_cursor(int distance, int *curr_col, int win_col)
 		}
 		else
 			write(1, "\x1b[C\x1b[D" + 3 * (distance < 0), 3);
-			*curr_col = (*curr_col + (1 - 2 * (distance < 0)));
-			*curr_col += (win_col - 1) * (*curr_col < 0);
-			*curr_col %= win_col;
+		*curr_col = (*curr_col + (1 - 2 * (distance < 0)));
+		*curr_col += (win_col) * (*curr_col < 0);
+		*curr_col %= win_col;
 		distance += 1 - 2 * (distance > 0);
 	}
 }

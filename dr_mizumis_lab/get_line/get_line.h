@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 11:24:12 by almighty          #+#    #+#             */
-/*   Updated: 2025/10/23 10:32:29 by almighty         ###   ########.fr       */
+/*   Updated: 2025/10/23 16:14:50 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,8 +89,7 @@ typedef struct s_env
 	t_term	term;
 	t_line	*history;
 	size_t	prompt_len;
-	t_usint	win_cols;
-	t_usint win_rows;
+	int		win_cols;
 	t_err	err;
 	char	culprit[CULPRIT_LENGTH];
 }	t_env;
