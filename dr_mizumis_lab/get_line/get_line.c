@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 11:23:11 by almighty          #+#    #+#             */
-/*   Updated: 2025/10/24 10:56:03 by almighty         ###   ########.fr       */
+/*   Updated: 2025/10/24 11:07:42 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ static inline bool	add_curr_char(t_line **line, t_env *env)
 		(*line)->index++;
 		(*line)->count++;
 		write(1, &(*line)->curr_char, 1);
+		write(1, "\n", get_curr_col(*line, term_cols, env) == term_cols - 1);
+		//move_cursor(get_curr_col(*line, term_cols, env) == term_cols - 1, &(int) { 0 }, term_cols);
 	}
 	else
 	{
@@ -43,6 +45,10 @@ static inline bool	add_curr_char(t_line **line, t_env *env)
 }
 // static inline bool	handle_special_char(t_line **line, t_env *env)
 // {
+// 	int	term_cols;
+	
+// 	if (get_term_cols(&term_cols, env))
+// 		return (true);
 // 	if ((*line)->curr_char == ESC_CHAR || (*line)->reading_esc_seq)
 // 		get_esc_seq(*line);
 // 	else if ((*line)->curr_char == RETURN)
@@ -90,8 +96,7 @@ bool	get_line(char **dst, char *prompt, t_env *env)
 		// 	if (handle_special_char(&line, env))
 		// 		return (handle_get_line_error(env));
 		// }
-		// else
-			if (/*(line->next && !line->alter_version
+		else if (/*(line->next && !line->alter_version
 				&& set_alter_version(env))
 				|| */line->curr_char != '\r' && add_curr_char(&line, env))
 				return (handle_get_line_error(env));

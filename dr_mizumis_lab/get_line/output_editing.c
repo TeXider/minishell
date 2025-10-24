@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 08:58:05 by almighty          #+#    #+#             */
-/*   Updated: 2025/10/24 09:46:32 by almighty         ###   ########.fr       */
+/*   Updated: 2025/10/24 11:19:10 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,7 @@
 
 inline int	get_curr_col(t_line *line, int term_cols, t_env *env)
 {
-	return ((line->index + (env->prompt_len
-		* ((env->prompt_len + line->index) / term_cols == 0))
-		% term_cols));
+	return ((line->index + env->prompt_len - 1) % term_cols);
 }
 
 inline bool	get_term_cols(int *term_cols, t_env *env)
