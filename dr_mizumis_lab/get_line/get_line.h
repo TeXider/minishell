@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 11:24:12 by almighty          #+#    #+#             */
-/*   Updated: 2025/10/23 16:14:50 by almighty         ###   ########.fr       */
+/*   Updated: 2025/10/24 09:39:53 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@
 # define CTRL_DEL -7
 # define CURR_CHAR 0
 # define NEXT_CHAR 1
-# define CTRL 2
+# define JUMP 2
 # define START 0
 # define END 1
 
@@ -100,6 +100,13 @@ bool	init_get_line(t_line **line, t_env *env);
 bool	switch_line_version(t_line **line, t_env *env);
 bool	end_get_line(t_line **line, t_env *env);
 bool	is_special_char(char c);
+void	move_rest_of_buff_to_right(t_line *line);
 bool	safe_challoc(char **dst, size_t len, t_env *env);
+int		get_curr_col(t_line *line, int term_cols, t_env *env);
+bool	get_term_cols(int *term_cols, t_env *env);
+void	move_cursor(ssize_t distance, int *curr_col, int term_cols);
+void	reset_line_output(t_line *line, int term_cols, t_env *env);
+void	show_line_output(t_line *line, int term_cols, t_env *env);
+bool	get_line(char **dst,  char *prompt, t_env *env);
 
 #endif

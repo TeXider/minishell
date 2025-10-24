@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 08:35:25 by almighty          #+#    #+#             */
-/*   Updated: 2025/10/23 08:54:25 by almighty         ###   ########.fr       */
+/*   Updated: 2025/10/24 09:15:07 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,4 @@ inline void	move_rest_of_buff_to_right(t_line *line)
 	i = line->count;
 	while (--i >= line->index)
 		line->buffer[i] = line->buffer[i - 1];
-}
-
-inline bool	delete_char(t_line **line, t_env *env)
-{
-	
 }

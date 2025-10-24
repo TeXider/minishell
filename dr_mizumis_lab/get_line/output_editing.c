@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 08:58:05 by almighty          #+#    #+#             */
-/*   Updated: 2025/10/24 09:10:41 by almighty         ###   ########.fr       */
+/*   Updated: 2025/10/24 09:46:32 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ inline void	move_cursor(ssize_t distance, int *curr_col, int term_cols)
 		{
 			write(1, "\x1b[A\x1b[B" + 3 * (distance > 0), 3);
 			i = -1;
-			while (++i < term_cols)
+			while (++i < (size_t) term_cols)
 				write(1, "\x1b[C\x1b[D" + 3 * (distance > 0), 3);
 		}
 		else
@@ -57,8 +57,10 @@ inline void	reset_line_output(t_line *line, int term_cols, t_env *env)
 	size_t	i;
 	int	curr_col;
 	
+	if (line->count == 0)
+		return ;
 	curr_col = get_curr_col(line, term_cols, env);
-	move_cursor(line->count - line->index, &curr_col, env);
+	move_cursor(line->count - line->index, &curr_col, term_cols);
 	i = -1;
 	while (++i < line->count)
 	{
@@ -68,13 +70,15 @@ inline void	reset_line_output(t_line *line, int term_cols, t_env *env)
 }
 
 //assume cursor just after prompt
-inline void	show_line_ouput(t_line *line, int term_cols, t_env *env)
+inline void	show_line_output(t_line *line, int term_cols, t_env *env)
 {
+	int		curr_col;
 	size_t	i;
 
 	i = -1;
 	while (++i < line->count)
-		write(1, line->buffer[i], 1);
-	move_cursor(line->count, get_curr_col(line, term_cols, env), env);
+		write(1, line->buffer + i, 1);
+	curr_col = get_curr_col(line, term_cols, env);
+	move_cursor(line->count, &curr_col, term_cols);
 	line->index = line->count;
 }

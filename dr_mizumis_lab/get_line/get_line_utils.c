@@ -6,25 +6,11 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 08:35:29 by almighty          #+#    #+#             */
-/*   Updated: 2025/10/23 09:28:00 by almighty         ###   ########.fr       */
+/*   Updated: 2025/10/24 09:32:11 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_line.h"
-
-inline bool	safe_line_alloc(t_line **line, size_t len, t_env *env)
-{
-	*line = malloc(sizeof(t_line));
-	if (!*line)
-		return (create_error("malloc()", SYS_ERR, env));
-	if (safe_challoc((*line)->buffer, len, env))
-		return (create_error("malloc()", SYS_ERR, env));
-	(*line)->len = len;
-	(*line)->count = 0;
-	(*line)->index = 0;
-	(*line)->curr_char = '\0';
-	return (false);
-}
 
 inline bool	init_get_line(t_line **line, t_env *env)
 {
@@ -42,28 +28,28 @@ inline bool	init_get_line(t_line **line, t_env *env)
 	return (false);
 }
 
-inline bool	switch_line_version(t_line **line, t_env *env)
-{
-	if (!(*line)->alter_version)
-	{ 
-		if (safe_line_alloc(&(*line)->alter_version, (*line)->len, env))
-			return (true);
-		(*line)->alter_version->next = (*line)->next;
-		(*line)->alter_version->prev = (*line)->prev;
-		(*line)->alter_version->alter_version = *line;
-		*line = (*line)->alter_version;
-	}
-	return (false);
-}
+// inline bool	switch_line_version(t_line **line, t_env *env)
+// {
+// 	if (!(*line)->alter_version)
+// 	{ 
+// 		if (safe_line_alloc(&(*line)->alter_version, (*line)->len, env))
+// 			return (true);
+// 		(*line)->alter_version->next = (*line)->next;
+// 		(*line)->alter_version->prev = (*line)->prev;
+// 		(*line)->alter_version->alter_version = *line;
+// 		*line = (*line)->alter_version;
+// 	}
+// 	return (false);
+// }
 
-inline bool	end_get_line(t_line **line, t_env *env)
-{
-	if (tcsetattr(STD_IN, TCSANOW, &env->old_term))
-		return (create_error("tcsetattr()", TERM_ERR, env));
-	return (false);
-}
+// inline bool	end_get_line(t_line **line, t_env *env)
+// {
+// 	if (tcsetattr(STD_IN, TCSANOW, &env->old_term))
+// 		return (create_error("tcsetattr()", TERM_ERR, env));
+// 	return (false);
+// }
 
-inline bool	is_special_char(char c)
-{
-	return (c < ' ' || c > '~');
-}
+// inline bool	is_special_char(char c)
+// {
+// 	return (c < ' ' || c > '~');
+// }

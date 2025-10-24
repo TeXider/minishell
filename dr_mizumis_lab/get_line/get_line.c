@@ -6,15 +6,24 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 11:23:11 by almighty          #+#    #+#             */
-/*   Updated: 2025/10/23 10:47:57 by almighty         ###   ########.fr       */
+/*   Updated: 2025/10/24 10:56:03 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_line.h"
 
+static inline bool	handle_get_line_error(t_env *env)
+{
+	return (env != NULL);
+}
+
 static inline bool	add_curr_char(t_line **line, t_env *env)
 {
-	if ((*line)->index == (*line)->count - 1)	
+	int	term_cols;
+	
+	if (get_term_cols(&term_cols, env))
+		return (true);
+	if ((*line)->index == (*line)->count)	
 	{
 		(*line)->buffer[(*line)->index] = (*line)->curr_char;
 		(*line)->index++;
@@ -23,12 +32,12 @@ static inline bool	add_curr_char(t_line **line, t_env *env)
 	}
 	else
 	{
-		reset_line_output(*line);
+		reset_line_output(*line, term_cols, env);
 		move_rest_of_buff_to_right(*line);
 		(*line)->buffer[(*line)->index] = (*line)->curr_char;
 		(*line)->index++;
 		(*line)->count++;
-		show_line_output(*line);
+		show_line_output(*line, term_cols, env);
 	}
 	return (/*set_correct_line_len(line, env)*/false);
 }
@@ -38,7 +47,7 @@ static inline bool	add_curr_char(t_line **line, t_env *env)
 // 		get_esc_seq(*line);
 // 	else if ((*line)->curr_char == RETURN)
 // 		delete_char(line, CURR_CHAR
-// 			| (CTRL * ((*line)->curr_char == CTRL_RETURN)), env);
+// 			| (JUMP * ((*line)->curr_char == CTRL_RETURN)), env);
 // 	else if ((*line)->curr_char == ARROW_UP)
 // 		history_prev(line, env);
 // 	else if ((*line)->curr_char == ARROW_DOWN)
@@ -48,7 +57,7 @@ static inline bool	add_curr_char(t_line **line, t_env *env)
 // 	else if ((*line)->curr_char == ARROW_LEFT)
 // 		move_index_left(*line, env);
 // 	else if ((*line)->curr_char == DEL)
-// 		delete_char(line, NEXT_CHAR | (CTRL * ((*line)->curr_char == CTRL_DEL)),
+// 		delete_char(line, NEXT_CHAR | (JUMP * ((*line)->curr_char == CTRL_DEL)),
 // 			env);
 // 	else if ((*line)->curr_char == '\r')
 // 		write(1, "\n", 1);
@@ -70,14 +79,12 @@ bool	get_line(char **dst, char *prompt, t_env *env)
 
 	if (init_get_line(&line, env))
 		return (true);
-	print_str(prompt);
+	(void) prompt;//print_str(prompt);
 	while (line->curr_char != '\r')
 	{
 		if (read(0, &line->curr_char, 1) == -1)
 			return (create_error("read()", SYS_ERR, env)
 				| handle_get_line_error(env));
-		if (get_win_size(env))
-			return (handle_get_line_error(env));
 		// if (is_special_char(line->curr_char))
 		// {
 		// 	if (handle_special_char(&line, env))
@@ -86,9 +93,10 @@ bool	get_line(char **dst, char *prompt, t_env *env)
 		// else
 			if (/*(line->next && !line->alter_version
 				&& set_alter_version(env))
-				|| */add_curr_char(&line, env))
+				|| */line->curr_char != '\r' && add_curr_char(&line, env))
 				return (handle_get_line_error(env));
 	}
+	line->buffer[line->count] = '\0';
 	*dst = line->buffer;
 	return (false);
 }
