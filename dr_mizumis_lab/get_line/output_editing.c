@@ -6,15 +6,15 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 08:58:05 by almighty          #+#    #+#             */
-/*   Updated: 2025/10/24 12:46:50 by almighty         ###   ########.fr       */
+/*   Updated: 2025/10/27 13:21:03 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_line.h"
 
-inline int	get_curr_col(t_line *line, int term_cols, t_env *env)
+inline int	get_curr_col(size_t index, int term_cols, t_env *env)
 {
-	return ((line->index + env->prompt_len - 1) % term_cols);
+	return ((index + env->prompt_len) % term_cols);
 }
 
 inline bool	get_term_cols(int *term_cols, t_env *env)
@@ -27,13 +27,13 @@ inline bool	get_term_cols(int *term_cols, t_env *env)
 	return (false);
 }
 
-inline void	move_cursor(ssize_t distance, t_line *line, int term_cols,
+inline void	move_cursor(ssize_t distance, size_t index, int term_cols,
 	t_env *env)
 {
 	int		col;
 	size_t	i;
 
-	col = get_curr_col(line, term_cols, env);
+	col = get_curr_col(index, term_cols, env);
 	while (distance)
 	{
 		if ((distance < 0 && col == 0)
@@ -55,19 +55,23 @@ inline void	move_cursor(ssize_t distance, t_line *line, int term_cols,
 
 inline void	reset_line_output(t_line *line, int term_cols, t_env *env)
 {
+	size_t	index;
 	size_t	i;
 	
 	if (line->count == 0)
 		return ;
-	move_cursor(line->count - line->index, line, term_cols, env);
+	move_cursor(line->count - line->index, line->index, term_cols, env);
 	i = -1;
+	index = line->count;
 	while (++i < line->count)
 	{
-		write(1, "\b \b", 3);
-		move_cursor(-1, line, term_cols, env);
+		move_cursor(-1, index, term_cols, env);
+		write(1, " ", 1);
+		move_cursor(-(get_curr_col(index, term_cols, env) != 0), index, term_cols, env); //do not if col == term_col - 1
+		index--;
 	}
-}
 
+}
 //assume cursor just after prompt
 inline void	show_line_output(t_line *line, int term_cols, t_env *env)
 {
@@ -76,6 +80,6 @@ inline void	show_line_output(t_line *line, int term_cols, t_env *env)
 	i = -1;
 	while (++i < line->count)
 		write(1, line->buffer + i, 1);
-	move_cursor(0, line, term_cols, env);
-	line->index = line->count;
+	write(1, " ", get_curr_col(line->count, term_cols, env) == 0);
+	move_cursor(line->index - line->count, line->count, term_cols, env);
 }

@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 11:23:11 by almighty          #+#    #+#             */
-/*   Updated: 2025/10/24 12:45:03 by almighty         ###   ########.fr       */
+/*   Updated: 2025/10/27 12:51:32 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@ static inline bool	handle_get_line_error(t_env *env)
 
 static inline void	move_index(t_line *line, int term_cols, t_env *env)
 {
-	move_cursor(((line->curr_char == ARROW_RIGHT) * (line->index < line->count)
-		- (line->curr_char == ARROW_LEFT) * (line->index > 0)), line,
+	move_cursor((line->curr_char == ARROW_RIGHT && line->index < line->count)
+		- (line->curr_char == ARROW_LEFT && line->index > 0), line->index,
 		term_cols, env);
-	line->index += ((line->curr_char == ARROW_RIGHT) * (line->index < line->count)
-		- (line->curr_char == ARROW_LEFT) * (line->index > 0));
+	line->index += (line->curr_char == ARROW_RIGHT && line->index < line->count)
+		- (line->curr_char == ARROW_LEFT && line->index > 0);
 }
 
 static inline bool	add_curr_char(t_line **line, t_env *env)
@@ -35,18 +35,21 @@ static inline bool	add_curr_char(t_line **line, t_env *env)
 	if ((*line)->index == (*line)->count)	
 	{
 		(*line)->buffer[(*line)->index] = (*line)->curr_char;
+		write(1, &(*line)->curr_char, 1);
+		write(1, "\n",
+			get_curr_col((*line)->index, term_cols, env) == term_cols - 1);
 		(*line)->index++;
 		(*line)->count++;
-		write(1, &(*line)->curr_char, 1);
-		write(1, "\n", get_curr_col(*line, term_cols, env) == term_cols - 1);
 	}
 	else
 	{
+		env->debug = 0;
 		reset_line_output(*line, term_cols, env);
 		move_rest_of_buff_to_right(*line);
 		(*line)->buffer[(*line)->index] = (*line)->curr_char;
 		(*line)->index++;
 		(*line)->count++;
+		env->debug = 1;
 		show_line_output(*line, term_cols, env);
 	}
 	return (/*set_correct_line_len(line, env)*/false);
@@ -81,9 +84,9 @@ static inline bool	add_curr_char(t_line **line, t_env *env)
 
 static inline void	get_esc_seq(t_line *line)
 {
-	char	seq[3];
+	char	seq[4];
 	
-	read(0, seq, 2);
+	read(0, seq, 3);
 	if (seq[1] == 'D')
 		line->curr_char = ARROW_LEFT;
 	else if (seq[1] == 'C')
@@ -102,7 +105,7 @@ static inline bool	handle_special_char(t_line **line, t_env *env)
 	// 	delete_char(line, env);
 	if ((*line)->curr_char == ARROW_RIGHT
 		|| (*line)->curr_char == ARROW_LEFT)
-		move_index(*line, term_cols, env);
+		/*reset_line_output(*line, term_cols, env);*/move_index(*line, term_cols, env);
 	else if ((*line)->curr_char == '\r')
 		write(1, "\n", 1);
 	return (false);
@@ -127,7 +130,7 @@ bool	get_line(char **dst, char *prompt, t_env *env)
 		}
 		else if (/*(line->next && !line->alter_version
 				&& set_alter_version(env))
-				|| */line->curr_char != '\r' && add_curr_char(&line, env))
+				|| */add_curr_char(&line, env))
 				return (handle_get_line_error(env));
 	}
 	line->buffer[line->count] = '\0';
