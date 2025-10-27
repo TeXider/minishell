@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 12:29:10 by almighty          #+#    #+#             */
-/*   Updated: 2025/10/27 09:49:31 by almighty         ###   ########.fr       */
+/*   Updated: 2025/10/27 13:57:16 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int main(int argc, char **argv, char **envp)
 	char *str;
 	while(1)
 	{
-		write(1, "caca> ", 6);
+		//write(1, "caca> ", 6);
 		get_line(&str, "caca> ", &env);
 		// t_line line;
 		// write(1, "JAIMELESBITES", 13);

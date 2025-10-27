@@ -6,26 +6,11 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 08:58:05 by almighty          #+#    #+#             */
-/*   Updated: 2025/10/27 13:21:03 by almighty         ###   ########.fr       */
+/*   Updated: 2025/10/27 14:45:23 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_line.h"
-
-inline int	get_curr_col(size_t index, int term_cols, t_env *env)
-{
-	return ((index + env->prompt_len) % term_cols);
-}
-
-inline bool	get_term_cols(int *term_cols, t_env *env)
-{
-	struct winsize	win;
-
-	if (ioctl(STD_IN, TIOCGWINSZ, &win))
-		return (create_error("ioctl()", SYS_ERR, env));
-	*term_cols = win.ws_col;
-	return (false);
-}
 
 inline void	move_cursor(ssize_t distance, size_t index, int term_cols,
 	t_env *env)
@@ -67,10 +52,10 @@ inline void	reset_line_output(t_line *line, int term_cols, t_env *env)
 	{
 		move_cursor(-1, index, term_cols, env);
 		write(1, " ", 1);
-		move_cursor(-(get_curr_col(index, term_cols, env) != 0), index, term_cols, env); //do not if col == term_col - 1
+		move_cursor(-(get_curr_col(index, term_cols, env) != 0),
+			index, term_cols, env);
 		index--;
 	}
-
 }
 //assume cursor just after prompt
 inline void	show_line_output(t_line *line, int term_cols, t_env *env)

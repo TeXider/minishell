@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 11:24:12 by almighty          #+#    #+#             */
-/*   Updated: 2025/10/27 12:51:04 by almighty         ###   ########.fr       */
+/*   Updated: 2025/10/27 13:54:09 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,7 @@ bool	switch_line_version(t_line **line, t_env *env);
 bool	end_get_line(t_line **line, t_env *env);
 bool	is_special_char(char c);
 void	move_rest_of_buff_to_right(t_line *line);
+void	move_rest_of_buff_to_left(t_line *line);
 bool	safe_challoc(char **dst, size_t len, t_env *env);
 int		get_curr_col(size_t index, int term_cols, t_env *env);
 bool	get_term_cols(int *term_cols, t_env *env);
@@ -109,5 +110,6 @@ void	move_cursor(ssize_t distance, size_t index, int term_cols, t_env *env);
 void	reset_line_output(t_line *line, int term_cols, t_env *env);
 void	show_line_output(t_line *line, int term_cols, t_env *env);
 bool	get_line(char **dst,  char *prompt, t_env *env);
+
 
 #endif

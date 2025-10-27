@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 11:23:11 by almighty          #+#    #+#             */
-/*   Updated: 2025/10/27 12:51:32 by almighty         ###   ########.fr       */
+/*   Updated: 2025/10/27 14:53:44 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,10 +82,21 @@ static inline bool	add_curr_char(t_line **line, t_env *env)
 // 	return (false);
 // }
 
+static inline void	delete_char(t_line *line, int term_cols, t_env *env)
+{
+	if (!line->index)
+		return ;
+	reset_line_output(line, term_cols, env);
+	line->index--;
+	move_rest_of_buff_to_left(line);
+	line->count--;
+	show_line_output(line, term_cols, env);
+}
+
 static inline void	get_esc_seq(t_line *line)
 {
 	char	seq[4];
-	
+
 	read(0, seq, 3);
 	if (seq[1] == 'D')
 		line->curr_char = ARROW_LEFT;
@@ -96,19 +107,25 @@ static inline void	get_esc_seq(t_line *line)
 static inline bool	handle_special_char(t_line **line, t_env *env)
 {
 	int	term_cols;
-	
+
 	if (get_term_cols(&term_cols, env))
 		return (true);
 	if ((*line)->curr_char == '\x1b')
 		get_esc_seq(*line);
-	// if ((*line)->curr_char == RETURN)
-	// 	delete_char(line, env);
+	if ((*line)->curr_char == RETURN)
+		delete_char(*line, term_cols, env);
 	if ((*line)->curr_char == ARROW_RIGHT
 		|| (*line)->curr_char == ARROW_LEFT)
-		/*reset_line_output(*line, term_cols, env);*/move_index(*line, term_cols, env);
+		move_index(*line, term_cols, env);
 	else if ((*line)->curr_char == '\r')
 		write(1, "\n", 1);
 	return (false);
+}
+
+static inline void	print_str(char *str)
+{
+	while (*str)
+		write(1, str++, 1);
 }
 
 bool	get_line(char **dst, char *prompt, t_env *env)
@@ -117,7 +134,7 @@ bool	get_line(char **dst, char *prompt, t_env *env)
 
 	if (init_get_line(&line, env))
 		return (true);
-	(void) prompt;//print_str(prompt);
+	print_str(prompt);
 	while (line->curr_char != '\r')
 	{
 		if (read(0, &line->curr_char, 1) == -1)

@@ -6,11 +6,16 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 08:35:29 by almighty          #+#    #+#             */
-/*   Updated: 2025/10/24 12:26:09 by almighty         ###   ########.fr       */
+/*   Updated: 2025/10/27 13:46:00 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_line.h"
+
+inline bool	is_special_char(char c)
+{
+	return (c < ' ' || c > '~');
+}
 
 inline bool	init_get_line(t_line **line, t_env *env)
 {
@@ -49,7 +54,17 @@ inline bool	init_get_line(t_line **line, t_env *env)
 // 	return (false);
 // }
 
-inline bool	is_special_char(char c)
+inline int	get_curr_col(size_t index, int term_cols, t_env *env)
 {
-	return (c < ' ' || c > '~');
+	return ((index + env->prompt_len) % term_cols);
+}
+
+inline bool	get_term_cols(int *term_cols, t_env *env)
+{
+	struct winsize	win;
+
+	if (ioctl(STD_IN, TIOCGWINSZ, &win))
+		return (create_error("ioctl()", SYS_ERR, env));
+	*term_cols = win.ws_col;
+	return (false);
 }
