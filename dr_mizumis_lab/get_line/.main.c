@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 12:29:10 by almighty          #+#    #+#             */
-/*   Updated: 2025/10/27 13:57:16 by almighty         ###   ########.fr       */
+/*   Updated: 2025/10/28 09:00:35 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ int main(int argc, char **argv, char **envp)
 		// printf("\nindex : %zu\ncount : %zu\ncol : %d\n", line.index, line.count, get_curr_col(&line, cols, &env));
 		for (int i = 0; str[i]; i++)
 			write(1, str + i, 1);
-		write(1, "\n", 1);
 		free(str);
 		(void) str;
 	}

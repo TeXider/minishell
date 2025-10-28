@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 08:35:25 by almighty          #+#    #+#             */
-/*   Updated: 2025/10/27 15:00:24 by almighty         ###   ########.fr       */
+/*   Updated: 2025/10/28 08:45:02 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,6 @@ inline void	move_rest_of_buff_to_left(t_line *line)
 {
 	size_t	i;
 
-	if (line->index == 0)
-		return ;
 	i = line->index;
 	while (++i < line->count)
 		line->buffer[i - 1] = line->buffer[i];

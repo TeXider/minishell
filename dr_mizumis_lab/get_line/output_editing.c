@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 08:58:05 by almighty          #+#    #+#             */
-/*   Updated: 2025/10/27 14:45:23 by almighty         ###   ########.fr       */
+/*   Updated: 2025/10/28 08:40:40 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,14 +57,17 @@ inline void	reset_line_output(t_line *line, int term_cols, t_env *env)
 		index--;
 	}
 }
+
 //assume cursor just after prompt
 inline void	show_line_output(t_line *line, int term_cols, t_env *env)
 {
 	size_t	i;
 
+	if (!line->count)
+		return ;
 	i = -1;
 	while (++i < line->count)
 		write(1, line->buffer + i, 1);
-	write(1, " ", get_curr_col(line->count, term_cols, env) == 0);
+	write(1, "\n", get_curr_col(line->count, term_cols, env) == 0);
 	move_cursor(line->index - line->count, line->count, term_cols, env);
 }

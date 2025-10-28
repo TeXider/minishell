@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 08:35:29 by almighty          #+#    #+#             */
-/*   Updated: 2025/10/27 13:46:00 by almighty         ###   ########.fr       */
+/*   Updated: 2025/10/28 09:41:46 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ inline bool	init_get_line(t_line **line, t_env *env)
 		return (true);
 	return (false);
 }
+
 
 // inline bool	switch_line_version(t_line **line, t_env *env)
 // {
