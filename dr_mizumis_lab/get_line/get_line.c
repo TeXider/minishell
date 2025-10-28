@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_line.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 11:23:11 by almighty          #+#    #+#             */
-/*   Updated: 2025/10/28 15:42:30 by almighty         ###   ########.fr       */
+/*   Updated: 2025/10/28 16:32:33 by tpanou-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,13 @@ static inline size_t	get_jump_len(t_line *line, int dir)
 	size_t	len;
 	size_t	i;
 
-	len = 0;
-	i = line->index;
+	len = 1;
+	i = line->index + dir;
 	while (i > 0 && i < line->count
-		&& (!(dir == LEFT && line->buffer[i] != ' '
+		&& !(dir == LEFT && line->buffer[i] != ' '
 		&& line->buffer[i - 1] == ' ')
-		|| !(dir == RIGHT && line->buffer[i] == ' '
-		&& line->buffer[i - 1] != ' ')))
+		&& !(dir == RIGHT && line->buffer[i] == ' '
+		&& line->buffer[i - 1] != ' '))
 	{
 		len++;
 		i += dir;
@@ -47,11 +47,26 @@ static inline size_t	get_jump_len(t_line *line, int dir)
 	return (len);
 }
 
+static inline void	delete_char(t_line *line, int term_cols, t_env *env)
+{
+	if ((line->curr_char == RETURN && !line->index)
+		|| (line->curr_char == DEL && line->index == line->count))
+		return ;
+	reset_line_output(line, term_cols, env);
+	line->index -= (line->curr_char == RETURN);
+	move_rest_of_buff_to_left(line);
+	line->count--;
+	show_line_output(line, term_cols, env);
+}
+
 static inline void	handle_ctrl(t_line *line, int term_cols, t_env *env)
 {
 	size_t	i;
 	size_t	jump_len;
 	
+	env->is_ctrl = false;
+	if (!line->count)
+		return ;
 	jump_len = get_jump_len(line, LEFT * (line->curr_char == ARROW_LEFT
 		|| line->curr_char == CTRL_RETURN)
 		+ RIGHT * (line->curr_char == ARROW_RIGHT
@@ -59,7 +74,16 @@ static inline void	handle_ctrl(t_line *line, int term_cols, t_env *env)
 	i = -1;
 	while (++i < jump_len)
 	{
-		handle_lr_arrows(line, term_cols, env);
+		if (line->curr_char == ARROW_LEFT || line->curr_char == ARROW_RIGHT)
+			handle_lr_arrows(line, term_cols, env);
+		else if (line->curr_char == CTRL_DEL || line->curr_char == CTRL_RETURN)
+		{
+			line->curr_char = DEL * (line->curr_char == CTRL_DEL)
+				+ RETURN * (line->curr_char == CTRL_RETURN);
+			delete_char(line, term_cols, env);
+			line->curr_char = CTRL_DEL * (line->curr_char == DEL)
+				+ CTRL_RETURN * (line->curr_char == RETURN);
+		}
 	}
 }
 
@@ -90,19 +114,6 @@ static inline bool	add_curr_char(t_line *line, t_env *env)
 	return (/*set_correct_line_len(line, env)*/false);
 }
 
-static inline void	delete_char(t_line *line, int term_cols, t_env *env)
-{
-	if ((line->curr_char == RETURN && !line->index)
-		|| (line->curr_char == DEL && line->index == line->count))
-		return ;
-	reset_line_output(line, term_cols, env);
-	line->index += (line->curr_char == DEL) - (line->curr_char == RETURN);
-	move_rest_of_buff_to_left(line);
-	line->index -= (line->curr_char == DEL);
-	line->count--;
-	show_line_output(line, term_cols, env);
-}
-
 static inline void	clean_charray(char *arr, size_t len)
 {
 	while (--len)
@@ -116,8 +127,8 @@ static inline bool	get_esc_seq(t_line *line, t_env *env)
 	clean_charray(seq, 7);
 	if (read(0, seq, 6) == -1)
 		return (create_error("read()", SYS_ERR, env));
-	line->curr_char = ARROW_LEFT * (seq[1] == 'D' || seq[5] == 'D')
-		+ ARROW_RIGHT * (seq[1] == 'C' || seq[5] == 'C')
+	line->curr_char = ARROW_LEFT * (seq[1] == 'D' || seq[4] == 'D')
+		+ ARROW_RIGHT * (seq[1] == 'C' || seq[4] == 'C')
 		+ ARROW_UP * (seq[1] == 'A')
 		+ ARROW_DOWN * (seq[1] == 'B')
 		+ DEL * (seq[1] == '3' && seq[2] == '~')
@@ -154,7 +165,7 @@ static inline bool	handle_special_char(t_line **line, t_env *env)
 		|| (*line)->curr_char == ARROW_LEFT)
 		handle_lr_arrows(*line, term_cols, env);
 	else if ((*line)->curr_char == ARROW_UP || (*line)->curr_char == ARROW_DOWN)
-		/*move_in_history(line, term_cols, env)*/;
+		/*move_in_history(line, term_cols, env)*/(void) env;
 	else if ((*line)->curr_char == '\r')
 		end_line(*line, term_cols, env);
 	return (false);
