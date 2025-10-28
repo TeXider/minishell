@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 08:58:05 by almighty          #+#    #+#             */
-/*   Updated: 2025/10/28 08:40:40 by almighty         ###   ########.fr       */
+/*   Updated: 2025/10/28 11:41:06 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,13 @@ inline void	move_cursor(ssize_t distance, size_t index, int term_cols,
 		if ((distance < 0 && col == 0)
 			|| (distance > 0 && col + 1 == term_cols))
 		{
-			write(1, "\x1b[A\x1b[B" + 3 * (distance > 0), 3);
+			write(1, "\033[A\033[B" + 3 * (distance > 0), 3);
 			i = -1;
 			while (++i < (size_t) term_cols)
-				write(1, "\x1b[C\x1b[D" + 3 * (distance > 0), 3);
+				write(1, "\033[C\033[D" + 3 * (distance > 0), 3);
 		}
 		else
-			write(1, "\x1b[C\x1b[D" + 3 * (distance < 0), 3);
+			write(1, "\033[C\033[D" + 3 * (distance < 0), 3);
 		col += 1 - 2 * (distance < 0);
 		col += term_cols * (col < 0);
 		col %= term_cols;

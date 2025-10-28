@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 12:29:10 by almighty          #+#    #+#             */
-/*   Updated: 2025/10/28 09:00:35 by almighty         ###   ########.fr       */
+/*   Updated: 2025/10/28 15:37:10 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ static inline void	init_env(t_env *env, char **envp)
 	env->empty_list[1] = NULL;
 	env->err = 0;
 	env->prompt_len = 6;
+	env->is_ctrl = false;
 }
 
 int main(int argc, char **argv, char **envp)

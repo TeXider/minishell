@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 11:24:12 by almighty          #+#    #+#             */
-/*   Updated: 2025/10/27 13:54:09 by almighty         ###   ########.fr       */
+/*   Updated: 2025/10/28 15:03:38 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,11 @@
 # define ARROW_RIGHT -3
 # define ARROW_LEFT -4
 # define DEL -5
-# define CTRL_RETURN -6
+# define CTRL_RETURN '\027'
 # define CTRL_DEL -7
-# define CURR_CHAR 0
-# define NEXT_CHAR 1
-# define JUMP 2
-# define START 0
-# define END 1
+# define CTRL_ARROW -8
+# define LEFT -1
+# define RIGHT 1
 
 typedef struct termios t_term;
 typedef unsigned short int	t_usint;
@@ -92,7 +90,7 @@ typedef struct s_env
 	int		win_cols;
 	t_err	err;
 	char	culprit[CULPRIT_LENGTH];
-	bool	debug;
+	bool	is_ctrl;
 }	t_env;
 
 bool	create_error(char *culprit, t_err err, t_env *env);
