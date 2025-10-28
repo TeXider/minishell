@@ -6,7 +6,7 @@
 /*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 11:23:11 by almighty          #+#    #+#             */
-/*   Updated: 2025/10/28 16:32:33 by tpanou-d         ###   ########.fr       */
+/*   Updated: 2025/10/28 16:35:16 by tpanou-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,13 +76,12 @@ static inline void	handle_ctrl(t_line *line, int term_cols, t_env *env)
 	{
 		if (line->curr_char == ARROW_LEFT || line->curr_char == ARROW_RIGHT)
 			handle_lr_arrows(line, term_cols, env);
-		else if (line->curr_char == CTRL_DEL || line->curr_char == CTRL_RETURN)
+		else if (line->curr_char == CTRL_DEL || line->curr_char == CTRL_RETURN
+			|| line->curr_char == DEL || line->curr_char == RETURN)
 		{
 			line->curr_char = DEL * (line->curr_char == CTRL_DEL)
 				+ RETURN * (line->curr_char == CTRL_RETURN);
 			delete_char(line, term_cols, env);
-			line->curr_char = CTRL_DEL * (line->curr_char == DEL)
-				+ CTRL_RETURN * (line->curr_char == RETURN);
 		}
 	}
 }
