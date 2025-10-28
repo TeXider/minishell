@@ -1,0 +1,59 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   handle_ctrl.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/10/28 17:21:04 by tpanou-d          #+#    #+#             */
+/*   Updated: 2025/10/28 17:21:13 by tpanou-d         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "get_line.h"
+
+inline size_t	get_jump_len(t_line *line, int dir)
+{
+	size_t	len;
+	size_t	i;
+
+	len = 1;
+	i = line->index + dir;
+	while (i > 0 && i < line->count
+		&& !(dir == LEFT && line->buffer[i] != ' '
+		&& line->buffer[i - 1] == ' ')
+		&& !(dir == RIGHT && line->buffer[i] == ' '
+		&& line->buffer[i - 1] != ' '))
+	{
+		len++;
+		i += dir;
+	}
+	return (len);
+}
+
+inline void	handle_ctrl(t_line *line, int term_cols, t_env *env)
+{
+	size_t	i;
+	size_t	jump_len;
+	
+	env->is_ctrl = false;
+	if (!line->count)
+		return ;
+	jump_len = get_jump_len(line, LEFT * (line->curr_char == ARROW_LEFT
+		|| line->curr_char == CTRL_RETURN)
+		+ RIGHT * (line->curr_char == ARROW_RIGHT
+		|| line->curr_char == CTRL_DEL));
+	i = -1;
+	while (++i < jump_len)
+	{
+		if (line->curr_char == ARROW_LEFT || line->curr_char == ARROW_RIGHT)
+			handle_lr_arrows(line, term_cols, env);
+		else if (line->curr_char == CTRL_DEL || line->curr_char == CTRL_RETURN
+			|| line->curr_char == DEL || line->curr_char == RETURN)
+		{
+			line->curr_char = DEL * (line->curr_char == CTRL_DEL)
+				+ RETURN * (line->curr_char == CTRL_RETURN);
+			delete_char(line, term_cols, env);
+		}
+	}
+}

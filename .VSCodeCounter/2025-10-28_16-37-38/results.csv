@@ -1,0 +1,10 @@
+"filename", "language", "C", "comment", "blank", "total"
+"/home/tpanou-d/Documents/github/minishell/dr_mizumis_lab/get_line/.main.c", "C", 27, 20, 4, 51
+"/home/tpanou-d/Documents/github/minishell/dr_mizumis_lab/get_line/create_error.c", "C", 35, 11, 5, 51
+"/home/tpanou-d/Documents/github/minishell/dr_mizumis_lab/get_line/get_line.c", "C", 176, 13, 21, 210
+"/home/tpanou-d/Documents/github/minishell/dr_mizumis_lab/get_line/get_line.h", "C", 91, 11, 11, 113
+"/home/tpanou-d/Documents/github/minishell/dr_mizumis_lab/get_line/get_line_utils.c", "C", 45, 17, 9, 71
+"/home/tpanou-d/Documents/github/minishell/dr_mizumis_lab/get_line/line_editing.c", "C", 15, 11, 5, 31
+"/home/tpanou-d/Documents/github/minishell/dr_mizumis_lab/get_line/memory.c", "C", 22, 11, 4, 37
+"/home/tpanou-d/Documents/github/minishell/dr_mizumis_lab/get_line/output_editing.c", "C", 54, 12, 8, 74
+"Total", "-", 465, 106, 67, 638
