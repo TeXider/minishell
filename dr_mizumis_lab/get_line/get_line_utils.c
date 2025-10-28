@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 08:35:29 by almighty          #+#    #+#             */
-/*   Updated: 2025/10/28 09:41:46 by almighty         ###   ########.fr       */
+/*   Updated: 2025/10/28 09:51:08 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,19 +34,19 @@ inline bool	init_get_line(t_line **line, t_env *env)
 }
 
 
-// inline bool	switch_line_version(t_line **line, t_env *env)
-// {
-// 	if (!(*line)->alter_version)
-// 	{ 
-// 		if (safe_line_alloc(&(*line)->alter_version, (*line)->len, env))
-// 			return (true);
-// 		(*line)->alter_version->next = (*line)->next;
-// 		(*line)->alter_version->prev = (*line)->prev;
-// 		(*line)->alter_version->alter_version = *line;
-// 		*line = (*line)->alter_version;
-// 	}
-// 	return (false);
-// }
+inline bool	switch_line_version(t_line **line, t_env *env)
+{
+	if (!(*line)->alter_version)
+	{ 
+		if (safe_line_alloc(&(*line)->alter_version, (*line)->len, env))
+			return (true);
+		(*line)->alter_version->next = (*line)->next;
+		(*line)->alter_version->prev = (*line)->prev;
+		(*line)->alter_version->alter_version = *line;
+		*line = (*line)->alter_version;
+	}
+	return (false);
+}
 
 // inline bool	end_get_line(t_line **line, t_env *env)
 // {

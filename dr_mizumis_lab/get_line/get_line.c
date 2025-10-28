@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 11:23:11 by almighty          #+#    #+#             */
-/*   Updated: 2025/10/28 09:09:13 by almighty         ###   ########.fr       */
+/*   Updated: 2025/10/28 10:23:13 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static inline bool	handle_get_line_error(t_env *env)
 	return (env != NULL);
 }
 
-static inline void	move_index(t_line *line, int term_cols, t_env *env)
+static inline void	handle_lr_arrows(t_line *line, int term_cols, t_env *env)
 {
 	move_cursor((line->curr_char == ARROW_RIGHT && line->index < line->count)
 		- (line->curr_char == ARROW_LEFT && line->index > 0), line->index,
@@ -84,24 +84,35 @@ static inline bool	add_curr_char(t_line *line, t_env *env)
 
 static inline void	delete_char(t_line *line, int term_cols, t_env *env)
 {
-	if (!line->index)
+	if ((line->curr_char == RETURN && !line->index)
+		|| (line->curr_char == DEL && line->index == line->count))
 		return ;
 	reset_line_output(line, term_cols, env);
-	line->index--;
-	move_rest_of_buff_to_left(line);
+	line->index -= (line->curr_char == RETURN);
+	if ((line->curr_char == RETURN))
+		move_rest_of_buff_to_left(line);
+	else
+	{
+		line->index++;
+		move_rest_of_buff_to_left(line);
+		line->index--;
+	}
 	line->count--;
 	show_line_output(line, term_cols, env);
 }
 
-static inline void	get_esc_seq(t_line *line)
+static inline bool	get_esc_seq(t_line *line, t_env *env)
 {
 	char	seq[4];
 
-	read(0, seq, 3);
-	if (seq[1] == 'D')
-		line->curr_char = ARROW_LEFT;
-	else if (seq[1] == 'C')
-		line->curr_char = ARROW_RIGHT;
+	if (read(0, seq, 3) == -1)
+		return (create_error("read()", SYS_ERR, env));
+	line->curr_char = ARROW_LEFT * (seq[1] == 'D')
+		+ ARROW_RIGHT * (seq[1] == 'C')
+		+ ARROW_UP * (seq[1] == 'A')
+		+ ARROW_DOWN * (seq[1] == 'B')
+		+ DEL * (seq[1] == '3' && seq[2] == '~');
+	return (false);
 }
 
 static inline void	end_line(t_line *line, int term_cols, t_env *env)
@@ -113,28 +124,37 @@ static inline void	end_line(t_line *line, int term_cols, t_env *env)
 	line->curr_char = '\r';
 }
 
-static inline bool	handle_special_char(t_line *line, t_env *env)
+static inline bool	handle_special_char(t_line **line, t_env *env)
 {
 	int	term_cols;
 
 	if (get_term_cols(&term_cols, env))
 		return (true);
-	if (line->curr_char == '\x1b')
-		get_esc_seq(line);
-	if (line->curr_char == RETURN)
-		delete_char(line, term_cols, env);
-	else if (line->curr_char == ARROW_RIGHT
-		|| line->curr_char == ARROW_LEFT)
-		move_index(line, term_cols, env);
-	else if (line->curr_char == '\r')
-		end_line(line, term_cols, env);
+	if ((*line)->curr_char == '\x1b')
+	{
+		if (get_esc_seq(*line, env))
+			return (true);
+	}
+	if ((*line)->curr_char == DEL || (*line)->curr_char == RETURN)
+		delete_char(*line, term_cols, env);
+	else if ((*line)->curr_char == ARROW_RIGHT
+		|| (*line)->curr_char == ARROW_LEFT)
+		handle_lr_arrows(*line, term_cols, env);
+	else if ((*line)->curr_char == ARROW_UP || (*line)->curr_char == ARROW_DOWN)
+		/*move_in_history(line, term_cols, env)*/;
+	else if ((*line)->curr_char == '\r')
+		end_line(*line, term_cols, env);
 	return (false);
 }
 
-static inline void	print_str(char *str)
+static inline size_t	print_strl(char *str)
 {
-	while (*str)
-		write(1, str++, 1);
+	size_t	len;
+
+	len = 0;
+	while (str[len])
+		write(1, str[len++], 1);
+	return (len);
 }
 
 bool	get_line(char **dst, char *prompt, t_env *env)
@@ -143,7 +163,7 @@ bool	get_line(char **dst, char *prompt, t_env *env)
 
 	if (init_get_line(&line, env))
 		return (true);
-	print_str(prompt);
+	env->prompt_len = print_strl(prompt);
 	while (line->curr_char != '\r')
 	{
 		if (read(0, &line->curr_char, 1) == -1)
@@ -151,7 +171,7 @@ bool	get_line(char **dst, char *prompt, t_env *env)
 				| handle_get_line_error(env));
 		if (is_special_char(line->curr_char))
 		{
-			if (handle_special_char(line, env))
+			if (handle_special_char(&line, env))
 				return (handle_get_line_error(env));
 		}
 		else if (/*(line->next && !line->alter_version
