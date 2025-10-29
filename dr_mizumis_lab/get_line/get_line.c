@@ -6,14 +6,15 @@
 /*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 11:23:11 by almighty          #+#    #+#             */
-/*   Updated: 2025/10/29 10:08:36 by tpanou-d         ###   ########.fr       */
+/*   Updated: 2025/10/29 10:18:35 by tpanou-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_line.h"
 
-inline bool	init_get_line(t_line **line, t_env *env)
+inline bool	init_get_line(t_line **line, char **dst, t_env *env)
 {
+	*dst = NULL;
 	if (!isatty(STD_IN))
 		return (create_error("FD_IN is not a TTY", TERM_ERR, env));
 	if (tcgetattr(STD_IN, &env->old_term))
@@ -32,7 +33,7 @@ inline bool	get_line(char **dst, char *prompt, t_env *env)
 {
 	t_line	*line;
 
-	if (init_get_line(&line, env))
+	if (init_get_line(&line, dst, env))
 		return (true);
 	env->prompt_len = print_strl(prompt);
 	while (line->curr_char != '\r')

@@ -6,7 +6,7 @@
 /*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 11:24:12 by almighty          #+#    #+#             */
-/*   Updated: 2025/10/29 10:08:02 by tpanou-d         ###   ########.fr       */
+/*   Updated: 2025/10/29 10:18:49 by tpanou-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ typedef struct s_env
 }	t_env;
 
 bool	create_error(char *culprit, t_err err, t_env *env);
-bool	init_get_line(t_line **line, t_env *env);
+bool	init_get_line(t_line **line, char **dst, t_env *env);
 bool	set_alter_version(t_line **line, t_env *env);
 bool	end_get_line(t_line *line, char **dst, t_env *env);
 bool	is_special_char(char c);
@@ -101,6 +101,7 @@ void	move_rest_of_buff_to_left(t_line *line);
 bool	safe_challoc(char **dst, size_t len, t_env *env);
 bool	safe_line_alloc(t_line **line, size_t len, t_env *env);
 bool	set_correct_line_len(t_line *line, t_env *env);
+char	*create_truncated_buff(t_line *line, t_env *env);
 int		get_curr_col(size_t index, int term_cols, t_env *env);
 bool	get_term_cols(int *term_cols, t_env *env);
 void	move_cursor(ssize_t distance, size_t index, int term_cols, t_env *env);

@@ -6,7 +6,7 @@
 /*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/28 17:14:17 by tpanou-d          #+#    #+#             */
-/*   Updated: 2025/10/29 10:09:00 by tpanou-d         ###   ########.fr       */
+/*   Updated: 2025/10/29 10:21:17 by tpanou-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,17 +30,12 @@ inline void	end_line(t_line *line, int term_cols, t_env *env)
 
 inline bool	end_get_line(t_line *line, char **dst, t_env *env)
 {
-	if (truncate_line(line, env))
+	if (tcsetattr(STD_IN, TCSANOW, &env->old_term))
+ 		return (create_error("tcsetattr()", TERM_ERR, env));
+	*dst = create_truncated_buff(line, env);
+	if (!*dst)
 		return (true);
-	 if (line->count > 0)
-	 	add_history_entry(line, env);
-	*dst = line->buffer;
+	//if (line->count > 0)
+	// 	add_history_entry(line, env);
 	return (false);
 }
-
-// inline bool	end_get_line(t_line **line, t_env *env)
-// {
-// 	if (tcsetattr(STD_IN, TCSANOW, &env->old_term))
-// 		return (create_error("tcsetattr()", TERM_ERR, env));
-// 	return (false);
-// }

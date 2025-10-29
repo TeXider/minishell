@@ -6,7 +6,7 @@
 /*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 10:15:39 by almighty          #+#    #+#             */
-/*   Updated: 2025/10/29 09:57:55 by tpanou-d         ###   ########.fr       */
+/*   Updated: 2025/10/29 10:17:06 by tpanou-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ inline bool	safe_challoc(char **dst, size_t len, t_env *env)
 {
 	*dst = malloc(sizeof(char) * (len + 1));
 	if (!*dst)
-		return (create_error(NULL, SYS_ERR, env));
+		return (create_error("malloc()", SYS_ERR, env));
 	(*dst)[len] = '\0';
 	return (false);
 }
@@ -52,4 +52,17 @@ inline bool	set_correct_line_len(t_line *line, t_env *env)
 	free(line->buffer);
 	line->buffer = tmp;
 	return (false);
+}
+
+inline char	*create_truncated_buff(t_line *line, t_env *env)
+{
+	char	*tmp;
+	size_t	i;
+
+	if (safe_challoc(&tmp, line->count, env))
+		return (NULL);
+	i = -1;
+	while (++i < line->count)
+		tmp[i] = line->buffer[i];
+	return (tmp);
 }
