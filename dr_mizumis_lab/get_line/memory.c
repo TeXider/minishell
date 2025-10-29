@@ -6,11 +6,18 @@
 /*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 10:15:39 by almighty          #+#    #+#             */
-/*   Updated: 2025/10/29 10:17:06 by tpanou-d         ###   ########.fr       */
+/*   Updated: 2025/10/29 10:42:54 by tpanou-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_line.h"
+
+inline void	safe_free(void **ptr)
+{
+	if (*ptr)
+		free(*ptr);
+	*ptr = NULL;
+}
 
 inline bool	safe_challoc(char **dst, size_t len, t_env *env)
 {
@@ -27,12 +34,17 @@ inline bool	safe_line_alloc(t_line **line, size_t len, t_env *env)
 	if (!*line)
 		return (create_error("malloc()", SYS_ERR, env));
 	if (safe_challoc(&(*line)->buffer, len, env))
+	{
+		free(*line);
 		return (create_error("malloc()", SYS_ERR, env));
+	}
 	(*line)->len = len;
 	(*line)->count = 0;
 	(*line)->index = 0;
 	(*line)->curr_char = '\0';
 	(*line)->alter_version = NULL;
+	(*line)->next = NULL;
+	(*line)->prev = NULL;
 	return (false);
 }
 

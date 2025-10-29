@@ -6,7 +6,7 @@
 /*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/28 17:14:17 by tpanou-d          #+#    #+#             */
-/*   Updated: 2025/10/29 10:21:17 by tpanou-d         ###   ########.fr       */
+/*   Updated: 2025/10/29 10:30:16 by tpanou-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ inline bool	end_get_line(t_line *line, char **dst, t_env *env)
 	*dst = create_truncated_buff(line, env);
 	if (!*dst)
 		return (true);
-	//if (line->count > 0)
-	// 	add_history_entry(line, env);
+	if (!line->alter_version && line->count == 0)
+	 	remove_new_history_entry(env);
 	return (false);
 }
