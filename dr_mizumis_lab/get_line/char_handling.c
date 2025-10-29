@@ -6,7 +6,7 @@
 /*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/28 17:17:31 by tpanou-d          #+#    #+#             */
-/*   Updated: 2025/10/28 17:20:29 by tpanou-d         ###   ########.fr       */
+/*   Updated: 2025/10/29 09:40:17 by tpanou-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,6 @@ inline void	handle_lr_arrows(t_line *line, int term_cols, t_env *env)
 		term_cols, env);
 	line->index += (line->curr_char == ARROW_RIGHT && line->index < line->count)
 		- (line->curr_char == ARROW_LEFT && line->index > 0);
-}
-
-inline void	delete_char(t_line *line, int term_cols, t_env *env)
-{
-	if ((line->curr_char == RETURN && !line->index)
-		|| (line->curr_char == DEL && line->index == line->count))
-		return ;
-	reset_line_output(line, term_cols, env);
-	line->index -= (line->curr_char == RETURN);
-	move_rest_of_buff_to_left(line);
-	line->count--;
-	show_line_output(line, term_cols, env);
 }
 
 inline bool	get_esc_seq(t_line *line, t_env *env)
@@ -64,7 +52,11 @@ inline bool	handle_special_char(t_line **line, t_env *env)
 	if (env->is_ctrl || (*line)->curr_char == CTRL_RETURN)
 		handle_ctrl(*line, term_cols, env);
 	else if ((*line)->curr_char == DEL || (*line)->curr_char == RETURN)
-		delete_char(*line, term_cols, env);
+	{
+		reset_line_output(*line, term_cols, env);
+		delete_char(*line);
+		show_line_output(*line, term_cols, env);
+	}
 	else if ((*line)->curr_char == ARROW_RIGHT
 		|| (*line)->curr_char == ARROW_LEFT)
 		handle_lr_arrows(*line, term_cols, env);

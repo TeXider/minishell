@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_ctrl.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/28 17:21:04 by tpanou-d          #+#    #+#             */
-/*   Updated: 2025/10/29 08:48:54 by almighty         ###   ########.fr       */
+/*   Updated: 2025/10/29 09:40:13 by tpanou-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ inline void	handle_ctrl(t_line *line, int term_cols, t_env *env)
 {
 	size_t	i;
 	size_t	jump_len;
-	
+
 	env->is_ctrl = false;
 	if (!line->count)
 		return ;
@@ -43,17 +43,16 @@ inline void	handle_ctrl(t_line *line, int term_cols, t_env *env)
 		|| line->curr_char == CTRL_RETURN)
 		+ RIGHT * (line->curr_char == ARROW_RIGHT
 		|| line->curr_char == CTRL_DEL));
+	if (line->curr_char == CTRL_DEL || line->curr_char == CTRL_RETURN)
+		reset_line_output(line, term_cols, env);
 	i = -1;
 	while (++i < jump_len)
 	{
 		if (line->curr_char == ARROW_LEFT || line->curr_char == ARROW_RIGHT)
 			handle_lr_arrows(line, term_cols, env);
-		else if (line->curr_char == CTRL_DEL || line->curr_char == CTRL_RETURN
-			|| line->curr_char == DEL || line->curr_char == RETURN)
-		{
-			line->curr_char = DEL * (line->curr_char == CTRL_DEL)
-				+ RETURN * (line->curr_char == CTRL_RETURN);
-			delete_char(line, term_cols, env);
-		}
+		else if (line->curr_char == CTRL_DEL || line->curr_char == CTRL_RETURN)
+			delete_char(line);
 	}
+	if (line->curr_char == CTRL_DEL || line->curr_char == CTRL_RETURN)
+		show_line_output(line, term_cols, env);
 }

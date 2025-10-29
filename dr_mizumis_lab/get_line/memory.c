@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   memory.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 10:15:39 by almighty          #+#    #+#             */
-/*   Updated: 2025/10/29 09:06:37 by almighty         ###   ########.fr       */
+/*   Updated: 2025/10/29 09:54:42 by tpanou-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,5 +50,6 @@ inline bool	set_correct_line_len(t_line *line, t_env *env)
 		tmp[i] = line->buffer[i];
 	line->len += LINE_SIZE;
 	free(line->buffer);
+	line->buffer = tmp;
 	return (false);
 }

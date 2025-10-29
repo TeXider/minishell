@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_line.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 11:24:12 by almighty          #+#    #+#             */
-/*   Updated: 2025/10/29 09:11:50 by almighty         ###   ########.fr       */
+/*   Updated: 2025/10/29 09:41:27 by tpanou-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 # define P_READ 0
 # define P_WRITE 1
 # define CULPRIT_LENGTH 32
-# define LINE_SIZE 1024
+# define LINE_SIZE 6
 # define ESC_CHAR 27
 # define RETURN 127
 # define ARROW_UP -1
@@ -109,7 +109,7 @@ void	reset_line_output(t_line *line, int term_cols, t_env *env);
 void	show_line_output(t_line *line, int term_cols, t_env *env);
 bool	get_line(char **dst,  char *prompt, t_env *env);
 void	handle_lr_arrows(t_line *line, int term_cols, t_env *env);
-void	delete_char(t_line *line, int term_cols, t_env *env);
+void	delete_char(t_line *line);
 bool	get_esc_seq(t_line *line, t_env *env);
 bool	handle_special_char(t_line **line, t_env *env);
 bool	add_curr_char(t_line *line, t_env *env);
