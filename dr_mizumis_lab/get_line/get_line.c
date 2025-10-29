@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   get_line.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 11:23:11 by almighty          #+#    #+#             */
-/*   Updated: 2025/10/28 17:17:21 by tpanou-d         ###   ########.fr       */
+/*   Updated: 2025/10/29 09:10:59 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_line.h"
 
-static inline bool	init_get_line(t_line **line, t_env *env)
+inline bool	init_get_line(t_line **line, t_env *env)
 {
 	if (!isatty(STD_IN))
 		return (create_error("FD_IN is not a TTY", TERM_ERR, env));
@@ -28,7 +28,7 @@ static inline bool	init_get_line(t_line **line, t_env *env)
 	return (false);
 }
 
-bool	get_line(char **dst, char *prompt, t_env *env)
+inline bool	get_line(char **dst, char *prompt, t_env *env)
 {
 	t_line	*line;
 
@@ -51,7 +51,8 @@ bool	get_line(char **dst, char *prompt, t_env *env)
 				return (handle_get_line_error(line, env));
 	}
 	line->buffer[line->count] = '\0'; //truncate_line()
-	//add_history(); -> necessary because of line_alter_version
+	// if (line->count > 0)
+	// 	add_history_entry(line, env);
 	*dst = line->buffer;
 	return (false);
 }

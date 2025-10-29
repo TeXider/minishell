@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 08:58:05 by almighty          #+#    #+#             */
-/*   Updated: 2025/10/28 11:41:06 by almighty         ###   ########.fr       */
+/*   Updated: 2025/10/29 09:04:11 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ inline void	reset_line_output(t_line *line, int term_cols, t_env *env)
 	}
 }
 
-//assume cursor just after prompt
 inline void	show_line_output(t_line *line, int term_cols, t_env *env)
 {
 	size_t	i;
