@@ -6,7 +6,7 @@
 /*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 08:35:29 by almighty          #+#    #+#             */
-/*   Updated: 2025/10/28 17:18:36 by tpanou-d         ###   ########.fr       */
+/*   Updated: 2025/10/29 14:29:39 by tpanou-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,11 @@ inline size_t	print_strl(char *str)
 	return (len);
 }
 
-inline void	clean_charray(char *arr, size_t len)
+inline void	cpy_str(char *src, char *dst, size_t len)
 {
-	while (--len)
-		arr[len] = '\0';
+	size_t	i;
+
+	i = -1;
+	while (++i < len)
+		dst[i] = src[i];
 }

@@ -6,7 +6,7 @@
 /*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 10:15:39 by almighty          #+#    #+#             */
-/*   Updated: 2025/10/29 10:42:54 by tpanou-d         ###   ########.fr       */
+/*   Updated: 2025/10/29 14:31:24 by tpanou-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,6 @@ inline bool	safe_line_alloc(t_line **line, size_t len, t_env *env)
 	(*line)->count = 0;
 	(*line)->index = 0;
 	(*line)->curr_char = '\0';
-	(*line)->alter_version = NULL;
-	(*line)->next = NULL;
-	(*line)->prev = NULL;
 	return (false);
 }
 
@@ -71,10 +68,11 @@ inline char	*create_truncated_buff(t_line *line, t_env *env)
 	char	*tmp;
 	size_t	i;
 
-	if (safe_challoc(&tmp, line->count, env))
+	if (safe_challoc(&tmp, line->count + 1, env))
 		return (NULL);
 	i = -1;
 	while (++i < line->count)
 		tmp[i] = line->buffer[i];
+	tmp[line->count] = '\n';
 	return (tmp);
 }

@@ -6,7 +6,7 @@
 /*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/28 17:17:31 by tpanou-d          #+#    #+#             */
-/*   Updated: 2025/10/29 09:40:17 by tpanou-d         ###   ########.fr       */
+/*   Updated: 2025/10/29 12:21:52 by tpanou-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,12 @@ inline void	handle_lr_arrows(t_line *line, int term_cols, t_env *env)
 
 inline bool	get_esc_seq(t_line *line, t_env *env)
 {
+	size_t	i;
 	char	seq[7];
 
-	clean_charray(seq, 7);
+	i = -1;
+	while (++i < 7)
+		seq[i] = false;
 	if (read(0, seq, 6) == -1)
 		return (create_error("read()", SYS_ERR, env));
 	line->curr_char = ARROW_LEFT * (seq[1] == 'D' || seq[4] == 'D')
@@ -61,9 +64,9 @@ inline bool	handle_special_char(t_line **line, t_env *env)
 		|| (*line)->curr_char == ARROW_LEFT)
 		handle_lr_arrows(*line, term_cols, env);
 	else if ((*line)->curr_char == ARROW_UP || (*line)->curr_char == ARROW_DOWN)
-		/*move_in_history(line, term_cols, env)*/(void) env;
+		move_in_history(line, term_cols, env);
 	else if ((*line)->curr_char == '\r')
-		end_line(*line, term_cols, env);
+		write(1, "\n", 1);
 	return (false);
 }
 

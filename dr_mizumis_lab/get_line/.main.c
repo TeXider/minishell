@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   .main.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 12:29:10 by almighty          #+#    #+#             */
-/*   Updated: 2025/10/28 15:37:10 by almighty         ###   ########.fr       */
+/*   Updated: 2025/10/29 11:35:30 by tpanou-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ static inline void	init_env(t_env *env, char **envp)
 	env->err = 0;
 	env->prompt_len = 6;
 	env->is_ctrl = false;
+	env->history = NULL;
 }
 
 int main(int argc, char **argv, char **envp)

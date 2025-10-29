@@ -6,13 +6,13 @@
 /*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 11:23:11 by almighty          #+#    #+#             */
-/*   Updated: 2025/10/29 10:45:09 by tpanou-d         ###   ########.fr       */
+/*   Updated: 2025/10/29 14:50:25 by tpanou-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_line.h"
 
-inline bool	init_get_line(t_line **line, char **dst, t_env *env)
+inline bool	init_get_line(t_line *line, char **dst, t_env *env)
 {
 	*dst = NULL;
 	if (!isatty(STD_IN))
@@ -26,30 +26,32 @@ inline bool	init_get_line(t_line **line, char **dst, t_env *env)
 		return (create_error("tcsetattr()", TERM_ERR, env));
 	if (new_history_entry(env))
 		return (true);
-	*line = env->history;
+	set_line_on_history(line, env);
 	return (false);
 }
 
 inline bool	get_line(char **dst, char *prompt, t_env *env)
 {
-	t_line	*line;
+	t_line	line;
 
 	if (init_get_line(&line, dst, env))
 		return (true);
 	env->prompt_len = print_strl(prompt);
-	while (line->curr_char != '\r')
+	while (line.curr_char != '\r')
 	{
-		if (read(0, &line->curr_char, 1) == -1)
-			return (create_error("read()", SYS_ERR, env));
-		if (is_special_char(line->curr_char))
+		if (read(0, &line.curr_char, 1) == -1)
+			return (create_error("read()", SYS_ERR, env)
+				| handle_get_line_error(env));
+		if (is_special_char(line.curr_char))
 		{
 			if (handle_special_char(&line, env))
-				return (true);
+				return (handle_get_line_error(env));
 		}
-		else if ((line->next && !line->alter_version
-				&& set_alter_version(&line, env))
-				|| add_curr_char(line, env))
-				return (true);
+		else if ((env->history->next && !env->history->edit_buffer
+				&& set_edit_buffer(&line, env))
+				|| add_curr_char(&line, env))
+				return (handle_get_line_error(env));
+		update_history(&line, env);
 	}
-	return (end_get_line(line, dst, env));
+	return (end_get_line(&line, dst, env));
 }
