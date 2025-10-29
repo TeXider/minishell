@@ -6,7 +6,7 @@
 /*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 10:15:39 by almighty          #+#    #+#             */
-/*   Updated: 2025/10/29 09:54:42 by tpanou-d         ###   ########.fr       */
+/*   Updated: 2025/10/29 09:57:55 by tpanou-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,12 @@ inline bool	set_correct_line_len(t_line *line, t_env *env)
 
 	if (line->count < line->len)
 		return (false);
-	if (safe_challoc(&tmp, line->len + LINE_SIZE, env))
+	if (safe_challoc(&tmp, line->len + LINE_LEN, env))
 		return (true);
 	i = -1;
 	while (++i < line->len)
 		tmp[i] = line->buffer[i];
-	line->len += LINE_SIZE;
+	line->len += LINE_LEN;
 	free(line->buffer);
 	line->buffer = tmp;
 	return (false);

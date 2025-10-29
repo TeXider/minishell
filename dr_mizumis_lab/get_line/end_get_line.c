@@ -6,7 +6,7 @@
 /*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/28 17:14:17 by tpanou-d          #+#    #+#             */
-/*   Updated: 2025/10/28 17:14:54 by tpanou-d         ###   ########.fr       */
+/*   Updated: 2025/10/29 10:09:00 by tpanou-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,16 @@ inline void	end_line(t_line *line, int term_cols, t_env *env)
 	move_cursor(line->count - line->index, line->index, term_cols, env);
 	add_curr_char(line, env);
 	line->curr_char = '\r';
+}
+
+inline bool	end_get_line(t_line *line, char **dst, t_env *env)
+{
+	if (truncate_line(line, env))
+		return (true);
+	 if (line->count > 0)
+	 	add_history_entry(line, env);
+	*dst = line->buffer;
+	return (false);
 }
 
 // inline bool	end_get_line(t_line **line, t_env *env)
