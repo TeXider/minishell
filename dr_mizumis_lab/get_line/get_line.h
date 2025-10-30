@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_line.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 11:24:12 by almighty          #+#    #+#             */
-/*   Updated: 2025/10/29 14:58:03 by tpanou-d         ###   ########.fr       */
+/*   Updated: 2025/10/30 12:47:08 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,10 @@
 # define CTRL_ARROW -8
 # define LEFT -1
 # define RIGHT 1
+# define RESET true
+# define NO_RESET false
 
 typedef struct termios	t_term;
-typedef unsigned short int	t_usint;
 
 typedef enum e_err
 {
@@ -94,6 +95,7 @@ typedef struct s_env
 	t_hist	*history;
 	size_t	prompt_len;
 	int		win_cols;
+	size_t	prev_line_len;
 	t_err	err;
 	char	culprit[CULPRIT_LENGTH];
 	bool	is_ctrl;
@@ -118,20 +120,19 @@ void	reset_line_output(t_line *line, int term_cols, t_env *env);
 void	show_line_output(t_line *line, int term_cols, t_env *env);
 bool	get_line(char **dst,  char *prompt, t_env *env);
 void	handle_lr_arrows(t_line *line, int term_cols, t_env *env);
-void	delete_char(t_line *line);
+bool	delete_char(t_line *line, t_env *env);
 bool	get_esc_seq(t_line *line, t_env *env);
-bool	handle_special_char(t_line **line, t_env *env);
+bool	handle_special_char(t_line *line, t_env *env);
 bool	add_curr_char(t_line *line, t_env *env);
-size_t	get_jump_len(t_line *line, int dir);
-void	handle_ctrl(t_line *line, int term_cols, t_env *env);
+size_t	get_jump_len(t_line *line);
+bool	handle_ctrl(t_line *line, int term_cols, t_env *env);
 size_t	print_strl(char *str);
 void	cpy_str(char *src, char *dst, size_t len);
-bool	handle_get_line_error(t_env *env);
-void	end_line(t_line *line, t_env *env);
-bool	set_edit_buffer(t_line **line, t_env *env);
+bool	handle_get_line_error(t_line *line, t_env *env);
+bool	set_edit_buffer(t_line *line, t_env *env);
 bool	new_history_entry(t_env *env);
 void	remove_new_history_entry(t_env *env);
-void	move_in_history(t_line **line, int term_cols, t_env *env);
+void	move_in_history(t_line *line, int term_cols, t_env *env);
 void	set_line_on_history(t_line *line, t_env *env);
 void	update_history(t_line *line, t_env *env);
 void	overwrite_new_history_entry(t_line *line, t_env *env);

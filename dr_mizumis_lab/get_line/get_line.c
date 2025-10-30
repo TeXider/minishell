@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_line.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 11:23:11 by almighty          #+#    #+#             */
-/*   Updated: 2025/10/29 14:50:25 by tpanou-d         ###   ########.fr       */
+/*   Updated: 2025/10/30 12:46:54 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,16 +41,14 @@ inline bool	get_line(char **dst, char *prompt, t_env *env)
 	{
 		if (read(0, &line.curr_char, 1) == -1)
 			return (create_error("read()", SYS_ERR, env)
-				| handle_get_line_error(env));
+				| handle_get_line_error(&line, env));
 		if (is_special_char(line.curr_char))
 		{
 			if (handle_special_char(&line, env))
-				return (handle_get_line_error(env));
+				return (handle_get_line_error(&line, env));
 		}
-		else if ((env->history->next && !env->history->edit_buffer
-				&& set_edit_buffer(&line, env))
-				|| add_curr_char(&line, env))
-				return (handle_get_line_error(env));
+		else if (add_curr_char(&line, env))
+			return (handle_get_line_error(&line, env));
 		update_history(&line, env);
 	}
 	return (end_get_line(&line, dst, env));

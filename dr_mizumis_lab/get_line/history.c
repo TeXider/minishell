@@ -3,23 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   history.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/28 17:13:27 by tpanou-d          #+#    #+#             */
-/*   Updated: 2025/10/29 14:41:50 by tpanou-d         ###   ########.fr       */
+/*   Updated: 2025/10/30 12:47:01 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_line.h"
-
-inline bool	set_edit_buffer(t_line *line, t_env *env)
-{
-	if (safe_challoc(&env->history->edit_buffer, env->history->len, env))
-		return (true);
-	cpy_str(env->history->buffer, env->history->edit_buffer, env->history->len);
-	set_line_on_history(line, env);
-	return (false);
-}
 
 inline void	move_in_history(t_line *line, int term_cols, t_env *env)
 {
@@ -35,13 +26,14 @@ inline void	move_in_history(t_line *line, int term_cols, t_env *env)
 	show_line_output(line, term_cols, env);
 }
 
-inline bool	overwrite_new_history_entry(t_line *line, t_env *env)
+inline void	overwrite_new_history_entry(t_line *line, t_env *env)
 {
 	while (env->history->next)
 		env->history = env->history->next;
-	safe_free(&env->history->buffer);
-	safe_free(&env->history->edit_buffer);
+	safe_free((void **) &env->history->buffer);
 	env->history->buffer = line->buffer;
+	env->history->len = line->len;
+	env->history->count = line->count;
 }
 
 inline bool	new_history_entry(t_env *env)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   history_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/29 14:09:57 by tpanou-d          #+#    #+#             */
-/*   Updated: 2025/10/29 14:47:13 by tpanou-d         ###   ########.fr       */
+/*   Updated: 2025/10/30 12:47:56 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,4 +32,16 @@ inline void	update_history(t_line *line, t_env *env)
 		env->history->buffer = line->buffer;
 	env->history->count = line->count;
 	env->history->len = line->len;
+}
+
+inline bool	set_edit_buffer(t_line *line, t_env *env)
+{
+	if (env->history->next && !env->history->edit_buffer)
+	{
+		if (safe_challoc(&env->history->edit_buffer, env->history->len, env))
+			return (true);
+		cpy_str(env->history->buffer, env->history->edit_buffer, env->history->len);
+		line->buffer = env->history->edit_buffer;
+	}
+	return (false);
 }

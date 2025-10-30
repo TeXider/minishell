@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   line_editing.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 08:35:25 by almighty          #+#    #+#             */
-/*   Updated: 2025/10/29 09:37:49 by tpanou-d         ###   ########.fr       */
+/*   Updated: 2025/10/30 12:29:08 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,15 +30,18 @@ inline void	move_rest_of_buff_to_left(t_line *line)
 		line->buffer[i - 1] = line->buffer[i];
 }
 
-inline void	delete_char(t_line *line)
+inline bool	delete_char(t_line *line, t_env *env)
 {
+	if (set_edit_buffer(line, env))
+		return (true);
 	if (((line->curr_char == RETURN || line->curr_char == CTRL_RETURN)
 		&& !line->index)
 		|| ((line->curr_char == DEL || line->curr_char == CTRL_DEL)
 		&& line->index == line->count))
-		return ;
+		return (false);
 	line->index -= (line->curr_char == RETURN
 		|| line->curr_char == CTRL_RETURN);
 	move_rest_of_buff_to_left(line);
 	line->count--;
+	return (false);
 }

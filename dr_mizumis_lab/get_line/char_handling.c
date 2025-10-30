@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   char_handling.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/28 17:17:31 by tpanou-d          #+#    #+#             */
-/*   Updated: 2025/10/29 12:21:52 by tpanou-d         ###   ########.fr       */
+/*   Updated: 2025/10/30 12:57:47 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,31 +41,31 @@ inline bool	get_esc_seq(t_line *line, t_env *env)
 	return (false);
 }
 
-inline bool	handle_special_char(t_line **line, t_env *env)
+inline bool	handle_special_char(t_line *line, t_env *env)
 {
 	int	term_cols;
 
 	if (get_term_cols(&term_cols, env))
 		return (true);
-	if ((*line)->curr_char == '\033')
+	if (line->curr_char == '\033' && get_esc_seq(line, env))
+		return (true);
+	if (env->is_ctrl || line->curr_char == CTRL_RETURN)
 	{
-		if (get_esc_seq(*line, env))
+		if (handle_ctrl(line, term_cols, env))
 			return (true);
 	}
-	if (env->is_ctrl || (*line)->curr_char == CTRL_RETURN)
-		handle_ctrl(*line, term_cols, env);
-	else if ((*line)->curr_char == DEL || (*line)->curr_char == RETURN)
+	else if (line->curr_char == DEL || line->curr_char == RETURN)
 	{
-		reset_line_output(*line, term_cols, env);
-		delete_char(*line);
-		show_line_output(*line, term_cols, env);
+		reset_line_output(line, term_cols, env);
+		if (delete_char(line, env))
+			return (true);
+		show_line_output(line, term_cols, env);
 	}
-	else if ((*line)->curr_char == ARROW_RIGHT
-		|| (*line)->curr_char == ARROW_LEFT)
-		handle_lr_arrows(*line, term_cols, env);
-	else if ((*line)->curr_char == ARROW_UP || (*line)->curr_char == ARROW_DOWN)
+	else if (line->curr_char == ARROW_RIGHT || line->curr_char == ARROW_LEFT)
+		handle_lr_arrows(line, term_cols, env);
+	else if (line->curr_char == ARROW_UP || line->curr_char == ARROW_DOWN)
 		move_in_history(line, term_cols, env);
-	else if ((*line)->curr_char == '\r')
+	else if (line->curr_char == '\r')
 		write(1, "\n", 1);
 	return (false);
 }
@@ -74,7 +74,7 @@ inline bool	add_curr_char(t_line *line, t_env *env)
 {
 	int	term_cols;
 	
-	if (get_term_cols(&term_cols, env))
+	if (get_term_cols(&term_cols, env) || set_edit_buffer(line, env))
 		return (true);
 	if (line->index == line->count)	
 	{

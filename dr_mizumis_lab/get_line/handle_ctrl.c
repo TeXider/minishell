@@ -3,20 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   handle_ctrl.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/28 17:21:04 by tpanou-d          #+#    #+#             */
-/*   Updated: 2025/10/29 09:40:13 by tpanou-d         ###   ########.fr       */
+/*   Updated: 2025/10/30 12:34:06 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_line.h"
 
-inline size_t	get_jump_len(t_line *line, int dir)
+inline size_t	get_jump_len(t_line *line)
 {
+	int		dir;
 	size_t	len;
 	size_t	i;
 
+	dir = LEFT * (line->curr_char == ARROW_LEFT
+		|| line->curr_char == CTRL_RETURN)
+		+ RIGHT * (line->curr_char == ARROW_RIGHT
+		|| line->curr_char == CTRL_DEL);
 	len = 1;
 	i = line->index + dir;
 	while (i > 0 && i < line->count
@@ -31,18 +36,15 @@ inline size_t	get_jump_len(t_line *line, int dir)
 	return (len);
 }
 
-inline void	handle_ctrl(t_line *line, int term_cols, t_env *env)
+inline bool	handle_ctrl(t_line *line, int term_cols, t_env *env)
 {
 	size_t	i;
 	size_t	jump_len;
 
 	env->is_ctrl = false;
 	if (!line->count)
-		return ;
-	jump_len = get_jump_len(line, LEFT * (line->curr_char == ARROW_LEFT
-		|| line->curr_char == CTRL_RETURN)
-		+ RIGHT * (line->curr_char == ARROW_RIGHT
-		|| line->curr_char == CTRL_DEL));
+		return (false);
+	jump_len = get_jump_len(line);
 	if (line->curr_char == CTRL_DEL || line->curr_char == CTRL_RETURN)
 		reset_line_output(line, term_cols, env);
 	i = -1;
@@ -51,8 +53,12 @@ inline void	handle_ctrl(t_line *line, int term_cols, t_env *env)
 		if (line->curr_char == ARROW_LEFT || line->curr_char == ARROW_RIGHT)
 			handle_lr_arrows(line, term_cols, env);
 		else if (line->curr_char == CTRL_DEL || line->curr_char == CTRL_RETURN)
-			delete_char(line);
+		{
+			if (delete_char(line, env))
+				return (true);
+		}
 	}
 	if (line->curr_char == CTRL_DEL || line->curr_char == CTRL_RETURN)
 		show_line_output(line, term_cols, env);
+	return (false);
 }
