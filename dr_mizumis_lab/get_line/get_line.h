@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_line.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 11:24:12 by almighty          #+#    #+#             */
-/*   Updated: 2025/10/30 12:47:08 by almighty         ###   ########.fr       */
+/*   Updated: 2025/10/30 13:48:04 by tpanou-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,10 +76,8 @@ typedef struct s_line
 
 typedef struct s_hist
 {
-	char			*buffer;
-	char			*edit_buffer;
-	size_t			count;
-	size_t			len;
+	t_line			*edit_line;
+	t_line			*og_line;
 	struct s_hist	*next;
 	struct s_hist	*prev;
 }	t_hist;
