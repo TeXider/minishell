@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/28 17:13:27 by tpanou-d          #+#    #+#             */
-/*   Updated: 2025/10/31 11:41:09 by almighty         ###   ########.fr       */
+/*   Updated: 2025/10/31 14:48:48 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ inline void	move_in_history(t_line **line, int term_cols, t_env *env)
 		env->history = env->history->prev;
 	else if ((*line)->curr_char == ARROW_DOWN)
 		env->history = env->history->next;
+	reset_line(*line);
 	*line = env->history->edit_line;
 	rewrite_line(*line, term_cols, env);
 }
@@ -52,10 +53,7 @@ inline bool	new_history_entry(t_env *env)
 
 inline void	remove_new_history_entry(t_env *env)
 {
-	t_hist	*tmp;
-
 	safe_free_line(&env->history->edit_line);
-	tmp = env->history->prev;
-	safe_free((void **) &env->history);
-	env->history = tmp;
+	env->history = env->history->prev;
+	safe_free((void **) &env->history->next);
 }

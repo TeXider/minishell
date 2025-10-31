@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 10:15:39 by almighty          #+#    #+#             */
-/*   Updated: 2025/10/31 11:26:28 by almighty         ###   ########.fr       */
+/*   Updated: 2025/10/31 13:19:48 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,9 @@ inline void	safe_free_line(t_line **line)
 {
 	if (*line)
 	{
-		safe_free((void **) &(*line)->buffer);
-		free(*line);
-		*line = NULL;
+		if ((*line)->buffer)
+			free((*line)->buffer);
+		safe_free((void **) line);
 	}
 }
 
