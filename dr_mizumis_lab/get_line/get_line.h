@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_line.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 11:24:12 by almighty          #+#    #+#             */
-/*   Updated: 2025/10/30 13:48:04 by tpanou-d         ###   ########.fr       */
+/*   Updated: 2025/10/31 11:47:31 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,46 +93,41 @@ typedef struct s_env
 	t_hist	*history;
 	size_t	prompt_len;
 	int		win_cols;
-	size_t	prev_line_len;
+	size_t	prev_line_count;
+	size_t	prev_line_index;
 	t_err	err;
 	char	culprit[CULPRIT_LENGTH];
 	bool	is_ctrl;
 }	t_env;
 
 bool	create_error(char *culprit, t_err err, t_env *env);
-bool	init_get_line(t_line *line, char **dst, t_env *env);
 bool	end_get_line(t_line *line, char **dst, t_env *env);
-bool	is_special_char(char c);
-void	move_rest_of_buff_to_right(t_line *line);
-void	move_rest_of_buff_to_left(t_line *line);
+bool	is_special_key(char c);
 void	safe_free(void **ptr);
 bool	safe_challoc(char **dst, size_t len, t_env *env);
+void	safe_free_line(t_line **line);
 bool	safe_line_alloc(t_line **line, size_t len, t_env *env);
 bool	safe_history_alloc(t_hist **history, t_env *env);
-bool	set_correct_line_len(t_line *line, t_env *env);
-char	*create_truncated_buff(t_line *line, t_env *env);
 int		get_curr_col(size_t index, int term_cols, t_env *env);
 bool	get_term_cols(int *term_cols, t_env *env);
 void	move_cursor(ssize_t distance, size_t index, int term_cols, t_env *env);
 void	reset_line_output(t_line *line, int term_cols, t_env *env);
 void	show_line_output(t_line *line, int term_cols, t_env *env);
+void	rewrite_line(t_line *line, int term_cols, t_env *env);
 bool	get_line(char **dst,  char *prompt, t_env *env);
+bool	delete_char(t_line **line, t_env *env);
+bool	handle_keys(t_line **line, t_env *env);
 void	handle_lr_arrows(t_line *line, int term_cols, t_env *env);
-bool	delete_char(t_line *line, t_env *env);
-bool	get_esc_seq(t_line *line, t_env *env);
-bool	handle_special_char(t_line *line, t_env *env);
-bool	add_curr_char(t_line *line, t_env *env);
-size_t	get_jump_len(t_line *line);
-bool	handle_ctrl(t_line *line, int term_cols, t_env *env);
+bool	add_char(t_line **line, t_env *env);
+bool	handle_ctrl(t_line **line, int term_cols, t_env *env);
 size_t	print_strl(char *str);
 void	cpy_str(char *src, char *dst, size_t len);
-bool	handle_get_line_error(t_line *line, t_env *env);
-bool	set_edit_buffer(t_line *line, t_env *env);
+void	handle_get_line_error(t_env *env);
 bool	new_history_entry(t_env *env);
 void	remove_new_history_entry(t_env *env);
-void	move_in_history(t_line *line, int term_cols, t_env *env);
-void	set_line_on_history(t_line *line, t_env *env);
-void	update_history(t_line *line, t_env *env);
 void	overwrite_new_history_entry(t_line *line, t_env *env);
+void	move_in_history(t_line **line, int term_cols, t_env *env);
+void	go_to_last_history_entry(t_env *env);
+bool	set_edit_line(t_line **line, t_env *env);
 
 #endif

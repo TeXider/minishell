@@ -3,21 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   memory.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 10:15:39 by almighty          #+#    #+#             */
-/*   Updated: 2025/10/29 14:31:24 by tpanou-d         ###   ########.fr       */
+/*   Updated: 2025/10/31 11:26:28 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_line.h"
-
-inline void	safe_free(void **ptr)
-{
-	if (*ptr)
-		free(*ptr);
-	*ptr = NULL;
-}
 
 inline bool	safe_challoc(char **dst, size_t len, t_env *env)
 {
@@ -26,6 +19,13 @@ inline bool	safe_challoc(char **dst, size_t len, t_env *env)
 		return (create_error("malloc()", SYS_ERR, env));
 	(*dst)[len] = '\0';
 	return (false);
+}
+
+inline void	safe_free(void **ptr)
+{
+	if (*ptr)
+		free(*ptr);
+	*ptr = NULL;
 }
 
 inline bool	safe_line_alloc(t_line **line, size_t len, t_env *env)
@@ -45,34 +45,30 @@ inline bool	safe_line_alloc(t_line **line, size_t len, t_env *env)
 	return (false);
 }
 
-inline bool	set_correct_line_len(t_line *line, t_env *env)
+inline void	safe_free_line(t_line **line)
 {
-	char	*tmp;
-	size_t	i;
-
-	if (line->count < line->len)
-		return (false);
-	if (safe_challoc(&tmp, line->len + LINE_LEN, env))
-		return (true);
-	i = -1;
-	while (++i < line->len)
-		tmp[i] = line->buffer[i];
-	line->len += LINE_LEN;
-	free(line->buffer);
-	line->buffer = tmp;
-	return (false);
+	if (*line)
+	{
+		safe_free((void **) &(*line)->buffer);
+		free(*line);
+		*line = NULL;
+	}
 }
 
-inline char	*create_truncated_buff(t_line *line, t_env *env)
+inline bool	safe_history_alloc(t_hist **history, t_env *env)
 {
-	char	*tmp;
-	size_t	i;
-
-	if (safe_challoc(&tmp, line->count + 1, env))
-		return (NULL);
-	i = -1;
-	while (++i < line->count)
-		tmp[i] = line->buffer[i];
-	tmp[line->count] = '\n';
-	return (tmp);
+	*history = malloc(sizeof(t_hist));
+	if (!*history)
+		return (create_error("malloc()", SYS_ERR, env));
+	if (safe_line_alloc(&(*history)->edit_line, LINE_LEN, env))
+	{
+		free(*history);
+		return (create_error("malloc()", SYS_ERR, env));
+	}
+	(*history)->edit_line->len = LINE_LEN;
+	(*history)->edit_line->count = 0;
+	(*history)->og_line = (*history)->edit_line;
+	(*history)->prev = NULL;
+	(*history)->next = NULL;
+	return (false);
 }

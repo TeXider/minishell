@@ -6,13 +6,13 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/28 17:21:04 by tpanou-d          #+#    #+#             */
-/*   Updated: 2025/10/30 12:34:06 by almighty         ###   ########.fr       */
+/*   Updated: 2025/10/31 11:37:59 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_line.h"
 
-inline size_t	get_jump_len(t_line *line)
+static inline size_t	get_jump_len(t_line *line)
 {
 	int		dir;
 	size_t	len;
@@ -36,29 +36,29 @@ inline size_t	get_jump_len(t_line *line)
 	return (len);
 }
 
-inline bool	handle_ctrl(t_line *line, int term_cols, t_env *env)
+bool	handle_ctrl(t_line **line, int term_cols, t_env *env)
 {
 	size_t	i;
 	size_t	jump_len;
 
 	env->is_ctrl = false;
-	if (!line->count)
+	if (!(*line)->count || !(*line)->curr_char)
 		return (false);
-	jump_len = get_jump_len(line);
-	if (line->curr_char == CTRL_DEL || line->curr_char == CTRL_RETURN)
-		reset_line_output(line, term_cols, env);
+	jump_len = get_jump_len(*line);
 	i = -1;
 	while (++i < jump_len)
 	{
-		if (line->curr_char == ARROW_LEFT || line->curr_char == ARROW_RIGHT)
-			handle_lr_arrows(line, term_cols, env);
-		else if (line->curr_char == CTRL_DEL || line->curr_char == CTRL_RETURN)
+		if ((*line)->curr_char == ARROW_LEFT
+			|| (*line)->curr_char == ARROW_RIGHT)
+			handle_lr_arrows(*line, term_cols, env);
+		else if ((*line)->curr_char == CTRL_DEL
+			|| (*line)->curr_char == CTRL_RETURN)
 		{
 			if (delete_char(line, env))
 				return (true);
 		}
 	}
-	if (line->curr_char == CTRL_DEL || line->curr_char == CTRL_RETURN)
-		show_line_output(line, term_cols, env);
+	if ((*line)->curr_char == CTRL_DEL || (*line)->curr_char == CTRL_RETURN)
+		rewrite_line(*line, term_cols, env);
 	return (false);
 }

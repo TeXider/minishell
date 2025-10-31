@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   get_line_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 08:35:29 by almighty          #+#    #+#             */
-/*   Updated: 2025/10/29 14:29:39 by tpanou-d         ###   ########.fr       */
+/*   Updated: 2025/10/31 09:56:15 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_line.h"
 
-inline bool	is_special_char(char c)
+inline bool	is_special_key(char c)
 {
 	return (c < ' ' || c > '~');
 }
