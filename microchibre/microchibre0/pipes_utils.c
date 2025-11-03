@@ -6,20 +6,11 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 13:06:30 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/03 09:24:57 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/03 10:24:24 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-inline void	safe_close(int *fd)
-{
-	if (*fd != STD_IN && *fd != STD_OUT && *fd != FD_ERR && *fd != FD_NULL)
-	{
-		close(*fd);
-		*fd = FD_NULL;
-	}
-}
 
 inline void	close_pipes(t_pipes *pipes)
 {

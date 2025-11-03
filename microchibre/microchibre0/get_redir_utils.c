@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 09:44:04 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/03 09:36:39 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/03 10:24:40 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,15 @@ inline void	close_prev_redir(t_cmd *cmd, t_type type)
 		safe_close(&cmd->fd_in);
 	else if (type >= OUT && !cmd->is_fd_out_pipe)
 		safe_close(&cmd->fd_out);
+}
+
+inline void	safe_close(int *fd)
+{
+	if (*fd != STD_IN && *fd != STD_OUT && *fd != FD_ERR && *fd != FD_NULL)
+	{
+		close(*fd);
+		*fd = FD_NULL;
+	}
 }
 
 inline bool	handle_redir_err(char *redir, t_err status, t_env *env)
