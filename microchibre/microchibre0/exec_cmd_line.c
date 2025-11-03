@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 08:54:12 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/03 09:29:12 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/03 10:10:59 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ static inline void	exec_cmd(t_cmd *cmd, t_pipes *pipes, t_env *env)
 	execve(cmd->argv[0], cmd->argv, env->envp);
 	create_error("execve()", SYS_ERR, env);
 }
+//add if is_builtin() exec_builtin(); else execve()
 
 static inline bool	handle_fork(pid_t *pid, t_pipes *pipes, char *line,
 	t_env *env)
