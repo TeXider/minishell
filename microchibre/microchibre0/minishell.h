@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 09:25:05 by almighty          #+#    #+#             */
-/*   Updated: 2025/10/23 09:35:15 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/03 09:45:26 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ char	skip_spaces(char **str);
 bool	go_to_end_of_arg(char **arg, t_env *env);
 bool	go_to_end_of_redir(char **redir, t_env *env);
 bool	go_to_end_of_cmd(char **cmd, bool *is_empty,
-		size_t *cmd_list_len, t_env *env);
+			size_t *cmd_list_len, t_env *env);
 bool	check_line_parsing(char *line, size_t *cmd_list_len, t_env *env);
 //
 bool	get_argv_len(char *cmd, size_t *argv_len, t_cmd *res, t_env *env);
@@ -135,11 +135,12 @@ bool	safe_lalloc(char ***dst, size_t len, t_env *env);
 bool	safe_cmdlalloc(t_cmd **dst, size_t len, t_env *env);
 //
 bool	get_arg_expand_len(char **arg, size_t *len, char sep, t_env *env);
-bool	arg_expand(t_get_arg_core *gac, char **argv_ptr, char **arg, t_env *env);
+bool	arg_expand(t_get_arg_core *gac, char **argv_ptr, char **arg,
+			t_env *env);
 void	redir_expand(char **redir, char *name,
-				t_get_redir_name *grn, t_env *env);
+			t_get_redir_name *grn, t_env *env);
 bool	get_redir_expand_len(char **redir, size_t *len,
-				t_get_redir_name_len *grnl, t_env *env);
+			t_get_redir_name_len *grnl, t_env *env);
 //
 bool	get_redir(char **redir, t_cmd *res, t_env *env);
 int		open_redir(char *name, t_type type, bool has_quotes, t_env *env);

@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 09:44:15 by almighty          #+#    #+#             */
-/*   Updated: 2025/10/15 11:43:18 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/03 09:30:46 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,10 @@ static inline size_t	arg_len(char *curr_str, t_get_arg_core *gac, t_env *env)
 
 	len = 0;
 	while ((!is_end_of_arg(*curr_str, gac->sep)) || (gac->in_var
-		&& (gac->sep != ' ' || *curr_str != ' ')))
+			&& (gac->sep != ' ' || *curr_str != ' ')))
 	{
 		if (!gac->in_var && ((gac->sep == ' ' && is_quote(*curr_str))
-			|| *curr_str == gac->sep))
+				|| *curr_str == gac->sep))
 			set_sep(&gac->sep, *curr_str);
 		else if (!gac->in_var && is_var(curr_str, gac->sep))
 		{
@@ -51,10 +51,11 @@ static inline void	get_arg_core(t_get_arg_core *gac, char *argv_ptr,
 			char **arg, t_env *env)
 {
 	while ((!is_end_of_arg(*(gac->curr_str), gac->sep))
-		|| (gac->in_var	&& (gac->sep != ' ' || *(gac->curr_str) != ' ')))
+		|| (gac->in_var && (gac->sep != ' ' || *(gac->curr_str) != ' ')))
 	{
 		if (!gac->in_var && ((gac->sep == ' '
-			&& is_quote(*(gac->curr_str))) || *(gac->curr_str) == gac->sep))
+					&& is_quote(*(gac->curr_str)))
+				|| *(gac->curr_str) == gac->sep))
 			set_sep(&gac->sep, (*gac->curr_str));
 		else if (!gac->in_var && is_var(gac->curr_str, gac->sep))
 		{

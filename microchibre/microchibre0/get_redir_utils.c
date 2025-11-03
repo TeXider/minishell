@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 09:44:04 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/03 09:05:39 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/03 09:36:39 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,11 @@ inline int	open_redir(char *name, t_type type, bool has_quotes, t_env *env)
 {
 	int	fd;
 
-	fd = open(name, O_RDONLY * (type == IN) | (O_WRONLY * (type >= OUT)
-			+ READ * (type == APPND)) | O_APPEND * (type == APPND)
-			| O_CREAT * (type >= OUT) | O_TRUNC * (type >= OUT && type != APPND),
-			0664);
+	fd = open(name, O_RDONLY * (type == IN)
+			| (O_WRONLY * (type >= OUT) + READ * (type == APPND))
+			| O_APPEND * (type == APPND)
+			| O_CREAT * (type >= OUT)
+			| O_TRUNC * (type >= OUT && type != APPND), 0664);
 	if (fd == -1)
 	{
 		create_error(name, FILE_ERR, env);

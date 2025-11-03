@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 13:06:30 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/03 08:54:20 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/03 09:24:57 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ inline void	close_pipes(t_pipes *pipes)
 }
 
 inline bool	repipe(int pipe_fds[2], bool is_final_cmd, t_env *env)
-{	
+{
 	safe_close(pipe_fds + P_READ);
 	safe_close(pipe_fds + P_WRITE);
 	if (is_final_cmd)

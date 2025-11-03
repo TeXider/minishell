@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 09:50:16 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/03 09:06:50 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/03 09:35:00 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,18 +39,25 @@ static inline bool	get_cmd(char **cmd, t_cmd *res, t_env *env)
 	return (false);
 }
 
-static inline bool	check_line_parsing(char *line, size_t *cmd_list_len, t_env *env)
+static inline bool	init_check_line_parsing(size_t *cmd_list_len,
+	bool *has_pipe, bool *is_empty)
+{
+	*cmd_list_len = 0;
+	*has_pipe = false;
+	*is_empty = true;
+}
+
+static inline bool	check_line_parsing(char *line, size_t *cmd_list_len,
+	t_env *env)
 {
 	bool	has_pipe;
 	bool	is_empty;
-	
-	*cmd_list_len = 0;
-	has_pipe = false;
-	is_empty = true;
+
+	init_check_line_parsing(cmd_list_len, &has_pipe, &is_empty);
 	while (*line && *line != '\n')
 	{
 		if (go_to_end_of_cmd(&line, &is_empty, cmd_list_len,
-			env))
+				env))
 			return (true);
 		if (is_empty && (*line == '|' || has_pipe))
 		{
@@ -73,7 +80,7 @@ bool	get_cmd_line(char **line, t_cmd **cmd_list, t_env *env)
 {
 	size_t	cmd_list_len;
 	size_t	i;
-	
+
 	if (check_line_parsing(*line, &cmd_list_len, env))
 		return (true);
 	if (!cmd_list_len)
@@ -84,9 +91,10 @@ bool	get_cmd_line(char **line, t_cmd **cmd_list, t_env *env)
 	while (**line && **line != '\n')
 	{
 		set_new_cmd(*cmd_list + i, env);
-		if (get_cmd(line, *cmd_list + i++, env))
+		if (get_cmd(line, *cmd_list + i, env))
 			return (true);
 		(*line) += (**line == '|');
+		i++;
 	}
 	return (false);
 }

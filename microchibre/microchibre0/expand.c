@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 08:31:47 by almighty          #+#    #+#             */
-/*   Updated: 2025/10/08 08:43:54 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/03 09:25:48 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ inline bool	get_arg_expand_len(char **arg, size_t *len, char sep, t_env *env)
 	return (*var == ' ');
 }
 
-inline bool	arg_expand(t_get_arg_core *gac, char **argv_ptr, char **arg, t_env *env)
+inline bool	arg_expand(t_get_arg_core *gac, char **argv_ptr, char **arg,
+	t_env *env)
 {
 	char	*var;
 

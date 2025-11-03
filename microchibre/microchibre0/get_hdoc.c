@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 08:55:49 by almighty          #+#    #+#             */
-/*   Updated: 2025/10/17 10:46:22 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/03 09:35:23 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static inline bool	open_hdoc(char *del, int *write_fd,
 	bool	res;
 	size_t	i;
 	char	*input;
-	
+
 	input = NULL;
 	while (!get_line(&input, "> ", env) && !is_end_of_hdoc(input, del))
 	{

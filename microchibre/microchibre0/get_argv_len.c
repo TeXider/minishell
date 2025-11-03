@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 09:33:57 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/03 09:10:24 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/03 09:31:07 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static inline void	count_args_in_var(char **arg, size_t *argv_len,
 		bool *var_is_sep, t_env *env)
 {
 	char	*var;
-	
+
 	if (get_var(arg, &var, env))
 		return ;
 	while (*var)

@@ -6,11 +6,20 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/29 10:02:10 by almighty          #+#    #+#             */
-/*   Updated: 2025/10/31 09:49:54 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/03 09:41:02 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static inline void	set_cmd_fds(t_cmd *dst, int fd, t_type type)
+{
+	dst->fd_in += (fd - dst->fd_in) * (type <= IN);
+	dst->append_mode = (type == APPND || (dst->append_mode && type >= OUT));
+	dst->fd_out += (fd - dst->fd_out) * (type >= OUT);
+	dst->is_fd_in_pipe &= !(type <= IN);
+	dst->is_fd_out_pipe &= !(type >= OUT);
+}
 
 static inline void	grnl_init(t_get_redir_name_len *grnl)
 {
@@ -19,10 +28,11 @@ static inline void	grnl_init(t_get_redir_name_len *grnl)
 	grnl->sep = ' ';
 }
 
-static inline bool	get_redir_name_len(char *redir, size_t *len, bool is_hdoc, t_env *env)
+static inline bool	get_redir_name_len(char *redir, size_t *len, bool is_hdoc,
+	t_env *env)
 {
 	t_get_redir_name_len	grnl;
-	
+
 	*len = 0;
 	grnl_init(&grnl);
 	while (!is_end_of_arg(*redir, grnl.sep))
@@ -81,7 +91,7 @@ bool	get_redir(char **redir, t_cmd *dst, t_env *env)
 	int		fd;
 
 	type = HDOC * (**redir == '<' && (*redir)[1] == '<')
-			+ APPND * (**redir == '>' && (*redir)[1] == '>');
+		+ APPND * (**redir == '>' && (*redir)[1] == '>');
 	if (type == HDOC)
 		return (go_to_end_of_redir(redir, env));
 	type += !type * (IN * (**redir == '<') + OUT * (**redir == '>') - type);
@@ -94,11 +104,7 @@ bool	get_redir(char **redir, t_cmd *dst, t_env *env)
 	if (fd == -1)
 		return (true);
 	close_prev_redir(dst, type);
-	dst->fd_in += (fd - dst->fd_in) * (type <= IN);
-	dst->append_mode = (type == APPND || (dst->append_mode && type >= OUT));
-	dst->fd_out += (fd - dst->fd_out) * (type >= OUT);
-	dst->is_fd_in_pipe &= !(type <= IN);
-	dst->is_fd_out_pipe &= !(type >= OUT);
+	set_cmd_fds(dst, type, fd);
 	free(name);
 	return (false);
 }

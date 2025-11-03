@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 09:29:35 by almighty          #+#    #+#             */
-/*   Updated: 2025/10/08 08:31:31 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/03 09:25:33 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ inline bool	is_var(char *str, char sep)
 	return (*str == '$' && sep != '\'' && is_var_char(*(str + 1)));
 }
 
-static inline bool check_var_eq(char **name, char **var)
+static inline bool	check_var_eq(char **name, char **var)
 {
 	bool	res;
 

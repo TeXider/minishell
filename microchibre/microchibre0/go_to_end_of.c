@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 08:27:45 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/03 09:04:16 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/03 09:43:48 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 inline bool	go_to_end_of_arg(char **arg, t_env *env)
 {
 	char	sep;
-	
+
 	sep = ' ';
 	while (!is_end_of_arg(**arg, sep))
 	{

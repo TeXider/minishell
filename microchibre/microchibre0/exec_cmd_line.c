@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 08:54:12 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/03 09:21:17 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/03 09:29:12 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,11 @@ static inline void	exec_cmd(t_cmd *cmd, t_pipes *pipes, t_env *env)
 	create_error("execve()", SYS_ERR, env);
 }
 
-static inline bool	handle_fork(pid_t *pid, t_pipes *pipes, char *line, t_env *env)
+static inline bool	handle_fork(pid_t *pid, t_pipes *pipes, char *line,
+	t_env *env)
 {
 	t_cmd	cmd;
-	
+
 	*pid = fork();
 	if (*pid == -1)
 	{
@@ -87,7 +88,7 @@ bool	exec_cmd_line(char **line, size_t cmd_count, t_env *env)
 		if ((cmd_count > 1 && handle_pipes(&pipes, i == cmd_count - 1, env))
 			|| handle_fork(&pid, &pipes, *line, env))
 			return (true);
-		go_to_end_of_cmd(line, &(bool){ false }, &(size_t) { 0 }, env);
+		go_to_end_of_cmd(line, dummy_bool_ptr(env), dummy_size_t_ptr(env), env);
 		pipes.is_next_pipe = !pipes.is_next_pipe;
 		(*line)++;
 	}
@@ -95,7 +96,8 @@ bool	exec_cmd_line(char **line, size_t cmd_count, t_env *env)
 	env->last_pid = pid;
 	i = -1;
 	while (++i < cmd_count)
-		wait(NULL);  //put this in exec_cmd_line caller, therefore whether
-		// there was an error or not, every child is waited for.
+		wait(NULL);
 	return (false);
 }
+// put the wait in exec_cmd_line caller, therefore whether
+// there was an error or not, every child is waited for.
