@@ -6,35 +6,37 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 09:50:16 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/03 09:35:00 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/03 10:33:31 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static inline bool	get_cmd(char **cmd, t_cmd *res, t_env *env)
+static inline bool	get_cmd(char **cmd_str, t_cmd *res, t_env *env)
 {
 	size_t	argv_len;
 	size_t	arg_i;
 
-	if (get_argv_len(*cmd, res, &argv_len, env)
+	if (get_argv_len(*cmd_str, res, &argv_len, env)
 		|| safe_lalloc(&(res->argv), argv_len, env))
 		return (false);
 	arg_i = 0;
-	while (!is_end_of_cmd(**cmd, ' '))
+	while (!is_end_of_cmd(**cmd_str, ' '))
 	{
-		if (**cmd == '>' || **cmd == '<')
+		if (!res->start_ptr && cmd_str != ' ')
+			res->start_ptr = cmd_str;
+		if (**cmd_str == '>' || **cmd_str == '<')
 		{
-			if (get_redir(cmd, res, env))
+			if (get_redir(cmd_str, res, env))
 				return (true);
 		}
-		else if (**cmd != ' ')
+		else if (**cmd_str != ' ')
 		{
-			if (get_arg(cmd, res, &arg_i, env))
+			if (get_arg(cmd_str, res, &arg_i, env))
 				return (true);
 		}
 		else
-			(*cmd)++;
+			(*cmd_str)++;
 	}
 	return (false);
 }
