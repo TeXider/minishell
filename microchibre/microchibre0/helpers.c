@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 09:26:39 by almighty          #+#    #+#             */
-/*   Updated: 2025/10/08 08:43:15 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/03 10:04:02 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,10 @@ inline void	set_sep(char *sep, char c)
 		+ (c - *sep) * (*sep == ' ' && (c == '\'' || c == '"'));
 }
 
-inline char	skip_spaces(char **str)
+inline void	skip_spaces(char **str)
 {
 	while (**str == ' ')
 		(*str)++;
-	return (' ');
 }
 
 inline bool	is_quote(char c)

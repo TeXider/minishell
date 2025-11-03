@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 09:25:05 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/03 09:45:26 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/03 10:04:17 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ bool	is_end_of_cmd(char c, char sep);
 bool	is_end_of_arg(char c, char sep);
 bool	is_quote(char c);
 void	set_sep(char *sep, char c);
-char	skip_spaces(char **str);
+void	skip_spaces(char **str);
 //
 bool	go_to_end_of_arg(char **arg, t_env *env);
 bool	go_to_end_of_redir(char **redir, t_env *env);
