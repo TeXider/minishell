@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 08:54:12 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/03 10:10:59 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/03 10:42:16 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,8 @@ static inline bool	handle_pipes(t_pipes *pipes, bool is_last_cmd, t_env *env)
 	return (false);
 }
 
-bool	exec_cmd_line(char **line, size_t cmd_count, t_env *env)
+bool	exec_cmd_line(char **line, t_cmd *cmd_list, size_t cmd_list_len,
+	t_env *env)
 {
 	t_pipes	pipes;
 	pid_t	pid;
@@ -84,19 +85,19 @@ bool	exec_cmd_line(char **line, size_t cmd_count, t_env *env)
 
 	init_pipes(&pipes);
 	i = -1;
-	while (++i < cmd_count)
+	while (++i < cmd_list_len)
 	{
-		if ((cmd_count > 1 && handle_pipes(&pipes, i == cmd_count - 1, env))
+		if ((cmd_list_len > 1
+				&& handle_pipes(&pipes, i == cmd_list_len - 1, env))
 			|| handle_fork(&pid, &pipes, *line, env))
 			return (true);
-		go_to_end_of_cmd(line, dummy_bool_ptr(env), dummy_size_t_ptr(env), env);
+		*line = cmd_list[i].start_ptr;
 		pipes.is_next_pipe = !pipes.is_next_pipe;
-		(*line)++;
 	}
 	close_pipes(&pipes);
 	env->last_pid = pid;
 	i = -1;
-	while (++i < cmd_count)
+	while (++i < cmd_list_len)
 		wait(NULL);
 	return (false);
 }
