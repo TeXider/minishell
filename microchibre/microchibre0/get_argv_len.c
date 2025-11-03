@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 09:33:57 by almighty          #+#    #+#             */
-/*   Updated: 2025/10/22 12:33:38 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/03 09:10:24 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static inline void	count_args_in_var(char **arg, size_t *argv_len,
 	}
 }
 
-static inline bool	count_arg(char **arg, size_t *argv_len, t_env *env)
+static inline void	count_arg(char **arg, size_t *argv_len, t_env *env)
 {
 	char	sep;
 	bool	var_is_sep;
@@ -46,9 +46,6 @@ static inline bool	count_arg(char **arg, size_t *argv_len, t_env *env)
 		}
 		(*arg)++;
 	}
-	if (sep != ' ')
-		return (create_error(&sep, UNCLOSED_QUOTES_ERR, env));
-	return (false);
 }
 
 bool	get_argv_len(char *cmd, t_cmd *res, size_t *argv_len, t_env *env)

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_parsing.c                                    :+:      :+:    :+:   */
+/*   go_to_end_of.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 08:27:45 by almighty          #+#    #+#             */
-/*   Updated: 2025/10/17 10:30:56 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/03 09:04:16 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,10 @@ inline bool	go_to_end_of_arg(char **arg, t_env *env)
 		(*arg)++;
 	}
 	if (sep != ' ')
-		return (create_error(&sep, UNCLOSED_QUOTES_ERR, env));
+	{
+		create_error(&sep, UNCLOSED_QUOTES_ERR, env);
+		return (true);
+	}
 	return (false);
 }
 
@@ -33,7 +36,10 @@ inline bool	go_to_end_of_redir(char **redir, t_env *env)
 			|| (**redir == '<' && *((*redir) + 1) == '<'));
 	skip_spaces(redir);
 	if (is_end_of_arg(**redir, ' '))
-		return (create_error(*redir, UNEXPECTED_TOKEN_ERR, env));
+	{
+		create_error(*redir, UNEXPECTED_TOKEN_ERR, env);
+		return (true);
+	}
 	return (go_to_end_of_arg(redir, env));
 }
 

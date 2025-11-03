@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 08:54:12 by almighty          #+#    #+#             */
-/*   Updated: 2025/10/23 09:28:13 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/03 09:21:17 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,10 @@ static inline bool	handle_fork(pid_t *pid, t_pipes *pipes, char *line, t_env *en
 	
 	*pid = fork();
 	if (*pid == -1)
-		return (create_error("fork()", SYS_ERR, env));
+	{
+		create_error("fork()", SYS_ERR, env);
+		return (true);
+	}
 	if (!*pid)
 	{
 		set_new_cmd(&cmd, env);
@@ -42,13 +45,11 @@ static inline bool	handle_fork(pid_t *pid, t_pipes *pipes, char *line, t_env *en
 		cmd.is_fd_in_pipe = true;
 		cmd.fd_out = pipes->fd_write;
 		cmd.is_fd_out_pipe = true;
-		if (!(get_cmd(&line, &cmd, env)
-			/*|| get_path(&cmd, env)*/))
+		if (!get_cmd(&line, &cmd, env) && !get_path(&cmd, env))
 			exec_cmd(&cmd, pipes, env);
 		close_pipes(pipes);
 		free_data(&cmd, line, env);
-		if (env->err)
-			throw_error(env);
+		throw_error(env);
 		exit(0);
 	}
 	return (false);

@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 10:15:39 by almighty          #+#    #+#             */
-/*   Updated: 2025/10/16 09:03:22 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/03 08:55:13 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,10 @@ inline bool	safe_challoc(char **dst, size_t len, t_env *env)
 {
 	*dst = malloc(sizeof(char) * (len + 1));
 	if (!*dst)
-		return (create_error("malloc()", SYS_ERR, env));
+	{
+		create_error("malloc()", SYS_ERR, env);
+		return (true);
+	}
 	(*dst)[len] = '\0';
 	return (false);
 }
@@ -44,7 +47,10 @@ inline bool	safe_lalloc(char ***dst, size_t len, t_env *env)
 	{
 		*dst = malloc(sizeof(char *) * (len + 1));
 		if (!*dst)
-			return (create_error("malloc()", SYS_ERR, env));
+		{
+			create_error("malloc()", SYS_ERR, env);
+			return (true);
+		}
 		(*dst)[0] = NULL;
 	}
 	return (false);
@@ -54,7 +60,10 @@ inline bool	safe_cmdlalloc(t_cmd **dst, size_t len, t_env *env)
 {
 	*dst = malloc(sizeof(t_cmd) * (len + 1));
 	if (!*dst)
-		return (create_error("malloc()", SYS_ERR, env));
+	{
+		create_error("malloc()", SYS_ERR, env);
+		return (true);
+	}
 	set_new_cmd(*dst + len, env);
 	return (false);
 }

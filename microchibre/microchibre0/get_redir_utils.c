@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 09:44:04 by almighty          #+#    #+#             */
-/*   Updated: 2025/10/17 09:22:12 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/03 09:05:39 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ inline int	open_redir(char *name, t_type type, bool has_quotes, t_env *env)
 	{
 		create_error(name, FILE_ERR, env);
 		free(name);
-		return (create_error(NULL, FILE_ERR, env));
+		return (true);
 	}
 	return (fd);
 }
@@ -40,6 +40,6 @@ inline void	close_prev_redir(t_cmd *cmd, t_type type)
 inline bool	handle_redir_err(char *redir, t_err status, t_env *env)
 {
 	if (status == AMBI_REDIR_ERR)
-		return (create_error(redir, AMBI_REDIR_ERR, env));
+		create_error(redir, AMBI_REDIR_ERR, env);
 	return (true);
 }

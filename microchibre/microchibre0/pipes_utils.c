@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 13:06:30 by almighty          #+#    #+#             */
-/*   Updated: 2025/10/23 09:28:13 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/03 08:54:20 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,10 @@ inline bool	repipe(int pipe_fds[2], bool is_final_cmd, t_env *env)
 	else
 	{
 		if (pipe(pipe_fds))
-			return (create_error("pipe()", SYS_ERR, env));
+		{
+			create_error("pipe()", SYS_ERR, env);
+			return (true);
+		}
 	}
 	return (false);
 }

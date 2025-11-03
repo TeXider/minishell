@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 09:50:16 by almighty          #+#    #+#             */
-/*   Updated: 2025/10/17 10:31:22 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/03 09:06:50 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,13 +53,19 @@ static inline bool	check_line_parsing(char *line, size_t *cmd_list_len, t_env *e
 			env))
 			return (true);
 		if (is_empty && (*line == '|' || has_pipe))
-			return (create_error(line, UNEXPECTED_TOKEN_ERR, env));
+		{
+			create_error(line, UNEXPECTED_TOKEN_ERR, env);
+			return (true);
+		}
 		is_empty = true;
 		has_pipe = (*line == '|');
 		line += (has_pipe);
 	}
 	if (has_pipe && is_empty)
-		return (create_error(line, UNEXPECTED_TOKEN_ERR, env));
+	{
+		create_error(line, UNEXPECTED_TOKEN_ERR, env);
+		return (true);
+	}
 	return (false);
 }
 
