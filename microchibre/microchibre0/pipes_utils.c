@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 13:06:30 by almighty          #+#    #+#             */
-/*   Updated: 2025/10/15 10:37:00 by almighty         ###   ########.fr       */
+/*   Updated: 2025/10/23 09:28:13 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 inline void	safe_close(int *fd)
 {
-	if (*fd != FD_IN && *fd != FD_OUT && *fd != FD_ERR && *fd != FD_NULL)
+	if (*fd != STD_IN && *fd != STD_OUT && *fd != FD_ERR && *fd != FD_NULL)
 	{
 		close(*fd);
 		*fd = FD_NULL;
@@ -35,8 +35,8 @@ inline bool	repipe(int pipe_fds[2], bool is_final_cmd, t_env *env)
 	safe_close(pipe_fds + P_WRITE);
 	if (is_final_cmd)
 	{
-		pipe_fds[P_READ] = FD_IN;
-		pipe_fds[P_WRITE] = FD_OUT;
+		pipe_fds[P_READ] = STD_IN;
+		pipe_fds[P_WRITE] = STD_OUT;
 	}
 	else
 	{
@@ -48,11 +48,11 @@ inline bool	repipe(int pipe_fds[2], bool is_final_cmd, t_env *env)
 
 inline void	init_pipes(t_pipes *pipes)
 {
-	pipes->pipe_fds[P_READ] = FD_IN;
-	pipes->pipe_fds[P_WRITE] = FD_OUT;
-	pipes->next_pipe_fds[P_READ] = FD_IN;
-	pipes->next_pipe_fds[P_WRITE] = FD_OUT;
-	pipes->fd_read = FD_IN;
-	pipes->fd_write = FD_OUT;
+	pipes->pipe_fds[P_READ] = STD_IN;
+	pipes->pipe_fds[P_WRITE] = STD_OUT;
+	pipes->next_pipe_fds[P_READ] = STD_IN;
+	pipes->next_pipe_fds[P_WRITE] = STD_OUT;
+	pipes->fd_read = STD_IN;
+	pipes->fd_write = STD_OUT;
 	pipes->is_next_pipe = false;
 }

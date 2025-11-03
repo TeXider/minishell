@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 12:29:10 by almighty          #+#    #+#             */
-/*   Updated: 2025/10/20 12:44:40 by almighty         ###   ########.fr       */
+/*   Updated: 2025/10/31 13:37:44 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,9 @@ static inline void	init_env(t_env *env, char **envp)
 	env->empty_list[0] = NULL;
 	env->empty_list[1] = NULL;
 	env->err = 0;
+	env->prompt_len = 6;
+	env->is_ctrl = false;
+	env->history = NULL;
 }
 
 int main(int argc, char **argv, char **envp)
@@ -28,19 +31,29 @@ int main(int argc, char **argv, char **envp)
 	(void) argc;
 	(void) argv;
 	init_env(&env, envp);
-	if (init_get_line(&env))
-		return (1);
-	char c;
+	char *str;
 	while(1)
 	{
-		read(0, &c, 1);
-		if (c != 127)
-			write(1, &c, 1);
-		else
+		write(1, "oh no, our get_line(), its broken\n\n", 35);
+		//write(1, "caca> ", 6);
+		if (get_line(&str, "caca> ", &env))
 		{
-			write(1, &(int) { 8 }, 1);
-			write(1, &(int) { ' ' }, 1);
-			write(1, &(int) { 8 }, 1);
+			write(1, "\n\nyo mama's so fat she crashed my get_line()\n", 42);
+			return (1);
 		}
+		// t_line line;
+		// write(1, "JAIMELESBITES", 13);
+		// line.count = 13;
+		// line.index = 13;
+		// int cols;
+		// get_term_cols(&cols, &env);
+		// reset_line_output(&line, cols, &env);
+		// printf("\nindex : %zu\ncount : %zu\ncol : %d\n", line.index, line.count, get_curr_col(&line, cols, &env));
+		if (!*str)
+			write(1, "ya r zeubi\n", 11);
+		for (int i = 0; str[i]; i++)
+			write(1, str + i, 1);
+		free(str);
+		(void) str;
 	}
 }

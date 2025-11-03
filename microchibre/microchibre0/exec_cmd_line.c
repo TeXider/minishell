@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 08:54:12 by almighty          #+#    #+#             */
-/*   Updated: 2025/10/15 13:11:38 by almighty         ###   ########.fr       */
+/*   Updated: 2025/10/23 09:28:13 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static inline void	exec_cmd(t_cmd *cmd, t_pipes *pipes, t_env *env)
 {
-	if (dup2(cmd->fd_in, FD_IN) == -1 || dup2(cmd->fd_out, FD_OUT) == -1)
+	if (dup2(cmd->fd_in, STD_IN) == -1 || dup2(cmd->fd_out, STD_OUT) == -1)
 	{
 		create_error("dup2()", SYS_ERR, env);
 		return ;
