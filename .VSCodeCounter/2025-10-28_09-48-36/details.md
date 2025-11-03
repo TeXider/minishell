@@ -1,0 +1,116 @@
+# Details
+
+Date : 2025-10-28 09:48:36
+
+Directory /home/allmighty/42/github/minishell
+
+Total : 101 files,  4795 codes, 1239 comments, 687 blanks, all 6721 lines
+
+[Summary](results.md) / Details / [Diff Summary](diff.md) / [Diff Details](diff-details.md)
+
+## Files
+| filename | language | code | comment | blank | total |
+| :--- | :--- | ---: | ---: | ---: | ---: |
+| [README.md](/README.md) | Markdown | 2 | 0 | 1 | 3 |
+| [bash\_tst/caca.c](/bash_tst/caca.c) | C | 7 | 0 | 1 | 8 |
+| [bash\_tst/key\_printer.c](/bash_tst/key_printer.c) | C | 32 | 11 | 4 | 47 |
+| [dr\_mizumis\_lab/check\_parsing/.i\_am.c](/dr_mizumis_lab/check_parsing/.i_am.c) | C | 27 | 11 | 4 | 42 |
+| [dr\_mizumis\_lab/check\_parsing/check\_parsing.c](/dr_mizumis_lab/check_parsing/check_parsing.c) | C | 78 | 11 | 9 | 98 |
+| [dr\_mizumis\_lab/check\_parsing/create\_error.c](/dr_mizumis_lab/check_parsing/create_error.c) | C | 16 | 11 | 3 | 30 |
+| [dr\_mizumis\_lab/check\_parsing/helpers.c](/dr_mizumis_lab/check_parsing/helpers.c) | C | 25 | 11 | 7 | 43 |
+| [dr\_mizumis\_lab/check\_parsing/minishell.h](/dr_mizumis_lab/check_parsing/minishell.h) | C++ | 75 | 14 | 13 | 102 |
+| [dr\_mizumis\_lab/exec\_cmd\_line/.i\_am.c](/dr_mizumis_lab/exec_cmd_line/.i_am.c) | C | 27 | 39 | 4 | 70 |
+| [dr\_mizumis\_lab/exec\_cmd\_line/check\_parsing.c](/dr_mizumis_lab/exec_cmd_line/check_parsing.c) | C | 78 | 11 | 9 | 98 |
+| [dr\_mizumis\_lab/exec\_cmd\_line/cmd\_funcs.c](/dr_mizumis_lab/exec_cmd_line/cmd_funcs.c) | C | 15 | 11 | 3 | 29 |
+| [dr\_mizumis\_lab/exec\_cmd\_line/create\_error.c](/dr_mizumis_lab/exec_cmd_line/create_error.c) | C | 30 | 11 | 5 | 46 |
+| [dr\_mizumis\_lab/exec\_cmd\_line/exec\_cmd\_line.c](/dr_mizumis_lab/exec_cmd_line/exec_cmd_line.c) | C | 82 | 12 | 8 | 102 |
+| [dr\_mizumis\_lab/exec\_cmd\_line/expand.c](/dr_mizumis_lab/exec_cmd_line/expand.c) | C | 58 | 11 | 10 | 79 |
+| [dr\_mizumis\_lab/exec\_cmd\_line/get\_arg.c](/dr_mizumis_lab/exec_cmd_line/get_arg.c) | C | 73 | 11 | 8 | 92 |
+| [dr\_mizumis\_lab/exec\_cmd\_line/get\_argv\_len.c](/dr_mizumis_lab/exec_cmd_line/get_argv_len.c) | C | 56 | 11 | 7 | 74 |
+| [dr\_mizumis\_lab/exec\_cmd\_line/get\_cmd.c](/dr_mizumis_lab/exec_cmd_line/get_cmd.c) | C | 26 | 11 | 4 | 41 |
+| [dr\_mizumis\_lab/exec\_cmd\_line/get\_redir.c](/dr_mizumis_lab/exec_cmd_line/get_redir.c) | C | 84 | 11 | 9 | 104 |
+| [dr\_mizumis\_lab/exec\_cmd\_line/get\_redir\_utils.c](/dr_mizumis_lab/exec_cmd_line/get_redir_utils.c) | C | 31 | 11 | 5 | 47 |
+| [dr\_mizumis\_lab/exec\_cmd\_line/helpers.c](/dr_mizumis_lab/exec_cmd_line/helpers.c) | C | 25 | 11 | 7 | 43 |
+| [dr\_mizumis\_lab/exec\_cmd\_line/memory.c](/dr_mizumis_lab/exec_cmd_line/memory.c) | C | 43 | 11 | 6 | 60 |
+| [dr\_mizumis\_lab/exec\_cmd\_line/minishell.h](/dr_mizumis_lab/exec_cmd_line/minishell.h) | C++ | 123 | 22 | 13 | 158 |
+| [dr\_mizumis\_lab/exec\_cmd\_line/pipes\_utils.c](/dr_mizumis_lab/exec_cmd_line/pipes_utils.c) | C | 42 | 11 | 6 | 59 |
+| [dr\_mizumis\_lab/exec\_cmd\_line/var\_funcs.c](/dr_mizumis_lab/exec_cmd_line/var_funcs.c) | C | 44 | 11 | 8 | 63 |
+| [dr\_mizumis\_lab/get\_arg/.i\_am.c](/dr_mizumis_lab/get_arg/.i_am.c) | C | 36 | 11 | 4 | 51 |
+| [dr\_mizumis\_lab/get\_arg/create\_error.c](/dr_mizumis_lab/get_arg/create_error.c) | C | 18 | 11 | 3 | 32 |
+| [dr\_mizumis\_lab/get\_arg/expand.c](/dr_mizumis_lab/get_arg/expand.c) | C | 29 | 11 | 6 | 46 |
+| [dr\_mizumis\_lab/get\_arg/get\_arg.c](/dr_mizumis_lab/get_arg/get_arg.c) | C | 72 | 11 | 8 | 91 |
+| [dr\_mizumis\_lab/get\_arg/helpers.c](/dr_mizumis_lab/get_arg/helpers.c) | C | 25 | 11 | 7 | 43 |
+| [dr\_mizumis\_lab/get\_arg/memory.c](/dr_mizumis_lab/get_arg/memory.c) | C | 9 | 11 | 3 | 23 |
+| [dr\_mizumis\_lab/get\_arg/minishell.h](/dr_mizumis_lab/get_arg/minishell.h) | C++ | 71 | 16 | 13 | 100 |
+| [dr\_mizumis\_lab/get\_arg/var\_funcs.c](/dr_mizumis_lab/get_arg/var_funcs.c) | C | 45 | 15 | 8 | 68 |
+| [dr\_mizumis\_lab/get\_argv\_len/.i\_am.c](/dr_mizumis_lab/get_argv_len/.i_am.c) | C | 22 | 11 | 3 | 36 |
+| [dr\_mizumis\_lab/get\_argv\_len/get\_argv\_len.c](/dr_mizumis_lab/get_argv_len/get_argv_len.c) | C | 75 | 11 | 9 | 95 |
+| [dr\_mizumis\_lab/get\_argv\_len/helpers.c](/dr_mizumis_lab/get_argv_len/helpers.c) | C | 30 | 11 | 8 | 49 |
+| [dr\_mizumis\_lab/get\_argv\_len/minishell.h](/dr_mizumis_lab/get_argv_len/minishell.h) | C++ | 42 | 13 | 7 | 62 |
+| [dr\_mizumis\_lab/get\_argv\_len/var\_funcs.c](/dr_mizumis_lab/get_argv_len/var_funcs.c) | C | 84 | 11 | 11 | 106 |
+| [dr\_mizumis\_lab/get\_cmd/.i\_am.c](/dr_mizumis_lab/get_cmd/.i_am.c) | C | 46 | 11 | 4 | 61 |
+| [dr\_mizumis\_lab/get\_cmd/create\_error.c](/dr_mizumis_lab/get_cmd/create_error.c) | C | 22 | 11 | 3 | 36 |
+| [dr\_mizumis\_lab/get\_cmd/expand.c](/dr_mizumis_lab/get_cmd/expand.c) | C | 57 | 11 | 10 | 78 |
+| [dr\_mizumis\_lab/get\_cmd/get\_arg.c](/dr_mizumis_lab/get_cmd/get_arg.c) | C | 73 | 11 | 8 | 92 |
+| [dr\_mizumis\_lab/get\_cmd/get\_argv\_len.c](/dr_mizumis_lab/get_cmd/get_argv_len.c) | C | 75 | 11 | 9 | 95 |
+| [dr\_mizumis\_lab/get\_cmd/get\_cmd.c](/dr_mizumis_lab/get_cmd/get_cmd.c) | C | 26 | 11 | 4 | 41 |
+| [dr\_mizumis\_lab/get\_cmd/get\_redir.c](/dr_mizumis_lab/get_cmd/get_redir.c) | C | 82 | 11 | 9 | 102 |
+| [dr\_mizumis\_lab/get\_cmd/get\_redir\_utils.c](/dr_mizumis_lab/get_cmd/get_redir_utils.c) | C | 37 | 13 | 5 | 55 |
+| [dr\_mizumis\_lab/get\_cmd/helpers.c](/dr_mizumis_lab/get_cmd/helpers.c) | C | 25 | 11 | 7 | 43 |
+| [dr\_mizumis\_lab/get\_cmd/memory.c](/dr_mizumis_lab/get_cmd/memory.c) | C | 22 | 11 | 4 | 37 |
+| [dr\_mizumis\_lab/get\_cmd/minishell.h](/dr_mizumis_lab/get_cmd/minishell.h) | C++ | 89 | 18 | 13 | 120 |
+| [dr\_mizumis\_lab/get\_cmd/var\_funcs.c](/dr_mizumis_lab/get_cmd/var_funcs.c) | C | 44 | 11 | 8 | 63 |
+| [dr\_mizumis\_lab/get\_cmd\_line/.i\_am.c](/dr_mizumis_lab/get_cmd_line/.i_am.c) | C | 56 | 11 | 4 | 71 |
+| [dr\_mizumis\_lab/get\_cmd\_line/check\_parsing.c](/dr_mizumis_lab/get_cmd_line/check_parsing.c) | C | 78 | 11 | 9 | 98 |
+| [dr\_mizumis\_lab/get\_cmd\_line/cmd\_funcs.c](/dr_mizumis_lab/get_cmd_line/cmd_funcs.c) | C | 13 | 11 | 3 | 27 |
+| [dr\_mizumis\_lab/get\_cmd\_line/create\_error.c](/dr_mizumis_lab/get_cmd_line/create_error.c) | C | 22 | 11 | 3 | 36 |
+| [dr\_mizumis\_lab/get\_cmd\_line/expand.c](/dr_mizumis_lab/get_cmd_line/expand.c) | C | 57 | 11 | 10 | 78 |
+| [dr\_mizumis\_lab/get\_cmd\_line/get\_arg.c](/dr_mizumis_lab/get_cmd_line/get_arg.c) | C | 73 | 11 | 8 | 92 |
+| [dr\_mizumis\_lab/get\_cmd\_line/get\_argv\_len.c](/dr_mizumis_lab/get_cmd_line/get_argv_len.c) | C | 56 | 11 | 7 | 74 |
+| [dr\_mizumis\_lab/get\_cmd\_line/get\_cmd.c](/dr_mizumis_lab/get_cmd_line/get_cmd.c) | C | 26 | 11 | 4 | 41 |
+| [dr\_mizumis\_lab/get\_cmd\_line/get\_cmd\_line.c](/dr_mizumis_lab/get_cmd_line/get_cmd_line.c) | C | 21 | 11 | 4 | 36 |
+| [dr\_mizumis\_lab/get\_cmd\_line/get\_redir.c](/dr_mizumis_lab/get_cmd_line/get_redir.c) | C | 82 | 11 | 9 | 102 |
+| [dr\_mizumis\_lab/get\_cmd\_line/get\_redir\_utils.c](/dr_mizumis_lab/get_cmd_line/get_redir_utils.c) | C | 37 | 13 | 5 | 55 |
+| [dr\_mizumis\_lab/get\_cmd\_line/helpers.c](/dr_mizumis_lab/get_cmd_line/helpers.c) | C | 25 | 11 | 7 | 43 |
+| [dr\_mizumis\_lab/get\_cmd\_line/memory.c](/dr_mizumis_lab/get_cmd_line/memory.c) | C | 30 | 11 | 5 | 46 |
+| [dr\_mizumis\_lab/get\_cmd\_line/minishell.h](/dr_mizumis_lab/get_cmd_line/minishell.h) | C++ | 93 | 20 | 12 | 125 |
+| [dr\_mizumis\_lab/get\_cmd\_line/var\_funcs.c](/dr_mizumis_lab/get_cmd_line/var_funcs.c) | C | 44 | 11 | 8 | 63 |
+| [dr\_mizumis\_lab/get\_line/.main.c](/dr_mizumis_lab/get_line/.main.c) | C | 26 | 20 | 4 | 50 |
+| [dr\_mizumis\_lab/get\_line/create\_error.c](/dr_mizumis_lab/get_line/create_error.c) | C | 35 | 11 | 5 | 51 |
+| [dr\_mizumis\_lab/get\_line/get\_line.c](/dr_mizumis_lab/get_line/get_line.c) | C | 112 | 37 | 17 | 166 |
+| [dr\_mizumis\_lab/get\_line/get\_line.h](/dr_mizumis_lab/get_line/get_line.h) | C | 93 | 11 | 11 | 115 |
+| [dr\_mizumis\_lab/get\_line/get\_line\_utils.c](/dr_mizumis_lab/get_line/get_line_utils.c) | C | 32 | 30 | 9 | 71 |
+| [dr\_mizumis\_lab/get\_line/line\_editing.c](/dr_mizumis_lab/get_line/line_editing.c) | C | 15 | 11 | 5 | 31 |
+| [dr\_mizumis\_lab/get\_line/memory.c](/dr_mizumis_lab/get_line/memory.c) | C | 22 | 11 | 4 | 37 |
+| [dr\_mizumis\_lab/get\_line/output\_editing.c](/dr_mizumis_lab/get_line/output_editing.c) | C | 54 | 12 | 8 | 74 |
+| [dr\_mizumis\_lab/get\_redir/.i\_am.c](/dr_mizumis_lab/get_redir/.i_am.c) | C | 44 | 11 | 3 | 58 |
+| [dr\_mizumis\_lab/get\_redir/create\_error.c](/dr_mizumis_lab/get_redir/create_error.c) | C | 18 | 11 | 3 | 32 |
+| [dr\_mizumis\_lab/get\_redir/expand.c](/dr_mizumis_lab/get_redir/expand.c) | C | 32 | 11 | 6 | 49 |
+| [dr\_mizumis\_lab/get\_redir/get\_redir.c](/dr_mizumis_lab/get_redir/get_redir.c) | C | 82 | 11 | 9 | 102 |
+| [dr\_mizumis\_lab/get\_redir/get\_redir\_utils.c](/dr_mizumis_lab/get_redir/get_redir_utils.c) | C | 34 | 13 | 5 | 52 |
+| [dr\_mizumis\_lab/get\_redir/helpers.c](/dr_mizumis_lab/get_redir/helpers.c) | C | 30 | 11 | 8 | 49 |
+| [dr\_mizumis\_lab/get\_redir/helpers2.c](/dr_mizumis_lab/get_redir/helpers2.c) | C | 5 | 11 | 2 | 18 |
+| [dr\_mizumis\_lab/get\_redir/memory.c](/dr_mizumis_lab/get_redir/memory.c) | C | 9 | 11 | 3 | 23 |
+| [dr\_mizumis\_lab/get\_redir/minishell.h](/dr_mizumis_lab/get_redir/minishell.h) | C++ | 83 | 16 | 13 | 112 |
+| [dr\_mizumis\_lab/get\_redir/var\_funcs.c](/dr_mizumis_lab/get_redir/var_funcs.c) | C | 44 | 15 | 8 | 67 |
+| [microchibre/microchibre0/cmd\_funcs.c](/microchibre/microchibre0/cmd_funcs.c) | C | 15 | 11 | 3 | 29 |
+| [microchibre/microchibre0/create\_error.c](/microchibre/microchibre0/create_error.c) | C | 35 | 11 | 5 | 51 |
+| [microchibre/microchibre0/exec\_cmd\_line.c](/microchibre/microchibre0/exec_cmd_line.c) | C | 81 | 12 | 8 | 101 |
+| [microchibre/microchibre0/expand.c](/microchibre/microchibre0/expand.c) | C | 57 | 11 | 10 | 78 |
+| [microchibre/microchibre0/get\_arg.c](/microchibre/microchibre0/get_arg.c) | C | 73 | 11 | 8 | 92 |
+| [microchibre/microchibre0/get\_argv\_len.c](/microchibre/microchibre0/get_argv_len.c) | C | 59 | 11 | 7 | 77 |
+| [microchibre/microchibre0/get\_cmd\_line.c](/microchibre/microchibre0/get_cmd_line.c) | C | 68 | 11 | 8 | 87 |
+| [microchibre/microchibre0/get\_hdoc.c](/microchibre/microchibre0/get_hdoc.c) | C | 89 | 11 | 10 | 110 |
+| [microchibre/microchibre0/get\_redir.c](/microchibre/microchibre0/get_redir.c) | C | 85 | 11 | 9 | 105 |
+| [microchibre/microchibre0/get\_redir\_utils.c](/microchibre/microchibre0/get_redir_utils.c) | C | 29 | 11 | 5 | 45 |
+| [microchibre/microchibre0/go\_to\_end\_of.c](/microchibre/microchibre0/go_to_end_of.c) | C | 47 | 11 | 6 | 64 |
+| [microchibre/microchibre0/helpers.c](/microchibre/microchibre0/helpers.c) | C | 25 | 11 | 7 | 43 |
+| [microchibre/microchibre0/main.c](/microchibre/microchibre0/main.c) | C | 45 | 11 | 9 | 65 |
+| [microchibre/microchibre0/memory.c](/microchibre/microchibre0/memory.c) | C | 44 | 11 | 6 | 61 |
+| [microchibre/microchibre0/minishell.h](/microchibre/microchibre0/minishell.h) | C++ | 124 | 22 | 14 | 160 |
+| [microchibre/microchibre0/pipes\_utils.c](/microchibre/microchibre0/pipes_utils.c) | C | 42 | 11 | 6 | 59 |
+| [microchibre/microchibre0/var\_funcs.c](/microchibre/microchibre0/var_funcs.c) | C | 44 | 11 | 8 | 63 |
+| [mizumi\_lab/move\_cursor\_tst.c](/mizumi_lab/move_cursor_tst.c) | C | 67 | 20 | 6 | 93 |
+| [mizumi\_lab/smove\_buff.c](/mizumi_lab/smove_buff.c) | C | 28 | 0 | 3 | 31 |
+
+[Summary](results.md) / Details / [Diff Summary](diff.md) / [Diff Details](diff-details.md)
