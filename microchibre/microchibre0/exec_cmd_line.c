@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 08:54:12 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/03 10:42:16 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/03 10:51:31 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,26 +52,6 @@ static inline bool	handle_fork(pid_t *pid, t_pipes *pipes, char *line,
 		close_pipes(pipes);
 		free_data(&cmd, line, env);
 		throw_error(env);
-		exit(0);
-	}
-	return (false);
-}
-
-static inline bool	handle_pipes(t_pipes *pipes, bool is_last_cmd, t_env *env)
-{
-	if (!pipes->is_next_pipe)
-	{
-		if (repipe(pipes->pipe_fds, is_last_cmd, env))
-			return (true);
-		pipes->fd_write = pipes->pipe_fds[P_WRITE];
-		pipes->fd_read = pipes->next_pipe_fds[P_READ];
-	}
-	else
-	{
-		if (repipe(pipes->next_pipe_fds, is_last_cmd, env))
-			return (true);
-		pipes->fd_write = pipes->next_pipe_fds[P_WRITE];
-		pipes->fd_read = pipes->pipe_fds[P_READ];
 	}
 	return (false);
 }

@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 09:25:05 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/03 10:31:06 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/03 10:50:41 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,11 +147,12 @@ bool	get_redir(char **redir, t_cmd *res, t_env *env);
 int		open_redir(char *name, t_type type, bool has_quotes, t_env *env);
 void	close_prev_redir(t_cmd *cmd, t_type type);
 bool	handle_redir_err(char *redir, t_err status, t_env *env);
-//
 void	safe_close(int *fd);
+//
 bool	repipe(int pipes_fds[2], bool is_last_cmd, t_env *env);
 void	init_pipes(t_pipes *pipes);
 void	close_pipes(t_pipes *pipes);
+bool	handle_pipes(t_pipes *pipes, bool is_last_cmd, t_env *env);
 //
 bool	exec_cmd_line(char **line, size_t cmd_count, t_env *env);
 //
