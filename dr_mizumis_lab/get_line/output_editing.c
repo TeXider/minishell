@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 08:58:05 by almighty          #+#    #+#             */
-/*   Updated: 2025/10/31 13:09:33 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/04 11:26:55 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ inline void	rewrite_line(t_line *line, int term_cols, t_env *env)
 		else
 			write(1, " ", 1);
 	}
-	write(1, "\n", get_curr_col(env->prev_line_count, term_cols, env) == 0);
+	write(1, "\n", get_curr_col(max, term_cols, env) == 0);
 	if (env->prev_line_count > line->count)
 		move_cursor(line->count - env->prev_line_count,
 			env->prev_line_count, term_cols, env);
