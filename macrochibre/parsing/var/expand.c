@@ -6,24 +6,24 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 08:31:47 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/05 14:11:09 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/05 14:29:22 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-static inline bool	check_var_eq(char **name, char **var)
+static inline bool	check_var_eq(char **str, char **var)
 {
 	bool	res;
 
 	res = true;
-	while (is_var_char(**name))
+	while (is_var_char(**str))
 	{
-		res &= (**var == **name);
+		res &= (**var == **str);
 		(*var) += (**var != '=');
-		(*name)++;
+		(*str)++;
 	}
-	(*name) -= 1;
+	(*str)--;
 	res &= (**var == '=');
 	(*var)++;
 	return (res);
