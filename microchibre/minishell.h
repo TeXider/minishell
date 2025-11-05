@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 09:25:05 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/04 14:49:34 by tpanou-d         ###   ########.fr       */
+/*   Updated: 2025/11/05 09:43:40 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,12 @@ typedef struct s_get_redir_name
 	bool	has_quotes;
 	size_t	i;
 }	t_get_redir_name;
+
+typedef struct s_get_argv_redirs
+{
+	size_t	argv_len;
+	size_t	redirs_len;
+}	t_get_argv_redirs;
 
 typedef struct s_get_arg_core
 {
