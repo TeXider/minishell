@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 09:25:05 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/05 13:30:48 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/05 13:57:45 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,7 @@ typedef struct s_get_redir_name
 typedef struct s_cmd_parsing
 {
 	char	*str;
+	char	*saved_str;
 	t_cmd	*cmd;
 	size_t	argv_len;
 	size_t	redirv_len;

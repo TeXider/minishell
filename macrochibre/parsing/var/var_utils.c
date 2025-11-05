@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 09:29:35 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/05 13:45:59 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/05 14:11:33 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,42 +21,4 @@ inline bool	is_var_char(char c)
 inline bool	is_var(char *str, char sep)
 {
 	return (*str == '$' && sep != '\'' && is_var_char(*(str + 1)));
-}
-
-static inline bool	check_var_eq(char **name, char **var)
-{
-	bool	res;
-
-	res = true;
-	while (is_var_char(**name))
-	{
-		res &= (**var == **name);
-		(*var) += (**var != '=');
-		(*name)++;
-	}
-	(*name) -= 1;
-	res &= (**var == '=');
-	(*var)++;
-	return (res);
-}
-
-bool	get_var(char **name, char **res, t_env *env)
-{
-	size_t	i;
-	char	*tmp_name;
-
-	(*name) += (**name == '$');
-	i = -1;
-	while (env->envp[++i])
-	{
-		*res = env->envp[i];
-		tmp_name = *name;
-		if (check_var_eq(&tmp_name, res))
-		{
-			*name = tmp_name;
-			return (false);
-		}
-	}
-	*res = NULL;
-	return (true);
 }
