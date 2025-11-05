@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_argv_len.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 09:33:57 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/03 09:31:07 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/04 17:06:19 by tpanou-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,13 @@ static inline void	count_arg(char **arg, size_t *argv_len, t_env *env)
 	}
 }
 
-bool	get_argv_len(char *cmd, t_cmd *res, size_t *argv_len, t_env *env)
+bool	get_argv_redir(char *cmd, t_cmd *res, t_env *env)
 {
-	*argv_len = 0;
+	size_t	argv_len;
+	size_t	redir_len;
+	
+	argv_len = 0;
+	redir_len = 0;
 	while (!is_end_of_cmd(*cmd, ' '))
 	{
 		if (*cmd == '<' && *(cmd + 1) == '<')

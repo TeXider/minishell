@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_redir_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 09:44:04 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/03 10:24:40 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/04 17:10:51 by tpanou-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,19 @@ inline int	open_redir(char *name, t_type type, bool has_quotes, t_env *env)
 {
 	int	fd;
 
-	fd = open(name, O_RDONLY * (type == IN)
-			| (O_WRONLY * (type >= OUT) + READ * (type == APPND))
-			| O_APPEND * (type == APPND)
-			| O_CREAT * (type >= OUT)
-			| O_TRUNC * (type >= OUT && type != APPND), 0664);
+	if (type == HDOC)
+		fd = open_hdoc(name, has_quotes, env);
+	else
+		fd = open(name, O_RDONLY * (type == IN)
+				| (O_WRONLY * (type >= OUT) + READ * (type == APPND))
+				| O_APPEND * (type == APPND)
+				| O_CREAT * (type >= OUT)
+				| O_TRUNC * (type >= OUT && type != APPND), 0664);
 	if (fd == -1)
 	{
-		create_error(name, FILE_ERR, env);
+		if ()
+			create_error(name, FILE_ERR, env);
 		free(name);
-		return (true);
 	}
 	return (fd);
 }

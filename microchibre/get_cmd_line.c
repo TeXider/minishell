@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_cmd_line.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 09:50:16 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/03 10:33:31 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/04 14:56:29 by tpanou-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,7 @@ static inline bool	get_cmd(char **cmd_str, t_cmd *res, t_env *env)
 	size_t	argv_len;
 	size_t	arg_i;
 
-	if (get_argv_len(*cmd_str, res, &argv_len, env)
-		|| safe_lalloc(&(res->argv), argv_len, env))
+	if (get_argv_redir(*cmd_str, res, &argv_len, env))
 		return (false);
 	arg_i = 0;
 	while (!is_end_of_cmd(**cmd_str, ' '))
