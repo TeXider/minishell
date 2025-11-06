@@ -6,13 +6,13 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 08:31:47 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/05 14:29:22 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/06 15:49:29 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-static inline bool	check_var_eq(char **str, char **var)
+static bool	check_var_eq(char **str, char **var)
 {
 	bool	res;
 
@@ -23,28 +23,36 @@ static inline bool	check_var_eq(char **str, char **var)
 		(*var) += (**var != '=');
 		(*str)++;
 	}
-	(*str)--;
 	res &= (**var == '=');
 	(*var)++;
 	return (res);
 }
 
-inline void	expand(t_cmd_parsing *cmdp, t_env *env)
+void	expand(t_cmd_parsing *cmdp, t_env *env)
 {
 	char	*tmp_str;
 	char	*var;
 	size_t	i;
 
 	cmdp->str += (*(cmdp->str) == '$');
+	tmp_str = cmdp->str;
 	i = -1;
 	while (!cmdp->saved_str && env->envp[++i])
 	{
 		var = env->envp[i];
-		tmp_str = cmdp->str;
-		if (check_var_eq(&tmp_str, &var))
+		cmdp->str = tmp_str;
+		if (check_var_eq(&cmdp->str, &var))
 		{
-			cmdp->saved_str = tmp_str;
+			if (!*var)
+				return ;
+			cmdp->saved_str = cmdp->str;
 			cmdp->str = var;
 		}
 	}
+}
+
+inline void	exit_expand(t_cmd_parsing *cmdp)
+{
+	cmdp->str = cmdp->saved_str;
+	cmdp->saved_str = NULL;
 }

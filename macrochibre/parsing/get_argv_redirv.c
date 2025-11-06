@@ -6,76 +6,53 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 09:33:57 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/05 13:46:55 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/06 16:06:50 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static inline void	count_args_in_var(t_cmd_parsing *cmdp, bool *var_is_sep,
-	t_env *env)
+static bool	go_through_arg(t_cmd_parsing *cmdp, t_env *env)
 {
-	char	*var;
+	bool	is_empty;
 
-	if (get_var(&cmdp->str, &var, env))
-		return ;
-	while (*var)
+	is_empty = true;
+	cmdp->sep = ' ';
+	while (!is_end_of_arg(cmdp))
 	{
-		cmdp->argv_len += (*var_is_sep && *var != ' ');
-		*var_is_sep = (*var == ' ');
-		var++;
-	}
-}
-
-static inline void	count_arg(t_cmd_parsing *cmdp, t_env *env)
-{
-	char	sep;
-	bool	var_is_sep;
-
-	var_is_sep = true;
-	sep = ' ';
-	while (!is_end_of_arg(*(cmdp->str), sep))
-	{
-		set_sep(&sep, *(cmdp->str));
-		if (sep == ' ' && *(cmdp->str) == '$' && is_var_char(*(cmdp->str + 1)))
-			count_args_in_var(cmdp, &var_is_sep, env);
+		set_sep(cmdp);
+		if (!cmdp->saved_str && cmdp->sep != '"' && is_var(cmdp))
+			expand(cmdp, env);
 		else
 		{
-			cmdp->argv_len += var_is_sep;
-			var_is_sep = false;
+			is_empty &= (*(cmdp->str) == ' ');
+			cmdp->str++;
 		}
-		cmdp->str++;
+		if (cmdp->saved_str && !*(cmdp->str))
+			exit_expand(cmdp);
 	}
-}
-
-static inline bool	count_arg_redir(t_cmd_parsing *cmdp, t_env *env)
-{
-	if (*(cmdp->str) == '<' && *(cmdp->str + 1) == '<')
-	{
-		if (get_hdoc(cmdp, env))
-			return (true);
-		cmdp->cmd->is_fd_in_hdoc = true;
-	}
-	else if (*(cmdp->str) == '>' || *(cmdp->str) == '<')
-	{
-		cmdp->cmd->is_fd_in_hdoc = (*(cmdp->str) != '<');
-		go_to_end_of_redir(&cmdp->str, env);
-		cmdp->redirv_len++;
-	}
-	else if (*(cmdp->str) != ' ')
-		count_arg(cmdp, env);
-	else
-		cmdp->str++;
-	return (false);
+	return (is_empty);
 }
 
 bool	get_argv_redirv(t_cmd_parsing *cmdp, t_env *env)
 {
-	while (!is_end_of_cmd(*(cmdp->str), ' '))
-		if (count_arg_redir(cmdp, env))
-			return (true);
-	if (safe_lalloc(&cmdp->cmd->argv, cmdp->argv_len, env)
-		|| safe_lalloc(&cmdp->cmd->redirv, cmdp->redirv_len, env))
-		return (true);
+	char	*tmp_str;
+
+	tmp_str = cmdp->str;
+	while (cmdp->saved_str || !is_end_of_cmd(cmdp))
+	{
+		if (!cmdp->saved_str && (*(cmdp->str) == '>' || *(cmdp->str) == '<'))
+		{
+			go_to_end_of_redir(cmdp, env);
+			cmdp->redirv_len++;
+		}
+		else if (*(cmdp->str) != ' ')
+			cmdp->argv_len += !go_through_arg(cmdp, env);
+		else
+			cmdp->str++;
+		if (cmdp->saved_str && !*(cmdp->str))
+			exit_expand(cmdp);
+	}
+	cmdp->str = tmp_str;
 	return (false);
 }

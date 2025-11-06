@@ -1,6 +1,7 @@
 {
 	"files.associations": {
 		"get_line.h": "c",
-		"minishell.h": "c"
+		"minishell.h": "c",
+		"random": "c"
 	}
 }

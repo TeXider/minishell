@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 09:25:05 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/06 09:27:32 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/06 16:00:40 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,26 +138,25 @@ typedef struct s_pipes
 }	t_pipes;
 
 bool	is_var_char(char c);
-bool	is_var(char *str, char sep);
-bool	get_var(char **name, char **res, t_env *env);
+bool	is_var(t_cmd_parsing *cmdp);
 //
 void	set_new_cmd(t_cmd *cmd, t_env *env);
 bool	is_empty_cmd(t_cmd *cmd);
 //
-bool	is_end_of_cmd(char c, char sep);
-bool	is_end_of_arg(char c, char sep);
+bool	is_end_of_cmd(t_cmd_parsing *cmdp);
+bool	is_end_of_arg(t_cmd_parsing *cmdp);
 bool	is_quote(char c);
-void	set_sep(char *sep, char c);
+void	set_sep(t_cmd_parsing *cmdp);
 void	skip_spaces(char **str);
 //
-bool	go_to_end_of_arg(char **arg, t_env *env);
-bool	go_to_end_of_redir(char **redir, t_env *env);
+bool	go_to_end_of_arg(t_cmd_parsing *cmdp, t_env *env);
+bool	go_to_end_of_redir(t_cmd_parsing *cmdp, t_env *env);
 bool	go_to_end_of_cmd(char **cmd, bool *is_empty,
 			size_t *cmd_list_len, t_env *env);
 bool	check_line_parsing(char *line, size_t *cmd_list_len, t_env *env);
 //
 bool	get_argv_len(char *cmd, size_t *argv_len, t_cmd *res, t_env *env);
-bool	get_arg(char **arg, t_cmd *res, size_t *arg_i, t_env *env);
+bool	get_arg(t_cmd_parsing *cmdp, size_t *arg_i, t_env *env);
 //
 bool	get_cmd(char **cmd, t_cmd *res, t_env *env);
 bool	get_cmd_line(char **line, t_cmd **cmd_list, t_env *env);

@@ -6,27 +6,31 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 09:26:39 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/03 10:04:02 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/06 10:40:26 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-inline bool	is_end_of_cmd(char c, char sep)
+inline bool	is_end_of_cmd(t_cmd_parsing *cmdp)
 {
-	return (c == '\0' || (sep == ' ' && (c == '|' || c == '\n')));
+	return (!cmdp->saved_str && (*(cmdp->str) == '\0' || (cmdp->sep == ' '
+		&& (*(cmdp->str) == '|' || *(cmdp->str) == '\n'))));
 }
 
-inline bool	is_end_of_arg(char c, char sep)
+inline bool	is_end_of_arg(t_cmd_parsing *cmdp)
 {
-	return (c == '\0' || (sep == ' ' && (c == ' ' || c == '>' || c == '<'
-				|| is_end_of_cmd(c, sep))));
+	return (!cmdp->saved_str && (*(cmdp->str) == '\0' || (cmdp->sep == ' '
+		&& (*(cmdp->str) == ' ' || *(cmdp->str) == '>' || *(cmdp->str) == '<'
+			|| is_end_of_cmd(cmdp)))));
 }
 
-inline void	set_sep(char *sep, char c)
+inline void	set_sep(t_cmd_parsing *cmdp)
 {
-	*sep += (' ' - *sep) * (c == *sep)
-		+ (c - *sep) * (*sep == ' ' && (c == '\'' || c == '"'));
+	cmdp->sep += (!cmdp->saved_str) *
+		((' ' - cmdp->sep) * (*(cmdp->str) == cmdp->sep)
+		+ (*(cmdp->str) - cmdp->sep)
+		* (cmdp->sep == ' ' && (*(cmdp->str) == '\'' || *(cmdp->str) == '"')));
 }
 
 inline void	skip_spaces(char **str)
