@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 08:31:47 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/06 15:49:29 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/06 16:44:02 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ void	expand(t_cmd_parsing *cmdp, t_env *env)
 				return ;
 			cmdp->saved_str = cmdp->str;
 			cmdp->str = var;
+			cmdp->in_expand = true;
 		}
 	}
 }
@@ -54,5 +55,5 @@ void	expand(t_cmd_parsing *cmdp, t_env *env)
 inline void	exit_expand(t_cmd_parsing *cmdp)
 {
 	cmdp->str = cmdp->saved_str;
-	cmdp->saved_str = NULL;
+	cmdp->in_expand = false;
 }

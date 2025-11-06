@@ -6,13 +6,13 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 09:50:16 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/06 12:48:57 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/06 16:41:37 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static inline bool	get_cmd(t_cmd_parsing *cmdp, t_env *env)
+static bool	get_cmd(t_cmd_parsing *cmdp, t_env *env)
 {
 	size_t	arg_i;
 
