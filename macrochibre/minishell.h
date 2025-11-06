@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 09:25:05 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/05 13:57:45 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/06 09:27:32 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ typedef enum e_rtype
 	IN = 2,
 	OUT = 3,
 	APPND = 4,
+	PIPE = 5
 }	t_rtype;
 
 typedef struct s_cmd
@@ -59,10 +60,8 @@ typedef struct s_cmd
 	char	**redirv;
 	int		fd_in;
 	int		fd_out;
-	bool	is_fd_in_hdoc;
-	bool	is_fd_in_pipe;
-	bool	is_fd_out_pipe;
-	bool	append_mode;
+	t_rtype	fd_in_type;
+	t_rtype	fd_out_type;
 	char	*start_ptr;
 }	t_cmd;
 
@@ -112,6 +111,7 @@ typedef struct s_cmd_parsing
 	t_cmd	*cmd;
 	size_t	argv_len;
 	size_t	redirv_len;
+	char	sep;
 }	t_cmd_parsing;
 
 
