@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 09:50:16 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/06 16:41:37 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/07 08:19:55 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,38 +39,16 @@ static bool	get_cmd(t_cmd_parsing *cmdp, t_env *env)
 	return (false);
 }
 
-static bool	init_check_line_parsing(size_t *cmd_list_len,
-	bool *has_pipe, bool *is_empty)
+static bool	check_line_parsing(char *line, size_t *cmd_list_len, t_env *env)
 {
-	*cmd_list_len = 0;
-	*has_pipe = false;
-	*is_empty = true;
-}
+	t_cmd_parsing	tmp_cmdp;
 
-static bool	check_line_parsing(char *line, size_t *cmd_list_len,
-	t_env *env)
-{
-	bool	has_pipe;
-	bool	is_empty;
-
-	init_check_line_parsing(cmd_list_len, &has_pipe, &is_empty);
-	while (*line && *line != '\n')
+	tmp_cmdp.str = line;
+	while (*(tmp_cmdp.str) && *(tmp_cmdp.str) != '\n')
 	{
-		if (go_to_end_of_cmd(&line, &is_empty, cmd_list_len, env))
+		if (go_to_end_of_cmd(&tmp_cmdp, cmd_list_len, *cmd_list_len, env))
 			return (true);
-		if (is_empty && (*line == '|' || has_pipe))
-		{
-			create_error(line, UNEXPECTED_TOKEN_ERR, env);
-			return (true);
-		}
-		is_empty = true;
-		has_pipe = (*line == '|');
-		line += has_pipe;
-	}
-	if (has_pipe && is_empty)
-	{
-		create_error(line, UNEXPECTED_TOKEN_ERR, env);
-		return (true);
+		tmp_cmdp.str += (*(tmp_cmdp.str) == '|');
 	}
 	return (false);
 }

@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 09:25:05 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/06 16:43:11 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/07 08:11:40 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,8 +152,8 @@ void	skip_spaces(char **str);
 //
 bool	go_to_end_of_arg(t_cmd_parsing *cmdp, t_env *env);
 bool	go_to_end_of_redir(t_cmd_parsing *cmdp, t_env *env);
-bool	go_to_end_of_cmd(char **cmd, bool *is_empty,
-			size_t *cmd_list_len, t_env *env);
+bool	go_to_end_of_cmd(t_cmd_parsing *cmdp, size_t *cmd_list_len,
+	size_t	og_cmd_list_len, t_env *env);
 bool	check_line_parsing(char *line, size_t *cmd_list_len, t_env *env);
 //
 bool	get_argv_len(char *cmd, size_t *argv_len, t_cmd *res, t_env *env);

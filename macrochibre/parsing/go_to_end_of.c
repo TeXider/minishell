@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 08:27:45 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/06 16:02:45 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/07 08:20:36 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@ inline bool	go_to_end_of_redir(t_cmd_parsing *cmdp, t_env *env)
 	return (go_to_end_of_arg(cmdp, env));
 }
 
-inline bool	go_to_end_of_cmd(t_cmd_parsing *cmdp, bool *is_empty,
-		size_t *cmd_list_len, t_env *env)
+inline bool	go_to_end_of_cmd(t_cmd_parsing *cmdp, size_t *cmd_list_len,
+	size_t	og_cmd_list_len, t_env *env)
 {
 	while (!is_end_of_cmd(cmdp))
 	{
@@ -49,18 +49,21 @@ inline bool	go_to_end_of_cmd(t_cmd_parsing *cmdp, bool *is_empty,
 		{
 			if (go_to_end_of_redir(cmdp, env))
 				return (true);
-			(*cmd_list_len) += *is_empty;
-			*is_empty = false;
+			(*cmd_list_len) += (*cmd_list_len == og_cmd_list_len);
 		}
 		else if (*(cmdp->str) != ' ')
 		{
 			if (go_to_end_of_arg(cmdp, env))
 				return (true);
-			(*cmd_list_len) += *is_empty;
-			*is_empty = false;
+			(*cmd_list_len) += (*cmd_list_len == og_cmd_list_len);
 		}
 		else
 			cmdp->str++;
+	}
+	if ((*cmd_list_len == og_cmd_list_len) && (*(cmdp->str) == '|'))
+	{
+		create_error(cmdp->str, UNEXPECTED_TOKEN_ERR, env);
+		return (true);
 	}
 	return (false);
 }
