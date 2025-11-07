@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 09:25:05 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/07 08:11:40 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/07 09:28:38 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,18 +149,18 @@ bool	is_end_of_arg(t_cmd_parsing *cmdp);
 bool	is_quote(char c);
 void	set_sep(t_cmd_parsing *cmdp);
 void	skip_spaces(char **str);
+void	init_cmd_parsing(t_cmd_parsing *cmdp, char *line);
 //
 bool	go_to_end_of_arg(t_cmd_parsing *cmdp, t_env *env);
 bool	go_to_end_of_redir(t_cmd_parsing *cmdp, t_env *env);
 bool	go_to_end_of_cmd(t_cmd_parsing *cmdp, size_t *cmd_list_len,
-	size_t	og_cmd_list_len, t_env *env);
-bool	check_line_parsing(char *line, size_t *cmd_list_len, t_env *env);
+	bool *is_empty, t_env *env);
 //
 bool	get_argv_len(char *cmd, size_t *argv_len, t_cmd *res, t_env *env);
 bool	get_arg(t_cmd_parsing *cmdp, size_t *arg_i, t_env *env);
 //
-bool	get_cmd(char **cmd, t_cmd *res, t_env *env);
-bool	get_cmd_line(char **line, t_cmd **cmd_list, t_env *env);
+bool	get_cmd_line(char **line, t_cmd **cmd_list, size_t *cmd_list_len,
+	t_env *env);
 //
 void	free_data(t_cmd *cmd, char *line, t_env *env);
 bool	safe_challoc(char **dst, size_t len, t_env *env);

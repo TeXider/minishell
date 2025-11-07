@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 09:50:16 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/07 08:19:55 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/07 09:28:15 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,28 +42,44 @@ static bool	get_cmd(t_cmd_parsing *cmdp, t_env *env)
 static bool	check_line_parsing(char *line, size_t *cmd_list_len, t_env *env)
 {
 	t_cmd_parsing	tmp_cmdp;
+	bool			is_empty;
+	bool			has_cmd;
 
-	tmp_cmdp.str = line;
+	init_cmd_parsing(&tmp_cmdp, line);
+	has_cmd = false;
 	while (*(tmp_cmdp.str) && *(tmp_cmdp.str) != '\n')
 	{
-		if (go_to_end_of_cmd(&tmp_cmdp, cmd_list_len, *cmd_list_len, env))
+		is_empty = true;
+		if (go_to_end_of_cmd(&tmp_cmdp, cmd_list_len, &is_empty, env))
 			return (true);
+		has_cmd |= !is_empty;
+		if (has_cmd && is_empty)
+		{
+			create_error(tmp_cmdp.str, UNEXPECTED_TOKEN_ERR, env);
+			return (true);
+		}
 		tmp_cmdp.str += (*(tmp_cmdp.str) == '|');
+	}
+	if (has_cmd && (is_empty || (*(tmp_cmdp.str - 1) == '|')))
+	{
+		create_error(tmp_cmdp.str, UNEXPECTED_TOKEN_ERR, env);
+		return (true);
 	}
 	return (false);
 }
 
-bool	get_cmd_line(char *line, t_cmd **cmd_list, t_env *env)
+bool	get_cmd_line(char *line, t_cmd **cmd_list, size_t *cmd_list_len,
+	t_env *env)
 {
 	t_cmd_parsing	cmdp;
-	size_t			cmd_list_len;
 	size_t			cmd_list_index;
 
-	if (check_line_parsing(line, &cmd_list_len, env))
+	*cmd_list_len = 0;
+	if (check_line_parsing(line, cmd_list_len, env))
 		return (true);
 	if (!cmd_list_len)
 		return (false);
-	if (safe_cmdlalloc(cmd_list, cmd_list_len, env))
+	if (safe_cmdlalloc(cmd_list, *cmd_list_len, env))
 		return (true);
 	cmdp.str = line;
 	cmd_list_index = 0;
