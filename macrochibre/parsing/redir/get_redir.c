@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_redir.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/29 10:02:10 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/05 13:46:08 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/07 09:58:07 by tpanou-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static inline bool	get_redir_name_len(char *redir, size_t *len, t_env *env)
 	return (!*len);
 }
 
-static inline t_err	get_redir_name(char **redir, char **name, t_env *env)
+static inline int	get_redir_name(char **redir, char **name, t_env *env)
 {
 	t_get_redir_name	grn;
 
@@ -76,7 +76,7 @@ static inline t_err	get_redir_name(char **redir, char **name, t_env *env)
 			(*name)[grn.i++] = **redir;
 		(*redir)++;
 	}
-	return (SUCCESS);
+	return (SUCCESS + HAS_QUOTES);
 }
 
 bool	get_redir(char **redir, char **name, t_cmd *dst, t_env *env)
@@ -93,8 +93,11 @@ bool	get_redir(char **redir, char **name, t_cmd *dst, t_env *env)
 	skip_spaces(redir);
 	status = get_redir_name(redir, name, env);
 	if (status == AMBI_REDIR_ERR || status == SYS_ERR)
-		return (handle_redir_err(*redir, status, env));
-	fd = open_redir(name, type, (status == -2), env);
+	{
+		handle_redir_err(*redir, status, env);
+		return (true);
+	}
+	fd = open_redir(name, type, (status == HAS_QUOTES), env);
 	if (fd == -1)
 		return (true);
 	close_prev_redir(dst, type);

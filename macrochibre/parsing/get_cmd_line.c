@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_cmd_line.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 09:50:16 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/07 09:28:15 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/07 10:23:01 by tpanou-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,6 @@ static bool	get_cmd(t_cmd_parsing *cmdp, t_env *env)
 	arg_i = 0;
 	while (!is_end_of_cmd(*(cmdp->str)))
 	{
-		if (!cmdp->cmd->start_ptr && cmdp->str != ' ')
-			cmdp->cmd->start_ptr = cmdp->str;
 		if (*(cmdp->str) == '>' || *(cmdp->str) == '<')
 		{
 			if (get_redir(cmdp, env))
@@ -79,7 +77,7 @@ bool	get_cmd_line(char *line, t_cmd **cmd_list, size_t *cmd_list_len,
 		return (true);
 	if (!cmd_list_len)
 		return (false);
-	if (safe_cmdlalloc(cmd_list, *cmd_list_len, env))
+	if (safe_malloc((void **) cmd_list, sizeof(t_cmd) * (*cmd_list_len), env))
 		return (true);
 	cmdp.str = line;
 	cmd_list_index = 0;
@@ -87,7 +85,6 @@ bool	get_cmd_line(char *line, t_cmd **cmd_list, size_t *cmd_list_len,
 	{
 		set_new_cmd(*cmd_list + cmd_list_index, env);
 		cmdp.argv_len = 0;
-		cmdp.redirv_len = 0;
 		cmdp.cmd = *cmd_list + cmd_list_index;
 		if (get_cmd(&cmdp, env))
 			return (true);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 09:25:05 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/07 09:28:38 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/07 10:22:21 by tpanou-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,19 +50,20 @@ typedef enum e_rtype
 	IN = 2,
 	OUT = 3,
 	APPND = 4,
-	PIPE = 5
+	PIPE = 5,
+	STD = 6
 }	t_rtype;
 
 typedef struct s_cmd
 {
 	char	*path;
 	char	**argv;
-	char	**redirv;
+	t_redir	*redirv;
+	size_t	redirv_len;
 	int		fd_in;
 	int		fd_out;
 	t_rtype	fd_in_type;
 	t_rtype	fd_out_type;
-	char	*start_ptr;
 }	t_cmd;
 
 typedef struct s_env
@@ -88,7 +89,6 @@ typedef struct s_redir
 	t_rtype	type;
 }	t_redir;
 
-
 typedef struct s_get_redir_name_len
 {
 	bool	has_arg;
@@ -111,16 +111,8 @@ typedef struct s_cmd_parsing
 	bool	in_expand;
 	t_cmd	*cmd;
 	size_t	argv_len;
-	size_t	redirv_len;
 	char	sep;
 }	t_cmd_parsing;
-
-
-typedef struct s_ar_len
-{
-	size_t	argv_len;
-	size_t	redirv_len;
-}	t_ar_len;
 
 typedef struct s_get_arg_core
 {
@@ -159,13 +151,13 @@ bool	go_to_end_of_cmd(t_cmd_parsing *cmdp, size_t *cmd_list_len,
 bool	get_argv_len(char *cmd, size_t *argv_len, t_cmd *res, t_env *env);
 bool	get_arg(t_cmd_parsing *cmdp, size_t *arg_i, t_env *env);
 //
-bool	get_cmd_line(char **line, t_cmd **cmd_list, size_t *cmd_list_len,
+bool	get_cmd_line(char *line, t_cmd **cmd_list, size_t *cmd_list_len,
 	t_env *env);
 //
 void	free_data(t_cmd *cmd, char *line, t_env *env);
 bool	safe_challoc(char **dst, size_t len, t_env *env);
 bool	safe_lalloc(char ***dst, size_t len, t_env *env);
-bool	safe_cmdlalloc(t_cmd **dst, size_t len, t_env *env);
+bool	safe_malloc(void **dst, size_t len, t_env *env);
 //
 bool	get_arg_expand_len(char **arg, size_t *len, char sep, t_env *env);
 bool	arg_expand(t_get_arg_core *gac, char **argv_ptr, char **arg,

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_argv_redirv.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 09:33:57 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/06 16:45:18 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/07 10:20:21 by tpanou-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ bool	get_argv_redirv(t_cmd_parsing *cmdp, t_env *env)
 		if (!cmdp->in_expand && (*(cmdp->str) == '>' || *(cmdp->str) == '<'))
 		{
 			go_to_end_of_redir(cmdp, env);
-			cmdp->redirv_len++;
+			cmdp->cmd->redirv_len++;
 		}
 		else if (*(cmdp->str) != ' ')
 			cmdp->argv_len += !go_through_arg(cmdp, env);
@@ -54,5 +54,9 @@ bool	get_argv_redirv(t_cmd_parsing *cmdp, t_env *env)
 			exit_expand(cmdp);
 	}
 	cmdp->str = tmp_str;
+	if (safe_lalloc(&cmdp->cmd->argv, cmdp->argv_len, env)
+		|| safe_malloc((void **)&cmdp->cmd->redirv,
+			sizeof(t_redir) * cmdp->cmd->redirv_len, env))
+		return (true);
 	return (false);
 }
