@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   var_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 09:29:35 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/06 10:08:10 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/07 13:24:46 by tpanou-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,6 @@ inline bool	is_var_char(char c)
 
 inline bool	is_var(t_cmd_parsing *cmdp)
 {
-	return (*(cmdp->str) == '$' && cmdp->sep != '\''
-		&& is_var_char(*(cmdp->str + 1)));
+	return (!cmdp->in_expand && (*(cmdp->str) == '$' && cmdp->sep != '\''
+		&& is_var_char(*(cmdp->str + 1))));
 }

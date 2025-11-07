@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   helpers.c                                          :+:      :+:    :+:   */
+/*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 09:26:39 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/07 09:00:49 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/07 14:35:26 by tpanou-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ inline bool	is_end_of_cmd(t_cmd_parsing *cmdp)
 
 inline bool	is_end_of_arg(t_cmd_parsing *cmdp)
 {
-	return (!cmdp->in_expand && (*(cmdp->str) == '\0' || (cmdp->sep == ' '
+	return (*(cmdp->str) == '\0' || (cmdp->sep == ' '
 		&& (*(cmdp->str) == ' ' || *(cmdp->str) == '>' || *(cmdp->str) == '<'
-			|| is_end_of_cmd(cmdp)))));
+			|| is_end_of_cmd(cmdp))));
 }
 
 inline void	set_sep(t_cmd_parsing *cmdp)

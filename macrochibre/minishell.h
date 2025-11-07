@@ -6,7 +6,7 @@
 /*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 09:25:05 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/07 10:22:21 by tpanou-d         ###   ########.fr       */
+/*   Updated: 2025/11/07 14:30:34 by tpanou-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,12 @@ typedef enum e_rtype
 	STD = 6
 }	t_rtype;
 
+typedef struct s_redir
+{
+	char	*name;
+	t_rtype	type;
+}	t_redir;
+
 typedef struct s_cmd
 {
 	char	*path;
@@ -83,12 +89,6 @@ typedef struct s_redir_parsing
 	size_t	len;
 }	t_redir_parsing;
 
-typedef struct s_redir
-{
-	char	*name;
-	t_rtype	type;
-}	t_redir;
-
 typedef struct s_get_redir_name_len
 {
 	bool	has_arg;
@@ -110,8 +110,11 @@ typedef struct s_cmd_parsing
 	char	*saved_str;
 	bool	in_expand;
 	t_cmd	*cmd;
+	size_t	redirv_i;
+	size_t	argv_i;
 	size_t	argv_len;
 	char	sep;
+	int		last_hdoc_fd;
 }	t_cmd_parsing;
 
 typedef struct s_get_arg_core
@@ -138,10 +141,12 @@ bool	is_empty_cmd(t_cmd *cmd);
 //
 bool	is_end_of_cmd(t_cmd_parsing *cmdp);
 bool	is_end_of_arg(t_cmd_parsing *cmdp);
+bool	is_end_of_redir(t_cmd_parsing *cmdp);
 bool	is_quote(char c);
 void	set_sep(t_cmd_parsing *cmdp);
 void	skip_spaces(char **str);
 void	init_cmd_parsing(t_cmd_parsing *cmdp, char *line);
+bool	change_of_sep(t_cmd_parsing *cmdp);
 //
 bool	go_to_end_of_arg(t_cmd_parsing *cmdp, t_env *env);
 bool	go_to_end_of_redir(t_cmd_parsing *cmdp, t_env *env);
@@ -149,7 +154,7 @@ bool	go_to_end_of_cmd(t_cmd_parsing *cmdp, size_t *cmd_list_len,
 	bool *is_empty, t_env *env);
 //
 bool	get_argv_len(char *cmd, size_t *argv_len, t_cmd *res, t_env *env);
-bool	get_arg(t_cmd_parsing *cmdp, size_t *arg_i, t_env *env);
+bool	get_arg(t_cmd_parsing *cmdp, t_env *env);
 //
 bool	get_cmd_line(char *line, t_cmd **cmd_list, size_t *cmd_list_len,
 	t_env *env);
@@ -159,15 +164,10 @@ bool	safe_challoc(char **dst, size_t len, t_env *env);
 bool	safe_lalloc(char ***dst, size_t len, t_env *env);
 bool	safe_malloc(void **dst, size_t len, t_env *env);
 //
-bool	get_arg_expand_len(char **arg, size_t *len, char sep, t_env *env);
-bool	arg_expand(t_get_arg_core *gac, char **argv_ptr, char **arg,
-			t_env *env);
-void	redir_expand(char **redir, char *name,
-			t_get_redir_name *grn, t_env *env);
-bool	get_redir_expand_len(char **redir, size_t *len,
-			t_get_redir_name_len *grnl, t_env *env);
+void	expand(t_cmd_parsing *cmdp, t_env *env);
+void	exit_expand(t_cmd_parsing *cmdp);
 //
-bool	get_redir(char **redir, t_cmd *res, t_env *env);
+bool	get_redir(t_cmd_parsing *cmdp, t_env *env);
 int		open_redir(char *name, t_rtype type, bool has_quotes, t_env *env);
 void	close_prev_redir(t_cmd *cmd, t_rtype type);
 bool	handle_redir_err(char *redir, t_err status, t_env *env);

@@ -6,7 +6,7 @@
 /*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 09:50:16 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/07 10:23:01 by tpanou-d         ###   ########.fr       */
+/*   Updated: 2025/11/07 10:32:44 by tpanou-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,8 @@
 
 static bool	get_cmd(t_cmd_parsing *cmdp, t_env *env)
 {
-	size_t	arg_i;
-
 	if (get_argv_redirv(cmdp, env))
 		return (false);
-	arg_i = 0;
 	while (!is_end_of_cmd(*(cmdp->str)))
 	{
 		if (*(cmdp->str) == '>' || *(cmdp->str) == '<')
@@ -28,7 +25,7 @@ static bool	get_cmd(t_cmd_parsing *cmdp, t_env *env)
 		}
 		else if (*(cmdp->str) != ' ')
 		{
-			if (get_arg(cmdp, &arg_i, env))
+			if (get_arg(cmdp, env))
 				return (true);
 		}
 		else
