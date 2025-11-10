@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 09:25:05 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/07 14:30:34 by tpanou-d         ###   ########.fr       */
+/*   Updated: 2025/11/10 09:01:57 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,6 +135,7 @@ typedef struct s_pipes
 
 bool	is_var_char(char c);
 bool	is_var(t_cmd_parsing *cmdp);
+bool	is_end_of_expand(t_cmd_parsing *cmdp);
 //
 void	set_new_cmd(t_cmd *cmd, t_env *env);
 bool	is_empty_cmd(t_cmd *cmd);
