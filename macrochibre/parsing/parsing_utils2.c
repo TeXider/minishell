@@ -3,14 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/07 09:01:12 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/10 10:33:54 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/10 12:01:23 by tpanou-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+inline void	simple_init_cmd_parsing(t_cmd_parsing *cmdp)
+{
+	cmdp->str = NULL;
+	cmdp->saved_str = NULL;
+	cmdp->in_expand = false;
+	cmdp->sep = ' ';
+}
 
 inline void	init_cmd_parsing(t_cmd_parsing *cmdp, char *line)
 {

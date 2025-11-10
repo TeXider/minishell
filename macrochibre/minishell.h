@@ -6,7 +6,7 @@
 /*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 09:25:05 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/10 11:46:36 by tpanou-d         ###   ########.fr       */
+/*   Updated: 2025/11/10 12:01:51 by tpanou-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,7 @@ bool	is_end_of_redir(t_cmd_parsing *cmdp);
 bool	is_quote(char c);
 void	set_sep(t_cmd_parsing *cmdp);
 void	skip_spaces(char **str);
+void	simple_init_cmd_parsing(t_cmd_parsing *cmdp);
 void	init_cmd_parsing(t_cmd_parsing *cmdp, char *line);
 bool	change_of_sep(t_cmd_parsing *cmdp);
 //
