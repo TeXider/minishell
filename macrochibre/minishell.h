@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 09:25:05 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/10 11:26:06 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/10 11:34:22 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,8 @@ typedef struct s_cmd_parsing
 	size_t	redirv_i;
 	size_t	argv_i;
 	size_t	argv_len;
+	t_redir	*curr_redir;
+	char	*curr_arg;
 	char	sep;
 }	t_cmd_parsing;
 

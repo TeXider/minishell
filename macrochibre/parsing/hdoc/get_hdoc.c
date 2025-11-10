@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 08:55:49 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/10 11:32:56 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/10 11:39:41 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ bool	get_hdoc(t_cmd_parsing *cmdp, bool has_quotes, t_env *env)
 		safe_free(&del);
 		return (true);
 	}
-	if (cmdp->cmd->redirv[cmdp->redirv_i].type == HDOC)
+	if (cmdp->curr_redir->type == HDOC)
 		safe_close(&cmdp->cmd->fd_in);
 	dst->fd_in = hdoc_fds[P_READ];
 	safe_close(hdoc_fds + P_READ);

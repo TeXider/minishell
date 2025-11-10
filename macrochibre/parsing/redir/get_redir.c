@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/29 10:02:10 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/10 11:27:04 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/10 11:39:19 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void	init_get_redir(t_cmd_parsing *cmdp, t_rtype *type)
 {
-	cmdp->cmd->redirv[cmdp->redirv_i].name = NULL;
+	cmdp->curr_redir = cmdp->cmd->redirv + cmdp->redirv_i;
 	*type = HDOC * (*(cmdp->str) == '<' && *(cmdp->str + 1) == '<')
 			+ APPND * (*(cmdp->str) == '>' && *(cmdp->str + 1) == '>');
 	*type += !(*type) * (IN * (*(cmdp->str) == '<')
@@ -27,7 +27,7 @@ static void	add_char_to_name(t_cmd_parsing *cmdp, size_t *i)
 {
 	if (cmdp->sep != ' ' || *(cmdp->str) != ' ')
 	{
-		cmdp->cmd->redirv[cmdp->redirv_i].name[*i] = *(cmdp->str);
+		cmdp->curr_redir->name[*i] = *(cmdp->str);
 		(*i)++;
 	}
 	cmdp->str++;
@@ -48,7 +48,7 @@ static int	get_redir_name(t_cmd_parsing *cmdp, t_rtype type, t_env *env)
 
 	if (get_redir_name_len(cmdp->str, &len, env))
 		return (AMBI_REDIR_ERR);
-	if (safe_challoc(&cmdp->cmd->redirv[cmdp->redirv_i].name, len, env))
+	if (safe_challoc(&cmdp->curr_redir->name, len, env))
 		return (SYS_ERR);
 	has_quotes = false;
 	i = 0;
@@ -79,13 +79,13 @@ bool	get_redir(t_cmd_parsing *cmdp, t_env *env)
 			create_error(cmdp->str, AMBI_REDIR_ERR, env);
 		return (true);
 	}
-	cmdp->cmd->redirv[cmdp->redirv_i].type = type;
+	cmdp->curr_redir->type = type;
 	if (type == HDOC && open_hdoc(cmdp, (status == HAS_QUOTES), env))
 		return (true);
-	if (type != HDOC && cmdp->cmd->redirv[cmdp->redirv_i].type == HDOC)
+	if (type != HDOC && cmdp->curr_redir->type == HDOC)
 	{
 		safe_close(&cmdp->cmd->fd_in);
-		cmdp->cmd->redirv[cmdp->redirv_i].type == EMPTY_REDIR;
+		cmdp->curr_redir->type == EMPTY_REDIR;
 	}
 	cmdp->redirv_i++;
 	return (false);
