@@ -6,7 +6,7 @@
 /*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 08:55:49 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/10 12:11:35 by tpanou-d         ###   ########.fr       */
+/*   Updated: 2025/11/10 12:41:06 by tpanou-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ static bool	open_hdoc(char *del, int write_fd, bool has_expand, t_env *env)
 	char			*tmp_str;
 
 	simple_init_cmd_parsing(&tmp_cmdp);
+	env->update_history = false;
 	while (!is_end_of_hdoc(&tmp_cmdp))
 	{
 		i = -1;
@@ -43,6 +44,7 @@ static bool	open_hdoc(char *del, int write_fd, bool has_expand, t_env *env)
 		while (*(tmp_cmdp.str) && *(tmp_cmdp.str) != '\n')
 			write_in_hdoc(&tmp_cmdp, has_expand, write_fd, env);
 	}
+	env->update_history = true;
 	return (false);
 }
 
