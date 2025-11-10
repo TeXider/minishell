@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 12:29:10 by almighty          #+#    #+#             */
-/*   Updated: 2025/10/31 13:37:44 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/10 14:12:35 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ int main(int argc, char **argv, char **envp)
 	char *str;
 	while(1)
 	{
-		write(1, "oh no, our get_line(), its broken\n\n", 35);
 		//write(1, "caca> ", 6);
 		if (get_line(&str, "caca> ", &env))
 		{

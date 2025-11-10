@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/28 17:13:27 by tpanou-d          #+#    #+#             */
-/*   Updated: 2025/10/31 14:48:48 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/10 14:17:04 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,5 +55,6 @@ inline void	remove_new_history_entry(t_env *env)
 {
 	safe_free_line(&env->history->edit_line);
 	env->history = env->history->prev;
-	safe_free((void **) &env->history->next);
+	if (env->history)
+		safe_free((void **) &env->history->next);
 }
