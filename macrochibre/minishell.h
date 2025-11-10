@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 09:25:05 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/10 11:18:46 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/10 11:26:06 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,12 +46,13 @@ typedef enum e_err
 
 typedef enum e_rtype
 {
-	HDOC = 1,
-	IN = 2,
-	OUT = 3,
-	APPND = 4,
-	PIPE = 5,
-	STD = 6
+	EMPTY_REDIR,
+	HDOC,
+	IN,
+	OUT,
+	APPND,
+	PIPE,
+	STD
 }	t_rtype;
 
 typedef struct s_redir
@@ -92,7 +93,6 @@ typedef struct s_cmd_parsing
 	size_t	argv_i;
 	size_t	argv_len;
 	char	sep;
-	int		last_hdoc_fd;
 }	t_cmd_parsing;
 
 typedef struct s_get_arg_core

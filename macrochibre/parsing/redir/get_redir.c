@@ -6,17 +6,21 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/29 10:02:10 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/10 11:13:40 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/10 11:27:04 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-static bool	handle_redir_err(t_cmd_parsing *cmdp, t_err status, t_env *env)
+static void	init_get_redir(t_cmd_parsing *cmdp, t_rtype *type)
 {
-	if (status == AMBI_REDIR_ERR)
-		create_error(cmdp->str, AMBI_REDIR_ERR, env);
-	return (true);
+	cmdp->cmd->redirv[cmdp->redirv_i].name = NULL;
+	*type = HDOC * (*(cmdp->str) == '<' && *(cmdp->str + 1) == '<')
+			+ APPND * (*(cmdp->str) == '>' && *(cmdp->str + 1) == '>');
+	*type += !(*type) * (IN * (*(cmdp->str) == '<')
+			+ OUT * (*(cmdp->str) == '>'));
+	cmdp->str += 1 + (*type == HDOC || *type == APPND);
+	skip_spaces(&cmdp->str);
 }
 
 static void	add_char_to_name(t_cmd_parsing *cmdp, size_t *i)
@@ -67,22 +71,22 @@ bool	get_redir(t_cmd_parsing *cmdp, t_env *env)
 	int		status;
 	t_rtype	type;
 
-	cmdp->cmd->redirv[cmdp->redirv_i].name = NULL;
-	type = HDOC * (*(cmdp->str) == '<' && *(cmdp->str + 1) == '<')
-			+ APPND * (*(cmdp->str) == '>' && *(cmdp->str + 1) == '>');
-	type += !type * (IN * (*(cmdp->str) == '<')
-			+ OUT * (*(cmdp->str) == '>'));
-	cmdp->str += 1 + (type == HDOC || type == APPND);
-	skip_spaces(&cmdp->str);
+	init_get_redir(cmdp, &type);
 	status = get_redir_name(cmdp, type, env);
 	if (status == AMBI_REDIR_ERR || status == SYS_ERR)
 	{
-		handle_redir_err(cmdp, status, env);
+		if (status == AMBI_REDIR_ERR)
+			create_error(cmdp->str, AMBI_REDIR_ERR, env);
 		return (true);
 	}
 	cmdp->cmd->redirv[cmdp->redirv_i].type = type;
-	if (type == HDOC /*&& open_hdoc(cmdp, env)*/)
+	if (type == HDOC && open_hdoc(cmdp, (status == HAS_QUOTES), env))
 		return (true);
+	if (type != HDOC && cmdp->cmd->redirv[cmdp->redirv_i].type == HDOC)
+	{
+		safe_close(&cmdp->cmd->fd_in);
+		cmdp->cmd->redirv[cmdp->redirv_i].type == EMPTY_REDIR;
+	}
 	cmdp->redirv_i++;
 	return (false);
 }
