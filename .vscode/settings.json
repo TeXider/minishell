@@ -2,6 +2,18 @@
 	"files.associations": {
 		"get_line.h": "c",
 		"minishell.h": "c",
-		"random": "c"
+		"random": "c",
+		"any": "c",
+		"array": "c",
+		"charconv": "c",
+		"compare": "c",
+		"complex": "c",
+		"format": "c",
+		"functional": "c",
+		"ratio": "c",
+		"tuple": "c",
+		"type_traits": "c",
+		"utility": "c",
+		"variant": "c"
 	}
 }

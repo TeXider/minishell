@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 09:25:05 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/10 09:01:57 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/10 09:57:09 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,10 +168,11 @@ bool	safe_malloc(void **dst, size_t len, t_env *env);
 void	expand(t_cmd_parsing *cmdp, t_env *env);
 void	exit_expand(t_cmd_parsing *cmdp);
 //
+bool	get_redir_name_len(char *redir, size_t *len, t_env *env);
 bool	get_redir(t_cmd_parsing *cmdp, t_env *env);
 int		open_redir(char *name, t_rtype type, bool has_quotes, t_env *env);
 void	close_prev_redir(t_cmd *cmd, t_rtype type);
-bool	handle_redir_err(char *redir, t_err status, t_env *env);
+bool	handle_redir_err(t_cmd_parsing *cmdp, t_err status, t_env *env);
 void	safe_close(int *fd);
 //
 bool	repipe(int pipes_fds[2], bool is_last_cmd, t_env *env);

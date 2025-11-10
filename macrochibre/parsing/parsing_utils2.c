@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/07 09:01:12 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/10 08:54:55 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/10 10:33:54 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ inline void	init_cmd_parsing(t_cmd_parsing *cmdp, char *line)
 
 inline bool	change_of_sep(t_cmd_parsing *cmdp)
 {
-	return (!cmdp->in_expand && ((cmdp->sep == ' ' && is_quote(*(cmdp->str)))
-		|| *(cmdp->str) == cmdp->sep));
+	return (!cmdp->in_expand && is_quote(*(cmdp->str))
+		&& (cmdp->sep == ' ' || *(cmdp->str) == cmdp->sep));
 }
 
 inline bool	is_end_of_redir(t_cmd_parsing *cmdp)

@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 08:31:47 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/06 16:44:02 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/10 10:48:52 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	expand(t_cmd_parsing *cmdp, t_env *env)
 	cmdp->str += (*(cmdp->str) == '$');
 	tmp_str = cmdp->str;
 	i = -1;
-	while (!cmdp->saved_str && env->envp[++i])
+	while (!cmdp->in_expand && env->envp[++i])
 	{
 		var = env->envp[i];
 		cmdp->str = tmp_str;

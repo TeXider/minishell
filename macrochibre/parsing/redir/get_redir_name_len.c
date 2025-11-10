@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/07 14:50:26 by tpanou-d          #+#    #+#             */
-/*   Updated: 2025/11/10 09:01:11 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/10 10:42:01 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static void	increment_len(t_cmd_parsing *cmdp, size_t *len, bool *end_of_redir,
 	bool *has_arg)
 {
 	(*len) += (cmdp->sep != ' ' || *(cmdp->str) != ' ');
-	*has_arg = (len != 0);
+	*has_arg = (*len != 0);
 	*end_of_redir |= (*has_arg && cmdp->sep == ' ' && *(cmdp->str) == ' ');
 	cmdp->str++;
 }
