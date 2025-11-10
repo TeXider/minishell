@@ -3,30 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   get_line.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 11:24:12 by almighty          #+#    #+#             */
-/*   Updated: 2025/10/31 13:59:26 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/10 12:32:23 by tpanou-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_LINE_H
 # define GET_LINE_H
 
-# include <stdio.h>
-# include <stdbool.h>
-# include <unistd.h>
-# include <stdlib.h>
+# include "../minishell.h"
 # include <termios.h>
 # include <sys/ioctl.h>
 
-# define STD_IN 0
-# define STD_OUT 1
-# define FD_ERR 2
-# define FD_NULL -1
-# define P_READ 0
-# define P_WRITE 1
-# define CULPRIT_LENGTH 32
 # define LINE_LEN 1024 
 # define ESC_CHAR 27
 # define RETURN 127
@@ -40,8 +30,6 @@
 # define CTRL_ARROW -8
 # define LEFT -1
 # define RIGHT 1
-# define RESET true
-# define NO_RESET false
 
 typedef struct termios	t_term;
 
@@ -82,29 +70,8 @@ typedef struct s_hist
 	struct s_hist	*prev;
 }	t_hist;
 
-
-typedef struct s_env
-{
-	char	**envp;
-	char	empty_string[1];
-	char	*empty_list[2];
-	t_term	old_term;
-	t_term	term;
-	t_hist	*history;
-	size_t	prompt_len;
-	int		win_cols;
-	size_t	prev_line_count;
-	size_t	prev_line_index;
-	t_err	err;
-	char	culprit[CULPRIT_LENGTH];
-	bool	is_ctrl;
-}	t_env;
-
-bool	create_error(char *culprit, t_err err, t_env *env);
 bool	end_get_line(t_line *line, char **dst, t_env *env);
 bool	is_special_key(char c);
-void	safe_free(void **ptr);
-bool	safe_challoc(char **dst, size_t len, t_env *env);
 void	safe_free_line(t_line **line);
 bool	safe_line_alloc(t_line **line, size_t len, t_env *env);
 bool	safe_history_alloc(t_hist **history, t_env *env);

@@ -6,7 +6,7 @@
 /*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 09:25:05 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/10 12:01:51 by tpanou-d         ###   ########.fr       */
+/*   Updated: 2025/11/10 12:31:05 by tpanou-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,17 @@ typedef struct s_env
 	char	**envp;
 	char	*empty_string;
 	char	**empty_list;
+	//
+	t_term	old_term;
+	t_term	term;
+	t_hist	*history;
+	size_t	prompt_len;
+	int		win_cols;
+	size_t	prev_line_count;
+	size_t	prev_line_index;
+	bool	update_history;
+	bool	is_ctrl;
+	//
 	pid_t	last_pid;
 	t_err	err;
 	char	culprit[CULPRIT_LENGTH];
@@ -134,6 +145,7 @@ bool	get_arg(t_cmd_parsing *cmdp, t_env *env);
 bool	get_cmd_line(char *line, t_cmd **cmd_list, size_t *cmd_list_len,
 	t_env *env);
 //
+void	safe_free(void **ptr);
 void	free_data(t_cmd *cmd, char *line, t_env *env);
 bool	safe_challoc(char **dst, size_t len, t_env *env);
 bool	safe_lalloc(char ***dst, size_t len, t_env *env);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   end_get_line.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/28 17:14:17 by tpanou-d          #+#    #+#             */
-/*   Updated: 2025/10/31 14:19:06 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/10 12:30:05 by tpanou-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ bool	end_get_line(t_line *line, char **dst, t_env *env)
 		overwrite_new_history_entry(line, env);
 		curr_hist->edit_line = curr_hist->og_line;
 	}
-	if (!line->count)
+	if (!line->count || !env->update_history)
 		remove_new_history_entry(env);
 	if (env->history)
 		go_to_last_history_entry(env);

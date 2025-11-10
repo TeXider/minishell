@@ -3,30 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   memory.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 10:15:39 by almighty          #+#    #+#             */
-/*   Updated: 2025/10/31 13:19:48 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/10 12:28:44 by tpanou-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_line.h"
-
-inline bool	safe_challoc(char **dst, size_t len, t_env *env)
-{
-	*dst = malloc(sizeof(char) * (len + 1));
-	if (!*dst)
-		return (create_error("malloc()", SYS_ERR, env));
-	(*dst)[len] = '\0';
-	return (false);
-}
-
-inline void	safe_free(void **ptr)
-{
-	if (*ptr)
-		free(*ptr);
-	*ptr = NULL;
-}
 
 inline bool	safe_line_alloc(t_line **line, size_t len, t_env *env)
 {
