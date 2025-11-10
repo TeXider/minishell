@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 09:25:05 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/10 09:57:09 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/10 11:18:46 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,28 +81,6 @@ typedef struct s_env
 	t_err	err;
 	char	culprit[CULPRIT_LENGTH];
 }	t_env;
-
-typedef struct s_redir_parsing
-{
-	char	*redir_str;
-	char	*redir_name;
-	size_t	len;
-}	t_redir_parsing;
-
-typedef struct s_get_redir_name_len
-{
-	bool	has_arg;
-	bool	var_is_sep;
-	char	sep;
-}	t_get_redir_name_len;
-
-typedef struct s_get_redir_name
-{
-	size_t	len;
-	char	sep;
-	bool	has_quotes;
-	size_t	i;
-}	t_get_redir_name;
 
 typedef struct s_cmd_parsing
 {
