@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_line.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 11:24:12 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/10 12:32:23 by tpanou-d         ###   ########.fr       */
+/*   Updated: 2025/11/10 13:48:07 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 # define GET_LINE_H
 
 # include "../minishell.h"
-# include <termios.h>
-# include <sys/ioctl.h>
 
 # define LINE_LEN 1024 
 # define ESC_CHAR 27
@@ -30,45 +28,6 @@
 # define CTRL_ARROW -8
 # define LEFT -1
 # define RIGHT 1
-
-typedef struct termios	t_term;
-
-typedef enum e_err
-{
-	SYS_ERR,
-	TERM_ERR,
-	FILE_ERR,
-	CLOSE_ERR,
-	AMBI_REDIR_ERR,
-	UNCLOSED_QUOTES_ERR,
-	UNEXPECTED_TOKEN_ERR
-}	t_err;
-
-typedef struct s_cmd
-{
-	char	*path;
-	char	**argv;
-	int		fd_in;
-	int		fd_out;
-	bool	append_mode;
-}	t_cmd;
-
-typedef struct s_line
-{
-	char			curr_char;
-	char			*buffer;
-	size_t			index;
-	size_t			count;
-	size_t			len;
-}	t_line;
-
-typedef struct s_hist
-{
-	t_line			*edit_line;
-	t_line			*og_line;
-	struct s_hist	*next;
-	struct s_hist	*prev;
-}	t_hist;
 
 bool	end_get_line(t_line *line, char **dst, t_env *env);
 bool	is_special_key(char c);

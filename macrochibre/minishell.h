@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 09:25:05 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/10 12:31:05 by tpanou-d         ###   ########.fr       */
+/*   Updated: 2025/11/10 13:51:26 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
 # include <errno.h>
 # include <fcntl.h>
 # include <sys/wait.h>
+# include <termios.h>
+# include <sys/ioctl.h>
 
 # define READ 1
 # define HAS_QUOTES -1
@@ -31,12 +33,15 @@
 # define P_WRITE 1
 # define CULPRIT_LENGTH 32
 
+typedef struct termios	t_term;
+
 extern bool	g_sigint;
 
 typedef enum e_err
 {
 	SUCCESS,
 	SYS_ERR,
+	TERM_ERR,
 	EXEC_ERR,
 	FILE_ERR,
 	AMBI_REDIR_ERR,
@@ -73,11 +78,28 @@ typedef struct s_cmd
 	t_rtype	fd_out_type;
 }	t_cmd;
 
+typedef struct s_line
+{
+	char			curr_char;
+	char			*buffer;
+	size_t			index;
+	size_t			count;
+	size_t			len;
+}	t_line;
+
+typedef struct s_hist
+{
+	t_line			*edit_line;
+	t_line			*og_line;
+	struct s_hist	*next;
+	struct s_hist	*prev;
+}	t_hist;
+
 typedef struct s_env
 {
 	char	**envp;
-	char	*empty_string;
-	char	**empty_list;
+	char	empty_string[1];
+	char	*empty_list[2];
 	//
 	t_term	old_term;
 	t_term	term;
@@ -133,6 +155,8 @@ void	skip_spaces(char **str);
 void	simple_init_cmd_parsing(t_cmd_parsing *cmdp);
 void	init_cmd_parsing(t_cmd_parsing *cmdp, char *line);
 bool	change_of_sep(t_cmd_parsing *cmdp);
+bool	is_end_of_hdoc(char *del, char *line);
+bool	str_eq(char *str1, char *str2);
 //
 bool	go_to_end_of_arg(t_cmd_parsing *cmdp, t_env *env);
 bool	go_to_end_of_redir(t_cmd_parsing *cmdp, t_env *env);
@@ -168,7 +192,8 @@ bool	handle_pipes(t_pipes *pipes, bool is_last_cmd, t_env *env);
 //
 bool	exec_cmd_line(char **line, size_t cmd_count, t_env *env);
 //
-int		open_hdoc(char *delimiter, bool has_quotes, t_env *env);
+bool	get_line(char **dst, char *prompt, t_env *env);
+//
 bool	create_error(char *culprit, t_err err, t_env *env);
 void	throw_error(t_env *env);
 

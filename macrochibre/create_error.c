@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 08:14:55 by almighty          #+#    #+#             */
-/*   Updated: 2025/10/17 12:01:06 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/10 13:22:34 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,4 @@ bool	create_error(char *culprit, t_err err, t_env *env)
 	}
 	env->culprit[i] = '\0';
 	return (true);
-}
-
-int	open_hdoc(char *delimiter, bool has_quotes, t_env *env)
-{
-	(void) env;
-	printf("del : \"%s\", has_quotes : %d", delimiter, has_quotes);
-	return (-2);
 }
