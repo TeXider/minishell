@@ -6,11 +6,18 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/29 10:02:10 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/10 11:12:23 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/10 11:13:40 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
+
+static bool	handle_redir_err(t_cmd_parsing *cmdp, t_err status, t_env *env)
+{
+	if (status == AMBI_REDIR_ERR)
+		create_error(cmdp->str, AMBI_REDIR_ERR, env);
+	return (true);
+}
 
 static void	add_char_to_name(t_cmd_parsing *cmdp, size_t *i)
 {
