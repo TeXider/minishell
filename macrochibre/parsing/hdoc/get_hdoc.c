@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 08:55:49 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/10 14:08:39 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/10 14:30:05 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ static bool	open_hdoc(char *del, int write_fd, bool has_expand, t_env *env)
 		while (tmp_str && (tmp_cmdp.in_expand
 			|| (*(tmp_cmdp.str) && *(tmp_cmdp.str) != '\n')))
 			write_in_hdoc(&tmp_cmdp, has_expand, write_fd, env);
+		write(write_fd, "\n", tmp_str != NULL);
 		safe_free((void **) &tmp_str);
 		if (get_line(&tmp_str, "> ", env))
 			return (true);
@@ -101,8 +102,16 @@ int	main(int argc, char **argv)
 	redir.name = cmdp.str;
 	cmd.fd_in = -1;
 	cmd.fd_in_type = EMPTY_REDIR;
-	if (get_hdoc(&cmdp, cmdp.str, &env))
+	if (get_hdoc(&cmdp, 1, &env))
 		printf("Yo mama so fat she broke my hdocs\n");
-	while (read(cmd.fd_in, cmdp.str, 256))
-		printf("%s", cmdp.str);
+	size_t	i;
+	ssize_t	size;
+	while (true)
+	{
+		size = read(cmd.fd_in, cmdp.str, 1);
+		if (!size)
+			break ;
+		for  (i = 0; i < (size_t)size; i++)
+			write(1, cmdp.str + i, 1);
+	}
 }
