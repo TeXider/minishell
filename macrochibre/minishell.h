@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 09:25:05 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/10 11:34:22 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/10 11:46:36 by tpanou-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,13 +96,6 @@ typedef struct s_cmd_parsing
 	char	*curr_arg;
 	char	sep;
 }	t_cmd_parsing;
-
-typedef struct s_get_arg_core
-{
-	char	*curr_str;
-	bool	in_var;
-	char	sep;
-}	t_get_arg_core;
 
 typedef struct s_pipes
 {
