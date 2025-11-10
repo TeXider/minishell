@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 09:44:04 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/10 09:55:47 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/10 11:12:40 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,18 +41,20 @@
 // 		safe_close(&cmd->fd_out);
 // }
 
-inline void	safe_close(int *fd)
-{
-	if (*fd != STD_IN && *fd != STD_OUT && *fd != FD_ERR && *fd != FD_NULL)
-	{
-		close(*fd);
-		*fd = FD_NULL;
-	}
-}
 
-inline bool	handle_redir_err(t_cmd_parsing *cmdp, t_err status, t_env *env)
-{
-	if (status == AMBI_REDIR_ERR)
-		create_error(cmdp->str, AMBI_REDIR_ERR, env);
-	return (true);
-}
+// static void	set_cmd_fds(t_cmd *dst, int fd, t_rtype type)
+// {
+// 	dst->fd_in += (fd - dst->fd_in) * (type <= IN);
+// 	dst->append_mode = (type == APPND || (dst->append_mode && type >= OUT));
+// 	dst->fd_out += (fd - dst->fd_out) * (type >= OUT);
+// 	dst->is_fd_in_pipe &= !(type <= IN);
+// 	dst->is_fd_out_pipe &= !(type >= OUT);
+// }
+// inline void	safe_close(int *fd)
+// {
+// 	if (*fd != STD_IN && *fd != STD_OUT && *fd != FD_ERR && *fd != FD_NULL)
+// 	{
+// 		close(*fd);
+// 		*fd = FD_NULL;
+// 	}
+// }

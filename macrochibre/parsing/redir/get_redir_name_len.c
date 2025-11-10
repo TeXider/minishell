@@ -6,11 +6,18 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/07 14:50:26 by tpanou-d          #+#    #+#             */
-/*   Updated: 2025/11/10 10:42:01 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/10 11:12:51 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
+
+static bool	handle_redir_err(t_cmd_parsing *cmdp, t_err status, t_env *env)
+{
+	if (status == AMBI_REDIR_ERR)
+		create_error(cmdp->str, AMBI_REDIR_ERR, env);
+	return (true);
+}
 
 static void	increment_len(t_cmd_parsing *cmdp, size_t *len, bool *end_of_redir,
 	bool *has_arg)

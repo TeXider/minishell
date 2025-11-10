@@ -6,20 +6,11 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/29 10:02:10 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/10 11:10:04 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/10 11:12:23 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
-
-// static void	set_cmd_fds(t_cmd *dst, int fd, t_rtype type)
-// {
-// 	dst->fd_in += (fd - dst->fd_in) * (type <= IN);
-// 	dst->append_mode = (type == APPND || (dst->append_mode && type >= OUT));
-// 	dst->fd_out += (fd - dst->fd_out) * (type >= OUT);
-// 	dst->is_fd_in_pipe &= !(type <= IN);
-// 	dst->is_fd_out_pipe &= !(type >= OUT);
-// }
 
 static void	add_char_to_name(t_cmd_parsing *cmdp, size_t *i)
 {
@@ -89,34 +80,3 @@ bool	get_redir(t_cmd_parsing *cmdp, t_env *env)
 	return (false);
 }
 
-int	main(int argc, char **argv)
-{
-	(void) argc; (void) argv;
-	t_env	env;
-	//env.empty_list = empty_list;
-	env.empty_string = "\0";
-	env.envp = malloc(sizeof(char *) * 4);
-	env.envp[3] = NULL;
-	env.envp[0] = "bousiller=    'c"; env.envp[1] = "kirikou=balletrou"; env.envp[2] = "fort=fra ka ka ";
-	t_cmd_parsing cmdp;
-	t_cmd cmd;
-	t_redir	redir;
-	redir.name = NULL;
-	redir.type = 0;
-	cmd.redirv = &redir;
-	cmdp.cmd = &cmd;
-	cmdp.argv_len = 0;
-	cmdp.redirv_i = 0;
-	cmdp.saved_str = NULL;
-	cmdp.sep = ' ';
-	cmdp.str = malloc(sizeof(char) * 257);
-	cmdp.in_expand = false;
-	ssize_t rd = read(1, cmdp.str, 256);
-	if (rd == -1)
-		return (1);
-	cmdp.str[rd] = '\0';
-	if (get_redir(&cmdp, &env))
-		printf("Yo mama so fat she can't correctly parse a redir\n");
-	else
-		printf("redir: %s\ntype : %d\n", redir.name, redir.type);
-}
