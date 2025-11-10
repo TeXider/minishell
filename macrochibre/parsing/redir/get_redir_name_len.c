@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_redir_name_len.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/07 14:50:26 by tpanou-d          #+#    #+#             */
-/*   Updated: 2025/11/07 14:50:54 by tpanou-d         ###   ########.fr       */
+/*   Updated: 2025/11/10 09:01:11 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static void	update_sep(t_cmd_parsing *cmdp, bool *has_arg)
 	cmdp->str++;
 }
 
-static bool	get_redir_name_len(char *redir, size_t *len, t_env *env)
+bool	get_redir_name_len(char *redir, size_t *len, t_env *env)
 {
 	t_cmd_parsing	tmp_cmdp;
 	bool			end_of_redir;
@@ -48,7 +48,7 @@ static bool	get_redir_name_len(char *redir, size_t *len, t_env *env)
 			expand(&tmp_cmdp, env);
 		else
 			increment_len(&tmp_cmdp, len, &end_of_redir, &has_arg);
-		if (tmp_cmdp.in_expand && !*(tmp_cmdp.str))
+		if (is_end_of_expand(&tmp_cmdp))
 			exit_expand(&tmp_cmdp);
 	}
 	return (!*len);

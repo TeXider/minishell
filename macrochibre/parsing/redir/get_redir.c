@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_redir.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/29 10:02:10 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/07 14:50:46 by tpanou-d         ###   ########.fr       */
+/*   Updated: 2025/11/10 09:02:19 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,12 @@ static void	set_cmd_fds(t_cmd *dst, int fd, t_rtype type)
 	dst->is_fd_out_pipe &= !(type >= OUT);
 }
 
+static void	update_sep(t_cmd_parsing *cmdp)
+{
+	set_sep(cmdp);
+	cmdp->str++;
+}
+
 static inline int	get_redir_name(t_cmd_parsing *cmdp, t_env *env)
 {
 	size_t	len;
@@ -28,18 +34,23 @@ static inline int	get_redir_name(t_cmd_parsing *cmdp, t_env *env)
 
 	if (get_redir_name_len(cmdp->str, &len, env))
 		return (AMBI_REDIR_ERR);
-	if (safe_challoc(&cmdp->cmd->redirv[i].name, len, env))
+	if (safe_challoc(&cmdp->cmd->redirv[cmdp->redirv_i].name, len, env))
 		return (SYS_ERR);
 	i = 0;
-	while (!is_end_of_arg(cmdp))
+	while (!is_end_of_redir(cmdp))
 	{
 		if (change_of_sep(cmdp))
-			set_sep(cmdp);
-		else if (is_var(*redir, grn.sep))
-			redir_expand(redir, *name, &grn, env);
+			update_sep(cmdp);
+		else if (is_var(cmdp))
+			expand(cmdp, env);
 		else
-			(*name)[grn.i++] = **redir;
-		(*redir)++;
+		{
+			cmdp->cmd->redirv[cmdp->redirv_i].name[i] = cmdp->str;
+			cmdp->str++;
+			i++;
+		}
+		if (is_end_of_expand(cmdp))
+			exit_expand(cmdp);
 	}
 	return (SUCCESS + HAS_QUOTES);
 }
