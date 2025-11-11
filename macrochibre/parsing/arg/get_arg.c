@@ -6,7 +6,7 @@
 /*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 09:44:15 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/11 10:37:50 by tpanou-d         ###   ########.fr       */
+/*   Updated: 2025/11/11 11:02:59 by tpanou-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,21 +72,22 @@ static inline void	get_arg_core(t_get_arg_core *gac, char *argv_ptr,
 
 bool	get_arg(t_cmd_parsing *cmdp, t_env *env)
 {
-	t_get_arg_core	gac;
-	size_t			len;
+	size_t	len;
 
-	gac.curr_str = *arg;
-	gac.sep = ' ';
-	gac.in_var = false;
-	while (!is_end_of_arg(**arg, gac.sep))
+	if (get_redir_name_len(cmdp->str, &len, env)
+		|| safe_challoc(&cmdp->curr_redir->name, len, env))
+		return (true);
+	i = 0;
+	while (!is_end_of_redir(cmdp))
 	{
-		len = arg_len(gac.curr_str, &gac, env);
-		if (len && safe_challoc(res->argv + *arg_i, len, env))
-			return (true);
-		get_arg_core(&gac, res->argv[*arg_i], arg, env);
-		actualize_strs(&gac, arg);
-		res->argv[*arg_i + 1] = NULL;
-		*arg_i += (len != 0);
+		if (change_of_sep(cmdp))
+			update_sep(cmdp, &has_quotes);
+		else if (type != HDOC && is_var(cmdp))
+			expand(cmdp, env);
+		else
+			add_char_to_name(cmdp, &i);
+		if (is_end_of_expand(cmdp))
+			exit_expand(cmdp);
 	}
 	return (false);
 }

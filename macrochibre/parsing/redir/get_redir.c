@@ -6,7 +6,7 @@
 /*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/29 10:02:10 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/11 10:34:17 by tpanou-d         ###   ########.fr       */
+/*   Updated: 2025/11/11 11:04:39 by tpanou-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,12 @@ static void	init_get_redir(t_cmd_parsing *cmdp, t_rtype *type)
 	skip_spaces(&cmdp->str);
 }
 
-static void	add_char_to_name(t_cmd_parsing *cmdp, size_t *i)
+static void	add_char_to_name(t_cmd_parsing *cmdp, size_t *redir_name_i)
 {
 	if (cmdp->sep != ' ' || *(cmdp->str) != ' ')
 	{
-		cmdp->curr_redir->name[*i] = *(cmdp->str);
-		(*i)++;
+		cmdp->curr_redir->name[*redir_name_i] = *(cmdp->str);
+		(*redir_name_i)++;
 	}
 	cmdp->str++;
 }
@@ -43,7 +43,7 @@ static void	update_sep(t_cmd_parsing *cmdp, bool *has_quotes)
 static int	get_redir_name(t_cmd_parsing *cmdp, t_rtype type, t_env *env)
 {
 	size_t	len;
-	size_t	i;
+	size_t	redir_name_i;
 	bool	has_quotes;
 
 	if (get_redir_name_len(cmdp->str, &len, env))
@@ -51,7 +51,7 @@ static int	get_redir_name(t_cmd_parsing *cmdp, t_rtype type, t_env *env)
 	if (safe_challoc(&cmdp->curr_redir->name, len, env))
 		return (SYS_ERR);
 	has_quotes = false;
-	i = 0;
+	redir_name_i = 0;
 	while (!is_end_of_redir(cmdp))
 	{
 		if (change_of_sep(cmdp))
@@ -59,7 +59,7 @@ static int	get_redir_name(t_cmd_parsing *cmdp, t_rtype type, t_env *env)
 		else if (type != HDOC && is_var(cmdp))
 			expand(cmdp, env);
 		else
-			add_char_to_name(cmdp, &i);
+			add_char_to_name(cmdp, &redir_name_i);
 		if (is_end_of_expand(cmdp))
 			exit_expand(cmdp);
 	}
