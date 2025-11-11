@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_argv_redirv.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 09:33:57 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/10 09:05:09 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/11 10:40:04 by tpanou-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ bool	get_argv_redirv(t_cmd_parsing *cmdp, t_env *env)
 	char	*tmp_str;
 
 	tmp_str = cmdp->str;
-	while (cmdp->in_expand || !is_end_of_cmd(cmdp))
+	while (!is_end_of_cmd(cmdp))
 	{
 		if (!cmdp->in_expand && (*(cmdp->str) == '>' || *(cmdp->str) == '<'))
 		{

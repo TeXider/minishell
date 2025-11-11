@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_arg.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 09:44:15 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/05 13:46:31 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/11 10:37:50 by tpanou-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ static inline void	get_arg_core(t_get_arg_core *gac, char *argv_ptr,
 		skip_spaces(&gac->curr_str);
 }
 
-bool	get_arg(char **arg, t_cmd *res, size_t *arg_i, t_env *env)
+bool	get_arg(t_cmd_parsing *cmdp, t_env *env)
 {
 	t_get_arg_core	gac;
 	size_t			len;
