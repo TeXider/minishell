@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_cmd_line.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 09:50:16 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/10 11:36:29 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/11 10:42:29 by tpanou-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static bool	get_cmd(t_cmd_parsing *cmdp, t_env *env)
 		return (false);
 	while (!is_end_of_cmd(*(cmdp->str)))
 	{
-		if (*(cmdp->str) == '>' || *(cmdp->str) == '<')
+		if (!cmdp->in_expand && *(cmdp->str) == '>' || *(cmdp->str) == '<')
 		{
 			if (get_redir(cmdp, env))
 				return (true);
@@ -30,6 +30,8 @@ static bool	get_cmd(t_cmd_parsing *cmdp, t_env *env)
 		}
 		else
 			cmdp->str++;
+		if (is_end_of_expand(cmdp))
+			exit_expand(cmdp);
 	}
 	return (false);
 }
