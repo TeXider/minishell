@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_hdoc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 08:55:49 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/10 14:30:05 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/11 10:27:43 by tpanou-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,34 +15,36 @@
 static void	write_in_hdoc(t_cmd_parsing *cmdp, bool has_expand, int write_fd,
 	t_env *env)
 {
-	if (has_expand && is_var(cmdp))
-		expand(cmdp, env);
-	else
+	while (cmdp->str && (cmdp->in_expand
+		|| (*(cmdp->str) && *(cmdp->str) != '\n')))
 	{
-		write(write_fd, cmdp->str, 1);
-		cmdp->str++;
+		if (has_expand && is_var(cmdp))
+			expand(cmdp, env);
+		else
+		{
+			write(write_fd, cmdp->str, 1);
+			cmdp->str++;
+		}
+		if (is_end_of_expand(cmdp))
+			exit_expand(cmdp);
 	}
-	if (is_end_of_expand(cmdp))
-		exit_expand(cmdp);
+	write(write_fd, "\n", cmdp->str != NULL);
 }
 
 static bool	open_hdoc(char *del, int write_fd, bool has_expand, t_env *env)
 {
 	t_cmd_parsing	tmp_cmdp;
-	char			*tmp_str;
+	char			*line;
 
 	simple_init_cmd_parsing(&tmp_cmdp);
-	tmp_str = NULL;
+	line = NULL;
 	env->update_history = false;
-	while (!is_end_of_hdoc(del, tmp_str))
+	while (!is_end_of_hdoc(del, line))
 	{
-		tmp_cmdp.str = tmp_str;
-		while (tmp_str && (tmp_cmdp.in_expand
-			|| (*(tmp_cmdp.str) && *(tmp_cmdp.str) != '\n')))
-			write_in_hdoc(&tmp_cmdp, has_expand, write_fd, env);
-		write(write_fd, "\n", tmp_str != NULL);
-		safe_free((void **) &tmp_str);
-		if (get_line(&tmp_str, "> ", env))
+		tmp_cmdp.str = line;
+		write_in_hdoc(&tmp_cmdp, has_expand, write_fd, env);
+		safe_free((void **) &line);
+		if (get_line(&line, "> ", env))
 			return (true);
 	}
 	env->update_history = true;
