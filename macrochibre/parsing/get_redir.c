@@ -6,11 +6,11 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/29 10:02:10 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/12 09:50:03 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/12 10:46:51 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../minishell.h"
+#include "../minishell.h"
 
 static void	init_get_redir(t_cmd_parsing *cmdp, t_rtype *type)
 {

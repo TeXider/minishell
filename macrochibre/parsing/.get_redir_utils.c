@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_redir_utils.c                                  :+:      :+:    :+:   */
+/*   .get_redir_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 09:44:04 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/10 11:12:40 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/12 10:46:11 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../minishell.h"
+#include "../minishell.h"
 
 // inline int	open_redir(t_cmd_parsing *cmdp, bool has_quotes, t_env *env)
 // {

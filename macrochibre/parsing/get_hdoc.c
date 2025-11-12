@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   get_hdoc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 08:55:49 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/11 10:30:16 by tpanou-d         ###   ########.fr       */
+/*   Updated: 2025/11/12 10:46:41 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../minishell.h"
+#include "../minishell.h"
 
 static void	write_in_hdoc(t_cmd_parsing *cmdp, bool has_expand, int write_fd,
 	t_env *env)
