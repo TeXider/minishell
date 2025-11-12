@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_argv_redirv.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 09:33:57 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/11 10:44:04 by tpanou-d         ###   ########.fr       */
+/*   Updated: 2025/11/12 08:52:03 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,9 @@ bool	get_argv_redirv(t_cmd_parsing *cmdp, t_env *env)
 	while (!is_end_of_cmd(cmdp))
 	{
 		if (!cmdp->in_expand && (*(cmdp->str) == '>' || *(cmdp->str) == '<'))
-		{
-			go_to_end_of_redir(cmdp, env);
-			cmdp->cmd->redirv_len++;
-		}
+			cmdp->cmd->redirv_len += (go_to_end_of_redir(cmdp, env) != IS_HDOC);
 		else if (*(cmdp->str) != ' ')
-			cmdp->argv_len += !go_through_arg(cmdp, env);
+			cmdp->argv_len += (go_through_arg(cmdp, env) != IS_EMPTY);
 		else
 			cmdp->str++;
 		if (is_end_of_expand(cmdp))

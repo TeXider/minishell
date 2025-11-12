@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 08:27:45 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/07 08:58:11 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/12 08:48:51 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,17 +27,22 @@ inline bool	go_to_end_of_arg(t_cmd_parsing *cmdp, t_env *env)
 	return (false);
 }
 
-inline bool	go_to_end_of_redir(t_cmd_parsing *cmdp, t_env *env)
+inline int	go_to_end_of_redir(t_cmd_parsing *cmdp, t_env *env)
 {
+	bool	is_hdoc;
+	
+	is_hdoc = (*(cmdp->str) == '<' && *(cmdp->str + 1) == '<');
 	cmdp->str += 1 + ((*(cmdp->str) == '>' && *(cmdp->str + 1) == '>')
-			|| (*(cmdp->str) == '<' && *(cmdp->str + 1) == '<'));
+			|| is_hdoc);
 	skip_spaces(&cmdp->str);
 	if (is_end_of_arg(cmdp))
 	{
 		create_error(cmdp->str, UNEXPECTED_TOKEN_ERR, env);
-		return (true);
+		return (ERR);
 	}
-	return (go_to_end_of_arg(cmdp, env));
+	if (go_to_end_of_arg(cmdp, env))
+		return (ERR);
+	return (IS_HDOC * is_hdoc);
 }
 
 inline bool	go_to_end_of_cmd(t_cmd_parsing *cmdp, size_t *cmd_list_len,
@@ -47,7 +52,7 @@ inline bool	go_to_end_of_cmd(t_cmd_parsing *cmdp, size_t *cmd_list_len,
 	{
 		if (*(cmdp->str) == '>' || *(cmdp->str) == '<')
 		{
-			if (go_to_end_of_redir(cmdp, env))
+			if (go_to_end_of_redir(cmdp, env) == ERR)
 				return (true);
 			(*cmd_list_len) += *is_empty;
 			*is_empty = false;

@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 09:25:05 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/12 08:26:00 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/12 08:51:48 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@
 
 # define READ 1
 # define HAS_QUOTES -1
+# define IS_HDOC -1
+# define IS_EMPTY true
 # define STD_IN 0
 # define STD_OUT 1
 # define FD_ERR 2
@@ -40,6 +42,7 @@ extern bool	g_sigint;
 typedef enum e_err
 {
 	SUCCESS,
+	ERR,
 	SYS_ERR,
 	TERM_ERR,
 	EXEC_ERR,
@@ -160,7 +163,7 @@ bool	is_end_of_hdoc(char *del, char *line);
 bool	str_eq(char *str1, char *str2);
 //
 bool	go_to_end_of_arg(t_cmd_parsing *cmdp, t_env *env);
-bool	go_to_end_of_redir(t_cmd_parsing *cmdp, t_env *env);
+int		go_to_end_of_redir(t_cmd_parsing *cmdp, t_env *env);
 bool	go_to_end_of_cmd(t_cmd_parsing *cmdp, size_t *cmd_list_len,
 	bool *is_empty, t_env *env);
 //
@@ -181,9 +184,6 @@ void	exit_expand(t_cmd_parsing *cmdp);
 //
 bool	get_redir_name_len(char *redir, size_t *len, bool is_hdoc, t_env *env);
 bool	get_redir(t_cmd_parsing *cmdp, t_env *env);
-int		open_redir(char *name, t_rtype type, bool has_quotes, t_env *env);
-void	close_prev_redir(t_cmd *cmd, t_rtype type);
-bool	handle_redir_err(t_cmd_parsing *cmdp, t_err status, t_env *env);
 void	safe_close(int *fd);
 //
 bool	repipe(int pipes_fds[2], bool is_last_cmd, t_env *env);
