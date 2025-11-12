@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_cmd_line.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 09:50:16 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/11 10:42:29 by tpanou-d         ###   ########.fr       */
+/*   Updated: 2025/11/12 09:11:00 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,9 @@ static bool	get_cmd(t_cmd_parsing *cmdp, t_env *env)
 	{
 		if (!cmdp->in_expand && *(cmdp->str) == '>' || *(cmdp->str) == '<')
 		{
-			if (get_redir(cmdp, env))
+			if (cmdp->curr_redir->type == AMBI_REDIR)
+				go_to_end_of_redir(cmdp, env);
+			else if (get_redir(cmdp, env))
 				return (true);
 		}
 		else if (*(cmdp->str) != ' ')
