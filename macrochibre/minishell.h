@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 09:25:05 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/10 13:51:26 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/11 11:17:32 by tpanou-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,7 +178,7 @@ bool	safe_malloc(void **dst, size_t len, t_env *env);
 void	expand(t_cmd_parsing *cmdp, t_env *env);
 void	exit_expand(t_cmd_parsing *cmdp);
 //
-bool	get_redir_name_len(char *redir, size_t *len, t_env *env);
+bool	get_redir_name_len(char *redir, size_t *len, bool is_hdoc, t_env *env);
 bool	get_redir(t_cmd_parsing *cmdp, t_env *env);
 int		open_redir(char *name, t_rtype type, bool has_quotes, t_env *env);
 void	close_prev_redir(t_cmd *cmd, t_rtype type);

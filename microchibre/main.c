@@ -49,11 +49,13 @@ static inline void	exec_input(char *input, t_env *env)
 	}
 }
 
-int	main(int argc, char **argv, char **envp)
+int	main(int argc, const char *char argv[], char **envp)
 {
 	t_env	env;
 	char	*input;
 
+	while (--argc)
+		printf("%s", ++argv);
 	init_env(&env, envp);
 	if (safe_challoc(&input, 500, &env))
 		throw_error(&env);

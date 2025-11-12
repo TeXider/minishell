@@ -1,0 +1,68 @@
+Date : 2025-11-11 10:48:07
+Directory : /home/tpanou-d/Documents/github/minishell/macrochibre
+Total : 34 files,  1681 codes, 485 comments, 224 blanks, all 2390 lines
+
+Languages
++----------+------------+------------+------------+------------+------------+
+| language | files      | code       | comment    | blank      | total      |
++----------+------------+------------+------------+------------+------------+
+| C        |         34 |      1,681 |        485 |        224 |      2,390 |
++----------+------------+------------+------------+------------+------------+
+
+Directories
++----------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                         | files      | code       | comment    | blank      | total      |
++----------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                            |         34 |      1,681 |        485 |        224 |      2,390 |
+| . (Files)                                                                                    |          4 |        292 |         58 |         37 |        387 |
+| exec                                                                                         |          2 |        120 |         25 |         12 |        157 |
+| get_line                                                                                     |         12 |        582 |        141 |         80 |        803 |
+| parsing                                                                                      |         16 |        687 |        261 |         95 |      1,043 |
+| parsing (Files)                                                                              |          7 |        275 |         77 |         38 |        390 |
+| parsing/arg                                                                                  |          1 |         74 |         11 |          8 |         93 |
+| parsing/hdoc                                                                                 |          1 |         58 |         54 |          7 |        119 |
+| parsing/redir                                                                                |          3 |        113 |         75 |         23 |        211 |
+| parsing/test_area                                                                            |          1 |         54 |         11 |          4 |         69 |
+| parsing/var                                                                                  |          3 |        113 |         33 |         15 |        161 |
++----------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++----------------------------------------------------------------------------------------------+----------+------------+------------+------------+------------+
+| filename                                                                                     | language | code       | comment    | blank      | total      |
++----------------------------------------------------------------------------------------------+----------+------------+------------+------------+------------+
+| /home/tpanou-d/Documents/github/minishell/macrochibre/create_error.c                         | C        |         29 |         11 |          5 |         45 |
+| /home/tpanou-d/Documents/github/minishell/macrochibre/exec/exec_cmd_line.c                   | C        |         65 |         14 |          6 |         85 |
+| /home/tpanou-d/Documents/github/minishell/macrochibre/exec/pipes.c                           | C        |         55 |         11 |          6 |         72 |
+| /home/tpanou-d/Documents/github/minishell/macrochibre/get_line/.main.c                       | C        |         35 |         20 |          4 |         59 |
+| /home/tpanou-d/Documents/github/minishell/macrochibre/get_line/end_get_line.c                | C        |         47 |         11 |          7 |         65 |
+| /home/tpanou-d/Documents/github/minishell/macrochibre/get_line/get_line.c                    | C        |         51 |         11 |          5 |         67 |
+| /home/tpanou-d/Documents/github/minishell/macrochibre/get_line/get_line.h                    | C        |         44 |         11 |          5 |         60 |
+| /home/tpanou-d/Documents/github/minishell/macrochibre/get_line/get_line_utils.c              | C        |         32 |         11 |         10 |         53 |
+| /home/tpanou-d/Documents/github/minishell/macrochibre/get_line/handle_ctrl.c                 | C        |         48 |         11 |          6 |         65 |
+| /home/tpanou-d/Documents/github/minishell/macrochibre/get_line/handle_keys.c                 | C        |         75 |         11 |          8 |         94 |
+| /home/tpanou-d/Documents/github/minishell/macrochibre/get_line/history.c                     | C        |         48 |         11 |          6 |         65 |
+| /home/tpanou-d/Documents/github/minishell/macrochibre/get_line/history_utils.c               | C        |         28 |         11 |          5 |         44 |
+| /home/tpanou-d/Documents/github/minishell/macrochibre/get_line/line_editing.c                | C        |         56 |         11 |          9 |         76 |
+| /home/tpanou-d/Documents/github/minishell/macrochibre/get_line/memory.c                      | C        |         43 |         11 |          5 |         59 |
+| /home/tpanou-d/Documents/github/minishell/macrochibre/get_line/output_editing.c              | C        |         75 |         11 |         10 |         96 |
+| /home/tpanou-d/Documents/github/minishell/macrochibre/main.c                                 | C        |         45 |         11 |          9 |         65 |
+| /home/tpanou-d/Documents/github/minishell/macrochibre/memory.c                               | C        |         59 |         11 |          7 |         77 |
+| /home/tpanou-d/Documents/github/minishell/macrochibre/minishell.h                            | C        |        159 |         25 |         16 |        200 |
+| /home/tpanou-d/Documents/github/minishell/macrochibre/parsing/arg/get_arg.c                  | C        |         74 |         11 |          8 |         93 |
+| /home/tpanou-d/Documents/github/minishell/macrochibre/parsing/cmd_funcs.c                    | C        |         16 |         11 |          4 |         31 |
+| /home/tpanou-d/Documents/github/minishell/macrochibre/parsing/get_argv_redirv.c              | C        |         46 |         11 |          6 |         63 |
+| /home/tpanou-d/Documents/github/minishell/macrochibre/parsing/get_cmd_line.c                 | C        |         77 |         11 |          7 |         95 |
+| /home/tpanou-d/Documents/github/minishell/macrochibre/parsing/go_to_end_of.c                 | C        |         56 |         11 |          5 |         72 |
+| /home/tpanou-d/Documents/github/minishell/macrochibre/parsing/hdoc/get_hdoc.c                | C        |         58 |         54 |          7 |        119 |
+| /home/tpanou-d/Documents/github/minishell/macrochibre/parsing/parsing_utils.c                | C        |         28 |         11 |          7 |         46 |
+| /home/tpanou-d/Documents/github/minishell/macrochibre/parsing/parsing_utils2.c               | C        |         34 |         11 |          6 |         51 |
+| /home/tpanou-d/Documents/github/minishell/macrochibre/parsing/parsing_utils3.c               | C        |         18 |         11 |          3 |         32 |
+| /home/tpanou-d/Documents/github/minishell/macrochibre/parsing/redir/get_redir.c              | C        |         73 |         11 |         10 |         94 |
+| /home/tpanou-d/Documents/github/minishell/macrochibre/parsing/redir/get_redir_name_len.c     | C        |         39 |         11 |          6 |         56 |
+| /home/tpanou-d/Documents/github/minishell/macrochibre/parsing/redir/get_redir_utils.c        | C        |          1 |         53 |          7 |         61 |
+| /home/tpanou-d/Documents/github/minishell/macrochibre/parsing/test_area/check_line_parsing.c | C        |         54 |         11 |          4 |         69 |
+| /home/tpanou-d/Documents/github/minishell/macrochibre/parsing/var/.main.c                    | C        |         56 |         11 |          4 |         71 |
+| /home/tpanou-d/Documents/github/minishell/macrochibre/parsing/var/expand.c                   | C        |         42 |         11 |          6 |         59 |
+| /home/tpanou-d/Documents/github/minishell/macrochibre/parsing/var/var_utils.c                | C        |         15 |         11 |          5 |         31 |
+| Total                                                                                        |          |      1,681 |        485 |        224 |      2,390 |
++----------------------------------------------------------------------------------------------+----------+------------+------------+------------+------------+

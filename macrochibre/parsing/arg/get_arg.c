@@ -6,7 +6,7 @@
 /*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 09:44:15 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/11 11:02:59 by tpanou-d         ###   ########.fr       */
+/*   Updated: 2025/11/11 11:07:00 by tpanou-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,9 @@ static inline void	actualize_strs(t_get_arg_core *gac, char **arg)
 	}
 }
 
-static inline size_t	arg_len(char *curr_str, t_get_arg_core *gac, t_env *env)
+static bool	get_arg_len(char *arg_str, size_t *len, t_env *env)
 {
-	size_t	len;
-
-	len = 0;
+	*len = 0;
 	while ((!is_end_of_arg(*curr_str, gac->sep)) || (gac->in_var
 			&& (gac->sep != ' ' || *curr_str != ' ')))
 	{
@@ -74,7 +72,7 @@ bool	get_arg(t_cmd_parsing *cmdp, t_env *env)
 {
 	size_t	len;
 
-	if (get_redir_name_len(cmdp->str, &len, env)
+	if (get_arg_len(cmdp->str, &len, env)
 		|| safe_challoc(&cmdp->curr_redir->name, len, env))
 		return (true);
 	i = 0;
