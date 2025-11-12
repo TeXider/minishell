@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 09:50:16 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/12 09:11:00 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/12 09:29:40 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static bool	get_cmd(t_cmd_parsing *cmdp, t_env *env)
 {
 	if (get_argv_redirv(cmdp, env))
 		return (false);
-	while (!is_end_of_cmd(*(cmdp->str)))
+	while (!is_end_of_cmd(cmdp))
 	{
 		if (!cmdp->in_expand && *(cmdp->str) == '>' || *(cmdp->str) == '<')
 		{
