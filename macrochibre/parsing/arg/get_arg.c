@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_arg.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 09:44:15 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/11 11:07:00 by tpanou-d         ###   ########.fr       */
+/*   Updated: 2025/11/12 09:46:25 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,15 +72,15 @@ bool	get_arg(t_cmd_parsing *cmdp, t_env *env)
 {
 	size_t	len;
 
-	if (get_arg_len(cmdp->str, &len, env)
-		|| safe_challoc(&cmdp->curr_redir->name, len, env))
+	get_arg_len(cmdp->str, &len, env);
+	if (safe_challoc(cmdp->cmd->argv + cmdp->argv_i, len, env))
 		return (true);
-	i = 0;
-	while (!is_end_of_redir(cmdp))
+	cmdp->curr_arg = cmdp->cmd->argv[cmdp->argv_i];
+	while (!is_end_of_arg(cmdp))
 	{
 		if (change_of_sep(cmdp))
 			update_sep(cmdp, &has_quotes);
-		else if (type != HDOC && is_var(cmdp))
+		else if (is_var(cmdp))
 			expand(cmdp, env);
 		else
 			add_char_to_name(cmdp, &i);

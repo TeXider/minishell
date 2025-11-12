@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/29 10:02:10 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/12 09:46:49 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/12 09:50:03 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,13 @@ static void	update_sep(t_cmd_parsing *cmdp, bool *has_quotes)
 	cmdp->str++;
 }
 
-static int	get_redir_name(t_cmd_parsing *cmdp, bool has_expand, t_env *env)
+static int	get_redir_name(t_cmd_parsing *cmdp, bool is_hdoc, t_env *env)
 {
 	size_t	len;
 	size_t	redir_name_i;
 	bool	has_quotes;
 
-	if (get_redir_name_len(cmdp->str, &len, has_expand, env))
+	if (get_redir_name_len(cmdp->str, &len, is_hdoc, env))
 		return (AMBI_REDIR_ERR);
 	if (safe_challoc(&cmdp->curr_redir->name, len, env))
 		return (SYS_ERR);
@@ -56,7 +56,7 @@ static int	get_redir_name(t_cmd_parsing *cmdp, bool has_expand, t_env *env)
 	{
 		if (change_of_sep(cmdp))
 			update_sep(cmdp, &has_quotes);
-		else if (has_expand && is_var(cmdp))
+		else if (!is_hdoc && is_var(cmdp))
 			expand(cmdp, env);
 		else
 			add_char_to_name(cmdp, &redir_name_i);
