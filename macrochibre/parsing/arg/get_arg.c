@@ -6,86 +6,81 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 09:44:15 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/12 09:46:25 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/12 10:25:54 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-static inline void	actualize_strs(t_get_arg_core *gac, char **arg)
+static void	add_char_to_arg(t_cmd_parsing *cmdp, size_t *arg_i)
 {
-	if (!gac->in_var)
-		*arg = gac->curr_str;
-	else if (!*(gac->curr_str))
+	if (cmdp->sep != ' ' || *(cmdp->str) != ' ')
 	{
-		gac->in_var = false;
-		gac->curr_str = *arg;
-		gac->curr_str++;
+		cmdp->curr_arg[*arg_i] = *(cmdp->str);
+		(*arg_i)++;
 	}
+	cmdp->str++;
 }
 
-static bool	get_arg_len(char *arg_str, size_t *len, t_env *env)
+static void	update_sep(t_cmd_parsing *cmdp, bool *has_arg)
 {
+	set_sep(cmdp);
+	if (has_arg)
+		*has_arg = true;
+	cmdp->str++;
+}
+
+static bool	get_arg_len(char *str, size_t *len, t_env *env)
+{
+	t_cmd_parsing	tmp_cmdp;
+	bool			has_arg;
+	
 	*len = 0;
-	while ((!is_end_of_arg(*curr_str, gac->sep)) || (gac->in_var
-			&& (gac->sep != ' ' || *curr_str != ' ')))
+	has_arg = false;
+	init_cmd_parsing(&tmp_cmdp, str);
+	while ((!has_arg && tmp_cmdp.in_expand) || !is_end_of_arg(&tmp_cmdp))
 	{
-		if (!gac->in_var && ((gac->sep == ' ' && is_quote(*curr_str))
-				|| *curr_str == gac->sep))
-			set_sep(&gac->sep, *curr_str);
-		else if (!gac->in_var && is_var(curr_str, gac->sep))
-		{
-			if (get_arg_expand_len(&curr_str, &len, gac->sep, env))
-				return (len);
-		}
+		if (change_of_sep(&tmp_cmdp))
+			update_sep(&tmp_cmdp, &has_arg);
+		else if (is_var(&tmp_cmdp))
+			expand(&tmp_cmdp, env);
 		else
-			len++;
-		curr_str++;
-	}
-	return (len);
-}
-
-static inline void	get_arg_core(t_get_arg_core *gac, char *argv_ptr,
-			char **arg, t_env *env)
-{
-	while ((!is_end_of_arg(*(gac->curr_str), gac->sep))
-		|| (gac->in_var && (gac->sep != ' ' || *(gac->curr_str) != ' ')))
-	{
-		if (!gac->in_var && ((gac->sep == ' '
-					&& is_quote(*(gac->curr_str)))
-				|| *(gac->curr_str) == gac->sep))
-			set_sep(&gac->sep, (*gac->curr_str));
-		else if (!gac->in_var && is_var(gac->curr_str, gac->sep))
 		{
-			if (arg_expand(gac, &argv_ptr, arg, env))
-				break ;
+			(*len) += (tmp_cmdp.sep != ' ' || *(tmp_cmdp.str) != ' ');
+			has_arg = (*len != 0);
+			tmp_cmdp.str++;
 		}
-		else
-			*(argv_ptr++) = *(gac->curr_str);
-		gac->curr_str++;
+		if (is_end_of_expand(&tmp_cmdp))
+			exit_expand(&tmp_cmdp);
 	}
-	if (gac->in_var)
-		skip_spaces(&gac->curr_str);
+	return (!has_arg);
 }
 
 bool	get_arg(t_cmd_parsing *cmdp, t_env *env)
 {
 	size_t	len;
+	size_t	arg_i;
 
-	get_arg_len(cmdp->str, &len, env);
+	if (get_arg_len(cmdp->str, &len, env))
+	{
+		go_to_end_of_arg(cmdp, env);
+		return (false);
+	}
 	if (safe_challoc(cmdp->cmd->argv + cmdp->argv_i, len, env))
 		return (true);
 	cmdp->curr_arg = cmdp->cmd->argv[cmdp->argv_i];
-	while (!is_end_of_arg(cmdp))
+	arg_i = 0;
+	while ((!arg_i && cmdp->in_expand) || !is_end_of_arg(cmdp))
 	{
 		if (change_of_sep(cmdp))
-			update_sep(cmdp, &has_quotes);
+			update_sep(cmdp, NULL);
 		else if (is_var(cmdp))
 			expand(cmdp, env);
 		else
-			add_char_to_name(cmdp, &i);
+			add_char_to_arg(cmdp, &arg_i);
 		if (is_end_of_expand(cmdp))
 			exit_expand(cmdp);
 	}
+	cmdp->argv_i++;
 	return (false);
 }
