@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 09:25:05 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/12 09:49:50 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/12 11:25:37 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,14 +162,16 @@ void	init_cmd_parsing(t_cmd_parsing *cmdp, char *line);
 bool	change_of_sep(t_cmd_parsing *cmdp);
 bool	is_end_of_hdoc(char *del, char *line);
 bool	str_eq(char *str1, char *str2);
+void	reset_cmd_parsing(t_cmd_parsing *cmdp, t_cmd *cmd);
 //
 bool	go_to_end_of_arg(t_cmd_parsing *cmdp, t_env *env);
 int		go_to_end_of_redir(t_cmd_parsing *cmdp, t_env *env);
 bool	go_to_end_of_cmd(t_cmd_parsing *cmdp, size_t *cmd_list_len,
 	bool *is_empty, t_env *env);
 //
-bool	get_argv_len(char *cmd, size_t *argv_len, t_cmd *res, t_env *env);
+bool	get_argv_redirv(t_cmd_parsing *cmdp, t_env *env);
 bool	get_arg(t_cmd_parsing *cmdp, t_env *env);
+bool	get_hdoc(t_cmd_parsing *cmdp, bool has_expand, t_env *env);
 //
 bool	get_cmd_line(char *line, t_cmd **cmd_list, size_t *cmd_list_len,
 	t_env *env);
@@ -185,7 +187,7 @@ void	exit_expand(t_cmd_parsing *cmdp);
 //
 bool	get_redir_name_len(char *redir, size_t *len, bool is_hdoc, t_env *env);
 bool	get_redir(t_cmd_parsing *cmdp, t_env *env);
-void	safe_close(int *fd);
+void	safe_close(int *fd, int new_fd);
 //
 bool	repipe(int pipes_fds[2], bool is_last_cmd, t_env *env);
 void	init_pipes(t_pipes *pipes);

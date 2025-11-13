@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 08:55:49 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/12 10:46:41 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/13 16:19:06 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static void	write_in_hdoc(t_cmd_parsing *cmdp, bool has_expand, int write_fd,
 		if (is_end_of_expand(cmdp))
 			exit_expand(cmdp);
 	}
-	write(write_fd, "\n", cmdp->str != NULL);
+	write(write_fd, "\n", (cmdp->str != NULL));
 }
 
 static bool	open_hdoc(char *del, int write_fd, bool has_expand, t_env *env)
@@ -47,6 +47,7 @@ static bool	open_hdoc(char *del, int write_fd, bool has_expand, t_env *env)
 		if (get_line(&line, "> ", env))
 			return (true);
 	}
+	safe_free((void **) &line);
 	env->update_history = true;
 	return (false);
 }
@@ -62,15 +63,14 @@ bool	get_hdoc(t_cmd_parsing *cmdp, bool has_expand, t_env *env)
 	}
 	if (open_hdoc(cmdp->curr_redir->name, hdoc_fds[P_WRITE], has_expand, env))
 	{
-		safe_close(hdoc_fds + P_READ);
-		safe_close(hdoc_fds + P_WRITE);
+		close(hdoc_fds[P_READ]);
+		close(hdoc_fds[P_WRITE]);
 		return (true);
 	}
-	if (cmdp->curr_redir->type == HDOC)
-		safe_close(&cmdp->cmd->fd_in);
 	cmdp->cmd->fd_in = hdoc_fds[P_READ];
 	cmdp->cmd->fd_in_type = HDOC;
-	safe_close(hdoc_fds + P_WRITE);
+	close(hdoc_fds[P_WRITE]);
+	safe_free((void **) &cmdp->curr_redir->name);
 	return (false);
 }
 

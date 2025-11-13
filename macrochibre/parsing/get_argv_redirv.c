@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 09:33:57 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/12 08:52:03 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/13 15:29:57 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,11 @@ bool	get_argv_redirv(t_cmd_parsing *cmdp, t_env *env)
 	cmdp->str = tmp_str;
 	if (safe_lalloc(&cmdp->cmd->argv, cmdp->argv_len, env)
 		|| safe_malloc((void **)&cmdp->cmd->redirv,
-			sizeof(t_redir) * cmdp->cmd->redirv_len, env))
+			sizeof(t_redir) * (cmdp->cmd->redirv_len
+				+ (cmdp->cmd->redirv_len == 0)), env))
 		return (true);
+	cmdp->curr_redir = cmdp->cmd->redirv;
+	cmdp->curr_redir->name = NULL;
+	cmdp->curr_redir->type = EMPTY_REDIR;
 	return (false);
 }

@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/29 10:02:10 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/12 10:46:51 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/13 16:16:53 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 static void	init_get_redir(t_cmd_parsing *cmdp, t_rtype *type)
 {
 	cmdp->curr_redir = cmdp->cmd->redirv + cmdp->redirv_i;
+	cmdp->curr_redir->name = NULL;
+	cmdp->curr_redir->type = EMPTY_REDIR;
 	*type = HDOC * (*(cmdp->str) == '<' && *(cmdp->str + 1) == '<')
 			+ APPND * (*(cmdp->str) == '>' && *(cmdp->str + 1) == '>');
 	*type += !(*type) * (IN * (*(cmdp->str) == '<')
@@ -79,12 +81,12 @@ bool	get_redir(t_cmd_parsing *cmdp, t_env *env)
 	{
 		cmdp->curr_redir->name = cmdp->str;
 		type = AMBI_REDIR;
-		go_to_end_of_redir(cmdp, env);
+		go_to_end_of_arg(cmdp, env);
 	}
-	if (type == HDOC && get_hdoc(cmdp, (status == HAS_QUOTES), env))
+	if (type == HDOC && get_hdoc(cmdp, (status != HAS_QUOTES), env))
 		return (true);
 	if (type != HDOC && cmdp->cmd->fd_in_type == HDOC)
-		safe_close(&cmdp->cmd->fd_in);
+		safe_close(&cmdp->cmd->fd_in, STD_IN);
 	cmdp->curr_redir->type = type * (type != HDOC);
 	cmdp->redirv_i += (type != HDOC);
 	return (false);

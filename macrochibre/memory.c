@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   memory.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 10:15:39 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/10 12:28:50 by tpanou-d         ###   ########.fr       */
+/*   Updated: 2025/11/13 14:28:15 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,11 @@ inline void	free_data(t_cmd *cmd, char *line, t_env *env)
 
 inline bool	safe_malloc(void **dst, size_t len, t_env *env)
 {
+	if (!len)
+	{
+		*dst = NULL;
+		return (false);
+	}
 	*dst = malloc(len);
 	if (!*dst)
 	{

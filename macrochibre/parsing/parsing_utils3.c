@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/10 13:40:22 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/10 13:49:45 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/13 16:16:17 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,26 @@ inline bool	str_eq(char *str1, char *str2)
 		str1++;
 		str2++;
 	}
-	return (*str1 == *str2);
+	return (*str1 == *str2 || (*str1 == '\n' && !*str2)
+		|| (!*str1 && *str2 == '\n'));
 }
 
-inline void	safe_close(int *fd)
+inline void	safe_close(int *fd, int new_fd)
 {
 	if (*fd != STD_IN && *fd != STD_OUT && *fd != FD_ERR && *fd != FD_NULL)
 	{
 		close(*fd);
-		*fd = FD_NULL;
+		*fd = new_fd;
 	}
+}
+
+inline void	reset_cmd_parsing(t_cmd_parsing *cmdp, t_cmd *cmd)
+{
+	cmdp->saved_str = NULL;
+	cmdp->sep = ' ';
+	cmdp->in_expand = false;
+	cmdp->argv_len = 0;
+	cmdp->redirv_i = 0;
+	cmdp->argv_i = 0;
+	cmdp->cmd = cmd;
 }

@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 09:50:16 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/12 09:29:40 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/13 16:06:19 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static bool	get_cmd(t_cmd_parsing *cmdp, t_env *env)
 		return (false);
 	while (!is_end_of_cmd(cmdp))
 	{
-		if (!cmdp->in_expand && *(cmdp->str) == '>' || *(cmdp->str) == '<')
+		if (!cmdp->in_expand && (*(cmdp->str) == '>' || *(cmdp->str) == '<'))
 		{
 			if (cmdp->curr_redir->type == AMBI_REDIR)
 				go_to_end_of_redir(cmdp, env);
@@ -80,13 +80,12 @@ bool	get_cmd_line(char *line, t_cmd **cmd_list, size_t *cmd_list_len,
 		return (false);
 	if (safe_malloc((void **) cmd_list, sizeof(t_cmd) * (*cmd_list_len), env))
 		return (true);
-	cmdp.str = line;
+	init_cmd_parsing(&cmdp, line);
 	cmd_list_index = 0;
 	while (*(cmdp.str) && *(cmdp.str) != '\n')
 	{
 		set_new_cmd(*cmd_list + cmd_list_index, env);
-		cmdp.argv_len = 0;
-		cmdp.cmd = *cmd_list + cmd_list_index;
+		reset_cmd_parsing(&cmdp, *cmd_list + cmd_list_index);
 		if (get_cmd(&cmdp, env))
 			return (true);
 		cmdp.str += (*(cmdp.str) == '|');
