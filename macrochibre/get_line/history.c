@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/28 17:13:27 by tpanou-d          #+#    #+#             */
-/*   Updated: 2025/11/10 14:20:30 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/14 08:57:43 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,14 @@ inline void	move_in_history(t_line **line, int term_cols, t_env *env)
 
 inline void	overwrite_new_history_entry(t_line *line, t_env *env)
 {
+	t_hist	*curr_hist;
+
+	curr_hist = env->history;
 	go_to_last_history_entry(env);
 	safe_free_line(&env->history->edit_line);
 	env->history->edit_line = line;
 	env->history->og_line = line;
+	curr_hist->edit_line = curr_hist->og_line;
 }
 
 inline bool	new_history_entry(t_env *env)
@@ -53,6 +57,7 @@ inline bool	new_history_entry(t_env *env)
 
 inline void	remove_new_history_entry(t_env *env)
 {
+	go_to_last_history_entry(env);
 	safe_free_line(&env->history->edit_line);
 	if (env->history->prev)
 	{
@@ -61,4 +66,14 @@ inline void	remove_new_history_entry(t_env *env)
 	}
 	else
 		safe_free((void **)&env->history);
+}
+
+inline void	update_history(t_line *line, t_env *env)
+{
+	if (env->update_history && env->history->next)
+		overwrite_new_history_entry(line, env);
+	if (!env->update_history || !line->count)
+		remove_new_history_entry(env);
+	if (env->history)
+		go_to_last_history_entry(env);
 }

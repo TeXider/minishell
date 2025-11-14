@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 08:35:25 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/13 16:35:57 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/14 08:39:07 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,5 @@ bool	add_char(t_line **line, t_env *env)
 	(*line)->buffer[(*line)->index] = (*line)->curr_char;
 	(*line)->index++;
 	(*line)->count++;
-	if (set_correct_line_len(*line, env))
-		return (true);
-	return (false);
+	return (set_correct_line_len(*line, env));
 }

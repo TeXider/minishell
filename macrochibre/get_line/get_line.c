@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 11:23:11 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/03 08:49:34 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/14 08:38:25 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static inline bool	init_get_line(t_line **line, char **dst, t_env *env)
 		create_error("tcsetattr()", TERM_ERR, env);
 		return (true);
 	}
-	if (new_history_entry(env)) //problem
+	if (new_history_entry(env))
 		return (true);
 	*line = env->history->edit_line;
 	return (false);

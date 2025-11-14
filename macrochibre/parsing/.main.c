@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   .main.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/10 10:53:41 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/13 18:11:19 by tpanou-d         ###   ########.fr       */
+/*   Updated: 2025/11/14 09:12:46 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,10 @@ int	main(int argc, char **argv, char **envp)
 	env.history = NULL;
 	env.update_history = true;
 	char	*input;
-	t_cmd	*cmd_list;
+	t_cmd	*cmd_list = NULL;
 	size_t	cmd_list_len;
-	t_cmd	empty_cmd;
 	while (true)
 	{
-	set_new_cmd(&empty_cmd, &env);
-	cmd_list = &empty_cmd;
 	get_line(&input, "paf malfaisant> ", &env);
 	if (get_cmd_line(input, &cmd_list, &cmd_list_len, &env))
 	{
@@ -56,6 +53,7 @@ int	main(int argc, char **argv, char **envp)
 			for (size_t j = 0; cmd_list[i].argv[j]; j++)
 				print_str(cmd_list[i].argv[j]);
 		}
+		write(1, "hdoc :\n", 7);
 		if (cmd_list[i].fd_in != STD_IN)
 		{
 			char	buff[2048];
@@ -65,8 +63,8 @@ int	main(int argc, char **argv, char **envp)
 				size = read(cmd_list[i].fd_in, buff, 1);
 				if (!size)
 					break ;
-				for  (i = 0; i < (size_t)size; i++)
-					write(1, buff + i, 1);
+				for  (size_t y = 0; y < (size_t)size; y++)
+					write(1, buff + y, 1);
 			}
 		}
 		if (cmd_list[i].argv && *(cmd_list[i].argv))
@@ -89,7 +87,7 @@ int	main(int argc, char **argv, char **envp)
 		if (cmd_list[i].fd_in != STD_IN)
 			close(cmd_list[i].fd_in);
 	}
-	if (i)
+	if (cmd_list_len)
 		free(cmd_list);
 	free(input);
 	}

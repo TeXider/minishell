@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   end_get_line.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/28 17:14:17 by tpanou-d          #+#    #+#             */
-/*   Updated: 2025/11/10 12:30:05 by tpanou-d         ###   ########.fr       */
+/*   Updated: 2025/11/14 08:49:58 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,6 @@ static inline char	*create_truncated_buff(t_line *line, t_env *env)
 
 bool	end_get_line(t_line *line, char **dst, t_env *env)
 {
-	t_hist	*curr_hist;
-	
 	reset_line(line);
 	if (tcsetattr(STD_IN, TCSANOW, &env->old_term))
 	{
@@ -50,15 +48,6 @@ bool	end_get_line(t_line *line, char **dst, t_env *env)
 		remove_new_history_entry(env);
 		return (true);
 	}
-	if (env->history->next)
-	{
-		curr_hist = env->history;
-		overwrite_new_history_entry(line, env);
-		curr_hist->edit_line = curr_hist->og_line;
-	}
-	if (!line->count || !env->update_history)
-		remove_new_history_entry(env);
-	if (env->history)
-		go_to_last_history_entry(env);
+	update_history(line, env);
 	return (false);
 }

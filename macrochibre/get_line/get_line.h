@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 11:24:12 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/10 13:48:07 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/14 08:50:05 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ void	handle_get_line_error(t_env *env);
 bool	new_history_entry(t_env *env);
 void	remove_new_history_entry(t_env *env);
 void	overwrite_new_history_entry(t_line *line, t_env *env);
+void	update_history(t_line *line, t_env *env);
 void	move_in_history(t_line **line, int term_cols, t_env *env);
 void	go_to_last_history_entry(t_env *env);
 bool	set_edit_line(t_line **line, t_env *env);
