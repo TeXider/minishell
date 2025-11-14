@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 11:24:12 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/14 08:50:05 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/14 13:18:31 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	move_cursor(ssize_t distance, size_t index, int term_cols, t_env *env);
 void	reset_line_output(t_line *line, int term_cols, t_env *env);
 void	show_line_output(t_line *line, int term_cols, t_env *env);
 void	rewrite_line(t_line *line, int term_cols, t_env *env);
-bool	get_line(char **dst,  char *prompt, t_env *env);
+bool	get_line(char **dst, char *prompt, t_env *env);
 bool	delete_char(t_line **line, t_env *env);
 bool	handle_keys(t_line **line, t_env *env);
 void	handle_lr_arrows(t_line *line, int term_cols, t_env *env);

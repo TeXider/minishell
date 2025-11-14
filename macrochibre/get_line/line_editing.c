@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 08:35:25 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/14 08:39:07 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/14 13:18:57 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,12 +53,12 @@ bool	delete_char(t_line **line, t_env *env)
 	if (set_edit_line(line, env))
 		return (true);
 	if ((((*line)->curr_char == RETURN || (*line)->curr_char == CTRL_RETURN)
-		&& !(*line)->index)
+			&& !(*line)->index)
 		|| (((*line)->curr_char == DEL || (*line)->curr_char == CTRL_DEL)
-		&& (*line)->index == (*line)->count))
+			&& (*line)->index == (*line)->count))
 		return (false);
 	(*line)->index -= ((*line)->curr_char == RETURN
-		|| (*line)->curr_char == CTRL_RETURN);
+			|| (*line)->curr_char == CTRL_RETURN);
 	move_rest_of_buff_to_left(*line);
 	(*line)->count--;
 	return (false);

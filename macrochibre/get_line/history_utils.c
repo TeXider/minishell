@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/29 14:09:57 by tpanou-d          #+#    #+#             */
-/*   Updated: 2025/10/31 14:52:33 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/14 13:19:23 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ inline bool	set_edit_line(t_line **line, t_env *env)
 	if (env->history->next && env->history->og_line == env->history->edit_line)
 	{
 		if (safe_line_alloc(&env->history->edit_line,
-			env->history->og_line->len, env))
+				env->history->og_line->len, env))
 			return (true);
 		cpy_str(env->history->og_line->buffer, env->history->edit_line->buffer,
 			env->history->og_line->len);

@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/28 17:21:04 by tpanou-d          #+#    #+#             */
-/*   Updated: 2025/10/31 13:52:58 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/14 13:17:43 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,16 @@ static inline size_t	get_jump_len(t_line *line)
 	size_t	i;
 
 	dir = LEFT * (line->curr_char == ARROW_LEFT
-		|| line->curr_char == CTRL_RETURN)
+			|| line->curr_char == CTRL_RETURN)
 		+ RIGHT * (line->curr_char == ARROW_RIGHT
-		|| line->curr_char == CTRL_DEL);
+			|| line->curr_char == CTRL_DEL);
 	len = 1;
 	i = line->index + dir;
 	while (i > 0 && i < line->count
 		&& !(dir == LEFT && line->buffer[i] != ' '
-		&& line->buffer[i - 1] == ' ')
+			&& line->buffer[i - 1] == ' ')
 		&& !(dir == RIGHT && line->buffer[i] == ' '
-		&& line->buffer[i - 1] != ' '))
+			&& line->buffer[i - 1] != ' '))
 	{
 		len++;
 		i += dir;

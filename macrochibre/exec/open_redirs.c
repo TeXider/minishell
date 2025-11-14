@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/14 09:54:07 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/14 13:06:15 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/14 13:11:31 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,14 @@ static inline bool	set_cmd_fds(t_cmd *cmd, size_t redir_i, t_env *env)
 	{
 		safe_close(&cmd->fd_in, STD_IN);
 		if (open_redir(cmd->redirv[redir_i].name, &cmd->fd_in,
-			cmd->redirv[redir_i].type, env))
+				cmd->redirv[redir_i].type, env))
 			return (true);
 	}
 	else if (cmd->redirv[redir_i].type >= OUT)
 	{
 		safe_close(&cmd->fd_out, STD_OUT);
 		if (open_redir(cmd->redirv[redir_i].name, &cmd->fd_out,
-			cmd->redirv[redir_i].type, env))
+				cmd->redirv[redir_i].type, env))
 			return (true);
 	}
 	return (false);

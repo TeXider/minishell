@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_redir.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/29 10:02:10 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/13 17:40:07 by tpanou-d         ###   ########.fr       */
+/*   Updated: 2025/11/14 13:13:32 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static void	init_get_redir(t_cmd_parsing *cmdp, t_rtype *type)
 	cmdp->curr_redir->name = NULL;
 	cmdp->curr_redir->type = EMPTY_REDIR;
 	*type = HDOC * (*(cmdp->str) == '<' && *(cmdp->str + 1) == '<')
-			+ APPND * (*(cmdp->str) == '>' && *(cmdp->str + 1) == '>');
+		+ APPND * (*(cmdp->str) == '>' && *(cmdp->str + 1) == '>');
 	*type += !(*type) * (IN * (*(cmdp->str) == '<')
 			+ OUT * (*(cmdp->str) == '>'));
 	cmdp->str += 1 + (*type == HDOC || *type == APPND);
@@ -91,4 +91,3 @@ bool	get_redir(t_cmd_parsing *cmdp, t_env *env)
 	cmdp->redirv_i += (type != HDOC);
 	return (false);
 }
-

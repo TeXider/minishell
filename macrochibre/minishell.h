@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 09:25:05 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/14 12:18:09 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/14 13:11:02 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@
 
 typedef struct termios	t_term;
 
-extern bool	g_sigint;
+extern bool				g_sigint;
 
 typedef enum e_err
 {
@@ -167,14 +167,14 @@ void	reset_cmd_parsing(t_cmd_parsing *cmdp, t_cmd *cmd);
 bool	go_to_end_of_arg(t_cmd_parsing *cmdp, t_env *env);
 int		go_to_end_of_redir(t_cmd_parsing *cmdp, t_env *env);
 bool	go_to_end_of_cmd(t_cmd_parsing *cmdp, size_t *cmd_list_len,
-	bool *is_empty, t_env *env);
+			bool *is_empty, t_env *env);
 //
 bool	get_argv_redirv(t_cmd_parsing *cmdp, t_env *env);
 bool	get_arg(t_cmd_parsing *cmdp, t_env *env);
 bool	get_hdoc(t_cmd_parsing *cmdp, bool has_expand, t_env *env);
 //
 bool	get_cmd_line(char *line, t_cmd **cmd_list, size_t *cmd_list_len,
-	t_env *env);
+			t_env *env);
 //
 void	safe_free(void **ptr);
 void	free_data(t_cmd *cmd, char *line, t_env *env);
@@ -193,7 +193,7 @@ bool	repipe(int pipes_fds[2], bool is_last_cmd, t_env *env);
 void	init_pipes(t_pipes *pipes);
 void	close_pipes(t_pipes *pipes);
 bool	handle_pipes(t_pipes *pipes, size_t cmd_list_i, size_t cmd_list_len,
-	t_env *env);
+			t_env *env);
 //
 bool	open_redirs(t_cmd *cmd, t_env *env);
 bool	exec_cmd_line(t_cmd *cmd_list, size_t cmd_list_len, t_env *env);

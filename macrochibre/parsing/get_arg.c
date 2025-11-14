@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 09:44:15 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/12 10:45:14 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/14 13:14:01 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static bool	get_arg_len(char *str, size_t *len, t_env *env)
 {
 	t_cmd_parsing	tmp_cmdp;
 	bool			has_arg;
-	
+
 	*len = 0;
 	has_arg = false;
 	init_cmd_parsing(&tmp_cmdp, str);

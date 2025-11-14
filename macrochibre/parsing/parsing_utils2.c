@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/07 09:01:12 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/10 14:06:32 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/14 13:14:55 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,9 @@ inline bool	change_of_sep(t_cmd_parsing *cmdp)
 inline bool	is_end_of_redir(t_cmd_parsing *cmdp)
 {
 	return (!cmdp->in_expand && (*(cmdp->str) == '\0' || (cmdp->sep == ' '
-		&& (*(cmdp->str) == ' ' || *(cmdp->str) == '>' || *(cmdp->str) == '<'
-			|| is_end_of_cmd(cmdp)))));
+				&& (*(cmdp->str) == ' '
+					|| *(cmdp->str) == '>' || *(cmdp->str) == '<'
+					|| is_end_of_cmd(cmdp)))));
 }
 
 inline bool	is_end_of_hdoc(char *del, char *line)

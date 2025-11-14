@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/28 17:13:27 by tpanou-d          #+#    #+#             */
-/*   Updated: 2025/11/14 08:57:43 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/14 13:18:14 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ inline void	move_in_history(t_line **line, int term_cols, t_env *env)
 {
 	if (((*line)->curr_char == ARROW_UP && !env->history->prev)
 		|| ((*line)->curr_char == ARROW_DOWN && !env->history->next))
-			return ;
+		return ;
 	if ((*line)->curr_char == ARROW_UP)
 		env->history = env->history->prev;
 	else if ((*line)->curr_char == ARROW_DOWN)
