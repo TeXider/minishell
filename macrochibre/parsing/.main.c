@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   .main.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/10 10:53:41 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/13 16:09:12 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/13 18:11:19 by tpanou-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ int	main(int argc, char **argv, char **envp)
 	t_cmd	*cmd_list;
 	size_t	cmd_list_len;
 	t_cmd	empty_cmd;
+	while (true)
+	{
 	set_new_cmd(&empty_cmd, &env);
 	cmd_list = &empty_cmd;
 	get_line(&input, "paf malfaisant> ", &env);
@@ -56,15 +58,15 @@ int	main(int argc, char **argv, char **envp)
 		}
 		if (cmd_list[i].fd_in != STD_IN)
 		{
-			pid_t child;
-			child = fork();
-			if (!child)
+			char	buff[2048];
+			size_t	size;
+			for (int x = 0; x < 2048; x++)
 			{
-				char *argv[2];
-				argv[0] = "cat";
-				argv[1] = NULL;
-				dup2(cmd_list[i].fd_in, STD_IN);
-				execve("/usr/bin/cat", argv, envp);
+				size = read(cmd_list[i].fd_in, buff, 1);
+				if (!size)
+					break ;
+				for  (i = 0; i < (size_t)size; i++)
+					write(1, buff + i, 1);
 			}
 		}
 		if (cmd_list[i].argv && *(cmd_list[i].argv))
@@ -90,5 +92,6 @@ int	main(int argc, char **argv, char **envp)
 	if (i)
 		free(cmd_list);
 	free(input);
+	}
 	free(env.envp);
 }

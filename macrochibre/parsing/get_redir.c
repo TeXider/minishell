@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_redir.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/29 10:02:10 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/13 16:16:53 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/13 17:40:07 by tpanou-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ bool	get_redir(t_cmd_parsing *cmdp, t_env *env)
 	}
 	if (type == HDOC && get_hdoc(cmdp, (status != HAS_QUOTES), env))
 		return (true);
-	if (type != HDOC && cmdp->cmd->fd_in_type == HDOC)
+	if ((type == IN || type == AMBI_REDIR) && cmdp->cmd->fd_in_type == HDOC)
 		safe_close(&cmdp->cmd->fd_in, STD_IN);
 	cmdp->curr_redir->type = type * (type != HDOC);
 	cmdp->redirv_i += (type != HDOC);
