@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 09:50:16 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/13 16:06:19 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/14 09:13:05 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ bool	get_cmd_line(char *line, t_cmd **cmd_list, size_t *cmd_list_len,
 	*cmd_list_len = 0;
 	if (check_line_parsing(line, cmd_list_len, env))
 		return (true);
-	if (!cmd_list_len)
+	if (!*cmd_list_len)
 		return (false);
 	if (safe_malloc((void **) cmd_list, sizeof(t_cmd) * (*cmd_list_len), env))
 		return (true);
