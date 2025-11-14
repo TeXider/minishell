@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 08:14:55 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/10 13:22:34 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/14 11:34:09 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ void	throw_error(t_env *env)
 		printf("t'as pas fermé la quote zeubi : %c\n", *(env->culprit));
 	else if (env->err == UNEXPECTED_TOKEN_ERR)
 		printf("balletrou qu'est-ce que tu veux que je fasse avec ça: %c\n", *(env->culprit));	
-	exit(0);
 }
 
 bool	create_error(char *culprit, t_err err, t_env *env)

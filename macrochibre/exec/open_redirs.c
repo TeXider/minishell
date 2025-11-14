@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   set_redirs.c                                       :+:      :+:    :+:   */
+/*   open_redirs.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/14 09:54:07 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/14 11:03:55 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/14 13:06:15 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,14 @@ static inline bool	set_cmd_fds(t_cmd *cmd, size_t redir_i, t_env *env)
 {
 	if (cmd->fd_in_type != HDOC && cmd->redirv[redir_i].type == IN)
 	{
-		safe_close(cmd->fd_in, STD_IN);
+		safe_close(&cmd->fd_in, STD_IN);
 		if (open_redir(cmd->redirv[redir_i].name, &cmd->fd_in,
 			cmd->redirv[redir_i].type, env))
 			return (true);
 	}
 	else if (cmd->redirv[redir_i].type >= OUT)
 	{
-		safe_close(cmd->fd_in, STD_OUT);
+		safe_close(&cmd->fd_out, STD_OUT);
 		if (open_redir(cmd->redirv[redir_i].name, &cmd->fd_out,
 			cmd->redirv[redir_i].type, env))
 			return (true);
@@ -46,18 +46,20 @@ static inline bool	set_cmd_fds(t_cmd *cmd, size_t redir_i, t_env *env)
 	return (false);
 }
 
-bool	set_redirs(t_cmd *cmd, t_env *env)
+bool	open_redirs(t_cmd *cmd, t_env *env)
 {
 	size_t	i;
 
 	i = -1;
 	while (++i < cmd->redirv_len)
 	{
-		if (cmd->redirv[i].type = AMBI_REDIR)
+		if (cmd->redirv[i].type == AMBI_REDIR)
 		{
 			create_error(cmd->redirv[i].name, AMBI_REDIR_ERR, env);
 			return (true);
 		}
+		if (set_cmd_fds(cmd, i, env))
+			return (true);
 	}
 	return (false);
 }

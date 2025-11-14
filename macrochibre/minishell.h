@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 09:25:05 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/14 10:38:08 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/14 12:18:09 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,7 +195,8 @@ void	close_pipes(t_pipes *pipes);
 bool	handle_pipes(t_pipes *pipes, size_t cmd_list_i, size_t cmd_list_len,
 	t_env *env);
 //
-bool	exec_cmd_line(char **line, size_t cmd_count, t_env *env);
+bool	open_redirs(t_cmd *cmd, t_env *env);
+bool	exec_cmd_line(t_cmd *cmd_list, size_t cmd_list_len, t_env *env);
 //
 bool	get_line(char **dst, char *prompt, t_env *env);
 //

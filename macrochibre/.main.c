@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   .main.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/10 10:53:41 by almighty          #+#    #+#             */
-/*   Updated: 2025/10/16 10:03:13 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/14 12:20:47 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,34 +19,19 @@ static inline void	init_env(t_env *env, char **envp)
 	env->empty_list[0] = NULL;
 	env->empty_list[1] = NULL;
 	env->err = 0;
+	env->is_ctrl = false;
+	env->history = NULL;
+	env->update_history = true;
 }
 
-static inline bool	get_input(char *input, t_env *env)
+static inline void	raboushell(char *input, t_env *env)
 {
-	ssize_t	nbytes;
-
-	write(1, "microchibre   $ ", 15);
-	nbytes = read(0, input, 499);
-	if (nbytes == -1)
-		return (create_error("read()", SYS_ERR, env));
-	input[nbytes] = '\0';
-	return (!nbytes);
-}
-
-static inline void	exec_input(char *input, t_env *env)
-{
-	size_t	cmd_count;
-
-	while (*input)
-	{
-		if (check_line_parsing(input, &cmd_count, &env)
-			|| exec_cmd_line(&input, cmd_count, env))
-		{
-			print_err(&env);
-			return ;
-		}
-		input += (*input != '\0');
-	}
+	t_cmd	*cmd_list;
+	size_t	cmd_list_len;
+	
+	if (get_cmd_line(input, &cmd_list, &cmd_list_len, env)
+		|| exec_cmd_line(cmd_list, cmd_list_len, env))
+		throw_error(env);
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -54,11 +39,15 @@ int	main(int argc, char **argv, char **envp)
 	t_env	env;
 	char	*input;
 
+	(void) argc;
+	(void) argv;
 	init_env(&env, envp);
-	if (safe_challoc(&input, 500, &env))
-		throw_error(&env);
-	while (!get_input(input, &env))
-		exec_input(input, &env);
-	free(input);
+	while (true)
+	{
+		if (get_line(&input, "raboushell> ", &env))
+			return (true);
+		raboushell(input, &env);
+		free(input);
+	}
 	return (0);
 }

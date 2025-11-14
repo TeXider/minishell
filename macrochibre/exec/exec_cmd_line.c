@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 08:54:12 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/14 10:38:35 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/14 12:27:51 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ static inline void	exec_cmd(t_cmd *cmd, t_pipes *pipes, t_env *env)
 		create_error("dup2()", SYS_ERR, env);
 		return ;
 	}
-	if (!cmd->fd_in_type != PIPE)
+	if (cmd->fd_in_type != PIPE)
 		safe_close(&cmd->fd_in, FD_NULL);
-	if (!cmd->fd_out_type != PIPE)
+	if (cmd->fd_out_type != PIPE)
 		safe_close(&cmd->fd_out, FD_NULL);
 	close_pipes(pipes);
 	execve(cmd->argv[0], cmd->argv, env->envp);
@@ -42,14 +42,16 @@ static inline bool	handle_fork(t_cmd *cmd, pid_t *pid, t_pipes *pipes,
 	if (!*pid)
 	{
 		if (open_redirs(cmd, env)
-			|| get_path(cmd, env))
+			/*|| get_path(cmd, env)*/)
 			return (true);
 		cmd->fd_in += (pipes->fd_read - cmd->fd_in) * (cmd->fd_in == STD_IN);
-		cmd->fd_in_type += (PIPE - STD) * (cmd->fd_in_type = STD);
-		cmd->fd_out = (pipes->fd_write - cmd->fd_out)
+		cmd->fd_in_type = (PIPE - STD) * (cmd->fd_in_type == STD)
+			+ cmd->fd_in_type;
+		cmd->fd_out += (pipes->fd_write - cmd->fd_out)
 			* (cmd->fd_out == STD_OUT);
-		cmd->fd_out_type = (PIPE - STD) * (cmd->fd_in_type == STD);
-		exec_cmd(&cmd, pipes, env);
+		cmd->fd_out_type = (PIPE - STD) * (cmd->fd_in_type == STD)
+			+ cmd->fd_in_type;
+		exec_cmd(cmd, pipes, env);
 		close_pipes(pipes);
 		return (true);
 	}
