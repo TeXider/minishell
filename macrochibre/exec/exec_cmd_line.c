@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 08:54:12 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/05 13:46:39 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/14 10:38:35 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,25 @@
 
 static inline void	exec_cmd(t_cmd *cmd, t_pipes *pipes, t_env *env)
 {
-	if (dup2(cmd->fd_in, STD_IN) == -1 || dup2(cmd->fd_out, STD_OUT) == -1)
+	if (dup2(cmd->fd_in, STD_IN) == -1
+		|| dup2(cmd->fd_out, STD_OUT) == -1)
 	{
 		create_error("dup2()", SYS_ERR, env);
 		return ;
 	}
-	if (!cmd->is_fd_in_pipe)
-		safe_close(&cmd->fd_in);
-	if (!cmd->is_fd_out_pipe)
-		safe_close(&cmd->fd_out);
+	if (!cmd->fd_in_type != PIPE)
+		safe_close(&cmd->fd_in, FD_NULL);
+	if (!cmd->fd_out_type != PIPE)
+		safe_close(&cmd->fd_out, FD_NULL);
 	close_pipes(pipes);
 	execve(cmd->argv[0], cmd->argv, env->envp);
 	create_error("execve()", SYS_ERR, env);
 }
 //add if is_builtin() exec_builtin(); else execve()
 
-static inline bool	handle_fork(pid_t *pid, t_pipes *pipes, char *line,
+static inline bool	handle_fork(t_cmd *cmd, pid_t *pid, t_pipes *pipes,
 	t_env *env)
 {
-	t_cmd	cmd;
-
 	*pid = fork();
 	if (*pid == -1)
 	{
@@ -42,22 +41,22 @@ static inline bool	handle_fork(pid_t *pid, t_pipes *pipes, char *line,
 	}
 	if (!*pid)
 	{
-		set_new_cmd(&cmd, env);
-		cmd.fd_in = pipes->fd_read;
-		cmd.is_fd_in_pipe = true;
-		cmd.fd_out = pipes->fd_write;
-		cmd.is_fd_out_pipe = true;
-		if (!get_cmd(&line, &cmd, env) && !get_path(&cmd, env))
-			exec_cmd(&cmd, pipes, env);
+		if (open_redirs(cmd, env)
+			|| get_path(cmd, env))
+			return (true);
+		cmd->fd_in += (pipes->fd_read - cmd->fd_in) * (cmd->fd_in == STD_IN);
+		cmd->fd_in_type += (PIPE - STD) * (cmd->fd_in_type = STD);
+		cmd->fd_out = (pipes->fd_write - cmd->fd_out)
+			* (cmd->fd_out == STD_OUT);
+		cmd->fd_out_type = (PIPE - STD) * (cmd->fd_in_type == STD);
+		exec_cmd(&cmd, pipes, env);
 		close_pipes(pipes);
-		free_data(&cmd, line, env);
-		throw_error(env);
+		return (true);
 	}
 	return (false);
 }
 
-bool	exec_cmd_line(char **line, t_cmd *cmd_list, size_t cmd_list_len,
-	t_env *env)
+bool	exec_cmd_line(t_cmd *cmd_list, size_t cmd_list_len, t_env *env)
 {
 	t_pipes	pipes;
 	pid_t	pid;
@@ -67,11 +66,9 @@ bool	exec_cmd_line(char **line, t_cmd *cmd_list, size_t cmd_list_len,
 	i = -1;
 	while (++i < cmd_list_len)
 	{
-		if ((cmd_list_len > 1
-				&& handle_pipes(&pipes, i == cmd_list_len - 1, env))
-			|| handle_fork(&pid, &pipes, *line, env))
+		if (handle_pipes(&pipes, i, cmd_list_len, env)
+			|| handle_fork(cmd_list + i, &pid, &pipes, env))
 			return (true);
-		*line = cmd_list[i].start_ptr;
 		pipes.is_next_pipe = !pipes.is_next_pipe;
 	}
 	close_pipes(&pipes);

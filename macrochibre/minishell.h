@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 09:25:05 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/12 11:25:37 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/14 10:38:08 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,7 +192,8 @@ void	safe_close(int *fd, int new_fd);
 bool	repipe(int pipes_fds[2], bool is_last_cmd, t_env *env);
 void	init_pipes(t_pipes *pipes);
 void	close_pipes(t_pipes *pipes);
-bool	handle_pipes(t_pipes *pipes, bool is_last_cmd, t_env *env);
+bool	handle_pipes(t_pipes *pipes, size_t cmd_list_i, size_t cmd_list_len,
+	t_env *env);
 //
 bool	exec_cmd_line(char **line, size_t cmd_count, t_env *env);
 //
