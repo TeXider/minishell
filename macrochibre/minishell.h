@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 09:25:05 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/14 13:11:02 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/14 14:21:49 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ typedef struct s_redir
 typedef struct s_cmd
 {
 	char	*path;
+	bool	cmd_name_is_path;
 	char	**argv;
 	t_redir	*redirv;
 	size_t	redirv_len;

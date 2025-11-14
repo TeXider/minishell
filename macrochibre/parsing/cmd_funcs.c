@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 10:15:58 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/14 11:38:22 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/14 14:22:00 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 inline void	set_new_cmd(t_cmd *cmd, t_env *env)
 {
 	cmd->path = NULL;
+	cmd->cmd_name_is_path = false;
 	cmd->argv = env->empty_list;
 	cmd->redirv = NULL;
 	cmd->redirv_len = 0;

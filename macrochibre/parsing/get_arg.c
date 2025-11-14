@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 09:44:15 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/14 13:14:01 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/14 14:23:55 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ static void	add_char_to_arg(t_cmd_parsing *cmdp, size_t *arg_i)
 		cmdp->curr_arg[*arg_i] = *(cmdp->str);
 		(*arg_i)++;
 	}
+	cmdp->cmd->cmd_name_is_path |= (!cmdp->argv_i && *(cmdp->str) == '/');
 	cmdp->str++;
 }
 
