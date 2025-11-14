@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 08:55:49 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/13 16:19:06 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/14 11:24:58 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ bool	get_hdoc(t_cmd_parsing *cmdp, bool has_expand, t_env *env)
 	}
 	if (open_hdoc(cmdp->curr_redir->name, hdoc_fds[P_WRITE], has_expand, env))
 	{
+		safe_free((void **) &cmdp->curr_redir->name);
 		close(hdoc_fds[P_READ]);
 		close(hdoc_fds[P_WRITE]);
 		return (true);
