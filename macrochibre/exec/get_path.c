@@ -6,11 +6,47 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/14 13:41:55 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/14 14:38:39 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/17 12:09:04 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+static inline void	get_join_path_lens(size_t *path_len, size_t *name_len,
+	char *path, char *name)
+{
+	*path_len = 0;
+	*name_len = 0;
+	while ((path[*path_len] && path[*path_len] != ':') || name[*name_len])
+	{
+		*path_len += (path[*path_len] && path[*path_len] != ':');
+		*name_len += (name[*name_len] != '\0');
+	}
+}
+
+static inline bool	join_path(char **path_dst, char **path_var, char *cmd_name,
+	t_env *env)
+{
+	size_t	path_len;
+	size_t	name_len;
+	size_t	i;
+
+	get_join_path_lens(&path_len, &name_len, *path_var, cmd_name);
+	if (safe_challoc(path_dst, path_len + name_len + 1, env))
+		return (true);
+	i = -1;
+	while (++i < path_len + name_len + 1)
+	{
+		if (i < path_len)
+			(*path_dst)[i] = (*path_var)[i];
+		else if (i == path_len)
+			(*path_dst)[i] = '/';
+		else
+			(*path_dst)[i] = cmd_name[i - 1 - path_len];
+	}
+	*path_var += path_len + ((*path_var)[path_len] == ':');
+	return (false);
+}
 
 static inline bool	get_path_var(char **path_var, t_env *env)
 {
@@ -26,7 +62,7 @@ static inline bool	get_path_var(char **path_var, t_env *env)
 			&& env->envp[i][4] == '=')
 		{
 			*path_var = env->envp[i] + 5;
-			return (*path_var == '\0');
+			return (**path_var == '\0');
 		}
 	}
 	return (true);
@@ -35,7 +71,6 @@ static inline bool	get_path_var(char **path_var, t_env *env)
 bool	get_path(t_cmd *cmd, t_env *env)
 {
 	char	*path_var;
-	char	*path;
 	
 	if (cmd->cmd_name_is_path
 		|| get_path_var(&path_var, env))
@@ -45,10 +80,12 @@ bool	get_path(t_cmd *cmd, t_env *env)
 	}
 	while (*path_var)
 	{
-		if (join_path(&path, cmd->argv[0]))
+		if (join_path(&cmd->path, &path_var, cmd->argv[0], env))
 			return (true);
-		if (access(path, O_EXCL))
-			return (true);
-		//blah blah blah i'm DONE FOR THE WEEK YEEEEE
+		if (!access(cmd->path, F_OK | X_OK))
+			return (false);
+		free(cmd->path);
 	}
+	create_error(cmd->argv[0], EXEC_ERR, env);
+	return (true);
 }
