@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 08:54:12 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/18 11:37:52 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/18 18:08:13 by tpanou-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static inline void	exec_cmd(t_cmd *cmd, t_pipes *pipes, t_env *env)
 	if (cmd->fd_out_type != PIPE)
 		safe_close(&cmd->fd_out, FD_NULL);
 	close_pipes(pipes);
-	execve(cmd->argv[0], cmd->argv, env->envp);
+	execve(cmd->path, cmd->argv, env->envp);
 	create_error("execve()", SYS_ERR, env);
 }
 //add if is_builtin() exec_builtin(); else execve()
