@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 11:26:24 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/17 12:13:07 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/18 12:07:12 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int	main(int argc, char **argv, char **envp)
 	while (*(cmd.path))
 		write(1, cmd.path++, 1);
 	write(1, "\n", 1);
-	free(tmp);
+	if (tmp != cmd.argv[0])
+		free(tmp);
 	free(cmd.argv);
 }

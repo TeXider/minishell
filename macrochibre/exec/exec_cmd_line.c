@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 08:54:12 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/14 12:27:51 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/18 11:37:52 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static inline bool	handle_fork(t_cmd *cmd, pid_t *pid, t_pipes *pipes,
 	if (!*pid)
 	{
 		if (open_redirs(cmd, env)
-			/*|| get_path(cmd, env)*/)
+			|| get_path(cmd, env))
 			return (true);
 		cmd->fd_in += (pipes->fd_read - cmd->fd_in) * (cmd->fd_in == STD_IN);
 		cmd->fd_in_type = (PIPE - STD) * (cmd->fd_in_type == STD)

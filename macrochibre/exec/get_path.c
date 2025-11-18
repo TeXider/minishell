@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/14 13:41:55 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/17 12:09:04 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/18 12:12:13 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,20 +31,26 @@ static inline bool	join_path(char **path_dst, char **path_var, char *cmd_name,
 	size_t	name_len;
 	size_t	i;
 
+	*path_var += (**path_var == ':' && *(*path_var - 1) != '=');
 	get_join_path_lens(&path_len, &name_len, *path_var, cmd_name);
+	if (!path_len)
+	{
+		*path_dst = cmd_name;
+		return (false);
+	}
 	if (safe_challoc(path_dst, path_len + name_len + 1, env))
 		return (true);
 	i = -1;
-	while (++i < path_len + name_len + 1)
+	while (++i < path_len + name_len + (path_len != 0))
 	{
 		if (i < path_len)
 			(*path_dst)[i] = (*path_var)[i];
-		else if (i == path_len)
+		else if (path_len && i == path_len)
 			(*path_dst)[i] = '/';
 		else
-			(*path_dst)[i] = cmd_name[i - 1 - path_len];
+			(*path_dst)[i] = cmd_name[i - (path_len != 0) - path_len];
 	}
-	*path_var += path_len + ((*path_var)[path_len] == ':');
+	*path_var += path_len;
 	return (false);
 }
 
@@ -84,7 +90,8 @@ bool	get_path(t_cmd *cmd, t_env *env)
 			return (true);
 		if (!access(cmd->path, F_OK | X_OK))
 			return (false);
-		free(cmd->path);
+		if (cmd->path != cmd->argv[0])
+			free(cmd->path);
 	}
 	create_error(cmd->argv[0], EXEC_ERR, env);
 	return (true);
