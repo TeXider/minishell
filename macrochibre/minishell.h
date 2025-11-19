@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 09:25:05 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/17 11:33:55 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/19 09:16:45 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ typedef enum e_err
 	AMBI_REDIR_ERR,
 	UNCLOSED_QUOTES_ERR,
 	UNEXPECTED_TOKEN_ERR,
+	BUILTIN_ERR,
 }	t_err;
 
 typedef enum e_rtype
