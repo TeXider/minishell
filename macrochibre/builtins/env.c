@@ -1,47 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo.c                                             :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/18 18:40:50 by tpanou-d          #+#    #+#             */
-/*   Updated: 2025/11/21 09:02:29 by almighty         ###   ########.fr       */
+/*   Created: 2025/11/20 11:54:05 by almighty          #+#    #+#             */
+/*   Updated: 2025/11/20 11:56:06 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-bool	check_new_line(char *arg)
+void	builtin_env(t_env *env)
 {
-	if (*arg != '-')
-		return (true);
-	arg++;
-	while (*arg == 'n')
-		arg++;
-	return (!*arg && *(arg - 1) != '-');
-}
+	size_t	i;
 
-void	builtin_echo(char **args)
-{
-	bool	has_new_line;
-
-	if (!*args)
+	i = 0;
+	while (env->envp[i])
 	{
+		print_str(env->envp);
 		write(1, "\n", 1);
-		return ;
+		i++;
 	}
-	has_new_line = true;
-	while (*args && !check_new_line(*args))
-	{
-		has_new_line = false;
-		args++;
-	}
-	while (*args)
-	{
-		print_str(*args);
-		write(1, " ", *(args + 1) != NULL);
-		args++;
-	}
-	write(1, "\n", has_new_line);
 }
