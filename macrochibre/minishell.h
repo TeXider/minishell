@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 09:25:05 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/19 09:16:45 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/21 10:38:30 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,25 @@
 # define P_WRITE 1
 # define CULPRIT_LENGTH 32
 
+typedef unsigned char	t_uchar;
 typedef struct termios	t_term;
+extern int				g_sig;
 
-extern bool				g_sigint;
+typedef enum s_varop
+{
+	TO_EXPORT,
+	TO_ENV,
+	TO_ENV_APPND,
+}	t_varop;
+
+typedef enum s_var_stat
+{
+	VAR_ERROR,
+	VAR_DOES_NOT_EXIST,
+	VAR_FOUND,
+	VAR_IN_EXPORT,
+	VAR_IN_ENV
+}	t_var_stat;
 
 typedef enum e_err
 {
@@ -52,6 +68,23 @@ typedef enum e_err
 	UNEXPECTED_TOKEN_ERR,
 	BUILTIN_ERR,
 }	t_err;
+
+typedef enum e_builtin_err
+{
+	ECHO_ERR,
+	CD_ERR,
+	PWD_ERR,
+	EXPORT_ERR,
+	UNSET_ERR,
+	ENV_ERR,
+	EXIT_ERR
+}	t_builtin_err;
+
+typedef enum e_builtin_err_ctxt
+{
+	INVALID_PARAM,
+	TOO_MANY_PARAMS
+}	t_builtin_err_ctxt;
 
 typedef enum e_rtype
 {
@@ -101,9 +134,18 @@ typedef struct s_hist
 	struct s_hist	*prev;
 }	t_hist;
 
+typedef struct s_exprt
+{
+	char			*name;
+	struct s_exprt	*next;
+}	t_exprt;
+
 typedef struct s_env
 {
 	char	**envp;
+	t_exprt	*exportp;
+	size_t	envp_len;
+	size_t	export_len;
 	char	empty_string[1];
 	char	*empty_list[2];
 	//
@@ -120,6 +162,8 @@ typedef struct s_env
 	pid_t	last_pid;
 	t_err	err;
 	char	culprit[CULPRIT_LENGTH];
+	t_uchar	exit_code;
+	bool	exit_cmd;
 }	t_env;
 
 typedef struct s_cmd_parsing
