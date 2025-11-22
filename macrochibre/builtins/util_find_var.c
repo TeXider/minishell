@@ -6,64 +6,44 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/21 09:14:27 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/21 11:01:45 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/22 14:35:26 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static inline bool	is_in_exportp(char *var, size_t *var_index, t_env *env)
+static inline bool	is_var_in_list(char *var, char **list, size_t *var_index)
 {
-	t_exprt	*curr_exprt;
-	size_t	iter_count;
+	size_t	list_i;
 	size_t	cmp_i;
 
-	curr_exprt = env->exportp;
-	iter_count = 0;
-	while (curr_exprt)
+	list_i = 0;
+	while (list[list_i])
 	{
 		cmp_i = 0;
-		while (var[cmp_i] == curr_exprt->name[cmp_i])
+		while (var[cmp_i] == list[list_i][cmp_i])
 			cmp_i++;
-		if (!curr_exprt->name[cmp_i]
+		if (list[list_i][cmp_i] == '='
 			&& (!var[cmp_i] || var[cmp_i] == '=' || var[cmp_i] == '+'))
 		{
-			*var_index = iter_count;
+			*var_index = list_i;
 			return (true);
 		}
-		curr_exprt = curr_exprt->next;
-		iter_count++;
+		list_i++;
 	}
 	return (false);
 }
 
-static inline bool	is_in_envp(char *var, size_t *var_index, t_env *env)
-{
-	size_t	envp_i;
-	size_t	cmp_i;
-
-	envp_i = 0;
-	while (env->envp[envp_i])
-	{
-		cmp_i = 0;
-		while (var[cmp_i] == env->envp[envp_i][cmp_i])
-			cmp_i++;
-		if (env->envp[envp_i][cmp_i] == '='
-			&& (!var[cmp_i] || var[cmp_i] == '=' || var[cmp_i] == '+'))
-		{
-			*var_index = envp_i;
-			return (true);
-		}
-		envp_i++;
-	}
-	return (false);
-}
-
-t_var_stat	find_var(char *var, size_t *var_index, t_env *env)
+void	find_var(char *var, size_t *var_index, int *var_info, t_env *env)
 {
 	if (is_in_envp(var, var_index, env))
 		return (VAR_IN_ENV);
-	if (is_in_exportp(var, var_index, env))
+	else if (is_in_exportp(var, var_index, env))
 		return (VAR_IN_EXPORT);
-	return (VAR_DOES_NOT_EXIST);
+	else
+	{
+		*var_index = env->envp_len * ((*var_info & VAR_OPERATION) != TO_EXPORT)
+			+ env->exportp_len * ((*var_info & VAR_OPERATION) == TO_EXPORT);
+		*var_info |= VAR_STAT & VAR_DOES_NOT_EXIST;
+	}
 }

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   export.c                                           :+:      :+:    :+:   */
+/*   .deprecated_export.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 18:59:47 by tpanou-d          #+#    #+#             */
-/*   Updated: 2025/11/20 09:38:32 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/22 14:35:26 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ static inline bool	get_new_var(char *export, char **new_var, t_varop *var_op,
 static inline bool	get_new_list(char ***new_list, t_varop var_op, t_env *env)
 {
 	if (safe_lalloc(new_list, env->envp_len + (var_op == TO_EXPORT)
-			* (env->export_len - env->envp_len) + 1, env))
+			* (env->exportp_len - env->envp_len) + 1, env))
 		return (true);
 	if (var_op == TO_EXPORT)
 		cpy_list(env->export, *new_list);
@@ -120,7 +120,7 @@ static inline bool	create_var(char *export, t_env *env)
 	}
 	if (var_op == TO_EXPORT)
 	{
-		new_list[env->export_len] = new_var;
+		new_list[env->exportp_len] = new_var;
 		free(env->export);
 		env->export = new_list;
 	}
