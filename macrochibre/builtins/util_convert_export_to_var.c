@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   export_utils.c                                     :+:      :+:    :+:   */
+/*   util_convert_export_to_var.c                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/21 10:48:16 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/22 12:08:08 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/22 15:03:06 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@ static inline size_t	str_len(char *str)
 	return (len);
 }
 
-static inline size_t	compute_var_len(char *export, int var_info,
-	size_t var_index, t_env *env)
+static inline size_t	compute_var_len(char *export, t_var_info *var_info,
+	t_env *env)
 {
 	size_t	name_len;
 	size_t	var_len;
@@ -49,44 +49,42 @@ static inline size_t	compute_var_len(char *export, int var_info,
 	while (is_var_char(export[name_len]))
 		name_len++;
 	var_len = name_len;
-	if ((var_info & VAR_STAT) == VAR_IN_ENV
-		&& (var_info & VAR_OPERATION) == TO_ENV_APPND)
-		var_len += str_len(env->envp[var_index] + name_len + 1);
+	if (var_info->stat == VAR_IN_ENV
+		&& var_info->operation == TO_ENV_APPND)
+		var_len += str_len(env->envp[var_info->index] + name_len + 1);
 	var_len += str_len(export + name_len
-		+ ((var_info & VAR_OPERATION) != TO_EXPORT)
-		+ ((var_info & VAR_OPERATION) == TO_ENV_APPND));
-	printf("%zu\n", var_len + 1);
-	return (var_len + ((var_info & VAR_OPERATION) != TO_EXPORT));
+		+ (var_info->operation != TO_EXPORT)
+		+ (var_info->operation == TO_ENV_APPND));
+	return (var_len + (var_info->operation != TO_EXPORT));
 }
 
-char	*convert_export_to_var(char *export, int var_info, size_t var_index,
-	t_env *env)
+char	*convert_export_to_var(char *export, char **var_dst,
+	t_var_info *var_info, t_env *env)
 {
-	char	*new_var;
 	bool	has_passed_operator;
 	size_t	i;
 
-	if (safe_challoc(&new_var,
-		compute_var_len(export, var_info, var_index, env), env))
-		return (NULL);
+	if (safe_challoc(var_dst,
+		compute_var_len(export, var_info, env), env))
+		return (true);
 	has_passed_operator = false;
 	i = 0;
 	while (*export)
 	{
 		export += (!has_passed_operator && (*export == '+'));
-		new_var[i] = *export;
+		(*var_dst)[i] = *export;
 		i++;
 		if (!has_passed_operator && ((*export == '=')))
 		{
 			has_passed_operator = true;
-			if ((var_info & VAR_STAT) == VAR_IN_ENV
-				&& (var_info & VAR_OPERATION) == TO_ENV_APPND)
-				appnd_env_var(var_index, new_var, &i, env);
+			if (var_info->stat == VAR_IN_ENV
+				&& var_info->operation == TO_ENV_APPND)
+				appnd_env_var(var_info->index, var_dst, &i, env);
 		}
 		export++;
 	}
-	new_var[i] = '\0';
-	return (new_var);
+	(*var_dst)[i] = '\0';
+	return (false);
 }
 
 int	main(int argc, char **argv)
