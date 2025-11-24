@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 08:58:05 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/14 13:19:12 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/22 14:06:56 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,3 +93,4 @@ inline void	rewrite_line(t_line *line, int term_cols, t_env *env)
 			env->prev_line_count, term_cols, env);
 	move_cursor(line->index - line->count, line->count, term_cols, env);
 }
+//CONDITIONAL INDICATION SIZE_T
