@@ -6,34 +6,38 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/20 09:43:51 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/22 15:07:09 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/24 13:59:11 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+static inline void	replace_var(char **list, size_t index, char *new_var)
+{
+	free(list[index]);
+	list[index] = new_var;
+}
 
 static inline bool	compute_export(char *export, t_var_info *var_info,
 	t_env *env)
 {
 	char	*new_var;
 	
+	if (export[0] == '_' && !is_var_char(export[1]))
+		return (false);
 	find_var(export, var_info, env);
+	if (var_info->stat != VAR_DOES_NOT_EXIST
+		&& var_info->operation == TO_EXPORTP)
+		return (false);
 	if (convert_export_to_var(export, &new_var, var_info, env))
 		return (true);
-	if (var_info->operation == TO_EXPORT)
-	{
-		if (resize_list(&env->exportp, env->exportp_len, env->exportp_len + 1,
-			var_info))
-			return (true);
-		env->exportp[var_info->index] = new_var;
-	}
-	else
-	{
-		if (resize_list(&env->envp, env->envp_len, env->envp_len + 1,
-			var_info))
-			return (true);
-		env->envp[var_info->index] = new_var;
-	}
+	if (var_info->stat != VAR_DOES_NOT_EXIST)
+		replace_var(env->exportp, var_info->exportp_index, new_var);
+	if (var_info->stat == VAR_IN_ENVP)
+		replace_var(env->envp, var_info->envp_index, new_var);
+	if ((var_info->stat == VAR_DOES_NOT_EXIST && add_to_exportp(new_var, env))
+		|| (var_info->stat != VAR_IN_ENVP && add_to_envp(new_var, env)))
+		return (true);
 	return (false);
 }
 
@@ -43,11 +47,36 @@ static inline bool	check_export_parsing(char *export, t_var_info *var_info)
 		return (true);
 	while (is_var_char(*export))
 		export++;
-	var_info->operation = TO_EXPORT * (!*export)
-		+ TO_ENV * (*export == '=')
-		+ TO_ENV_APPND * (*export == '+');
+	var_info->operation = TO_EXPORTP * (!*export)
+		+ TO_ENVP * (*export == '=')
+		+ TO_ENVP_APPND * (*export == '+');
 	return (*export
 		&& (*export != '=' || (*export == '+' && *(export + 1) != '=')));
+}
+
+static inline void	print_export(t_env *env)
+{
+	size_t	i;
+	size_t	j;
+
+	i = -1;
+	while (++i < env->exportp_len)
+	{
+		if (env->exportp[i][0] == '_' && env->exportp[i][1] == '=')
+			continue ;
+		write(1, "declare -x ", 11);
+		j = -1;
+		while (is_var_char(env->exportp[i][++j]))
+			write(1, env->exportp[i][j], 1);
+		if (env->exportp[i][j] == '=')
+		{
+			write(1, "=\"", 2);
+			while (env->exportp[i][++j])
+				write(1, env->exportp[i][j], 1);
+			write(1, "\"", 1);
+		}
+		write(1, "\n", 1);
+	}
 }
 
 bool	builtin_export(char **args, t_env *env)
@@ -67,9 +96,8 @@ bool	builtin_export(char **args, t_env *env)
 		{
 			throw_builtin_error(*args, EXPORT_ERR, INVALID_PARAM, env);
 			has_error = true;
-			continue ;
 		}
-		if (compute_export(*args, &var_info, env))
+		else if (compute_export(*args, &var_info, env))
 			return (true);
 		args++;
 	}

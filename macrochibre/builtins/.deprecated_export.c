@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 18:59:47 by tpanou-d          #+#    #+#             */
-/*   Updated: 2025/11/22 14:35:26 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/24 13:30:23 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,16 +78,16 @@ static inline bool	get_new_var(char *export, char **new_var, t_varop *var_op,
 	char	**var_addrs;
 	
 	name_len = var_name_len(export);
-	*var_op = TO_EXPORT * (!*(export + name_len))
-		+ TO_ENV * (*(export + name_len) == '=')
-		+ TO_ENV_APPND * (*(export + name_len) == '+');
+	*var_op = TO_EXPORTP * (!*(export + name_len))
+		+ TO_ENVP * (*(export + name_len) == '=')
+		+ TO_ENVP_APPND * (*(export + name_len) == '+');
 	val_len = str_len(export + name_len + *var_op);
-	if (var_op == TO_ENV_APPND)
+	if (var_op == TO_ENVP_APPND)
 		val_len += get_var_len(export, env);
 	if (safe_challoc(new_var, name_len + val_len, env))
 		return (true);
 	new_var[0] = '\0';
-	if (*var_op == TO_ENV_APPND
+	if (*var_op == TO_ENVP_APPND
 		&& get_var(export, &var_addrs, env) != VAR_DOES_NOT_EXIST)
 		cpy_var(*var_addrs, new_var);
 	cpy_var(export, *new_var);
@@ -96,10 +96,10 @@ static inline bool	get_new_var(char *export, char **new_var, t_varop *var_op,
 
 static inline bool	get_new_list(char ***new_list, t_varop var_op, t_env *env)
 {
-	if (safe_lalloc(new_list, env->envp_len + (var_op == TO_EXPORT)
+	if (safe_lalloc(new_list, env->envp_len + (var_op == TO_EXPORTP)
 			* (env->exportp_len - env->envp_len) + 1, env))
 		return (true);
-	if (var_op == TO_EXPORT)
+	if (var_op == TO_EXPORTP)
 		cpy_list(env->export, *new_list);
 	else
 		cpy_list(env->envp, *new_list); 
@@ -118,7 +118,7 @@ static inline bool	create_var(char *export, t_env *env)
 		safe_free((void **) &new_var);
 		return (true);
 	}
-	if (var_op == TO_EXPORT)
+	if (var_op == TO_EXPORTP)
 	{
 		new_list[env->exportp_len] = new_var;
 		free(env->export);
