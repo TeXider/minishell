@@ -6,44 +6,45 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/21 09:14:27 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/22 15:08:29 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/24 11:43:15 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static inline bool	is_var_in_list(char *var, char **list, size_t *var_index)
+static inline bool	var_eq(char *var1, char *var2)
 {
-	size_t	list_i;
-	size_t	cmp_i;
-
-	list_i = 0;
-	while (list[list_i])
-	{
-		cmp_i = 0;
-		while (var[cmp_i] == list[list_i][cmp_i])
-			cmp_i++;
-		if (list[list_i][cmp_i] == '='
-			&& (!var[cmp_i] || var[cmp_i] == '=' || var[cmp_i] == '+'))
-		{
-			*var_index = list_i;
-			return (true);
-		}
-		list_i++;
-	}
-	return (false);
+	size_t i;
+	while (is_var_char(var1[i]) && is_var_char(var2[i]) && var1[i] == var2[i])
+		i++;
+	return ((!var1[i] || var1[i] == '=' || var1[i] == '+')
+		&& (!var2[i] || var2[i] == '=' || var2[i] == '+'));
 }
 
-void	find_var(char *var, t_var_info *var_info, t_env *env)
+void	get_var_indexes(char *var, t_var_info *var_info, t_env *env)
 {
-	if (is_var_in_list(var, env->envp, &var_info->index))
-		var_info->stat = VAR_IN_ENV;
-	else if (is_var_in_list(var, env->exportp, &var_info->index))
-		var_info->stat = VAR_IN_EXPORT;
-	else
+	bool	found_in_envp;
+	bool	found_in_exportp;
+	size_t	envp_i;
+	size_t	exportp_i;
+
+	found_in_envp = false;
+	found_in_exportp = false;
+	envp_i = 0;
+	exportp_i = 0;
+	while ((!found_in_exportp && exportp_i < env->exportp_len)
+		|| (!found_in_envp && envp_i < env->envp_len))
 	{
-		var_info->index = env->envp_len * (var_info->operation != TO_EXPORT)
-			+ env->exportp_len * (var_info->operation == TO_EXPORT);
-		var_info->stat = VAR_DOES_NOT_EXIST;
+		if (!found_in_envp && var_eq(env->envp[envp_i], var))
+			found_in_envp = true;
+		if (!found_in_exportp && var_eq(env->exportp[exportp_i], var))
+			found_in_envp = true;
+		envp_i += (!found_in_envp && envp_i < env->envp_len);
+		exportp_i += (!found_in_exportp && exportp_i < env->exportp_len);
 	}
+	var_info->stat = VAR_DOES_NOT_EXIST
+		+ VAR_IN_EXPORTP * (found_in_exportp && !found_in_envp)
+		+ VAR_IN_ENVP * (found_in_envp);
+	var_info->envp_index = envp_i;
+	var_info->exportp_index = exportp_i;
 }

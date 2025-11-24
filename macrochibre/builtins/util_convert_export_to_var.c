@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/21 10:48:16 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/22 15:03:06 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/24 13:30:23 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,13 @@ static inline size_t	compute_var_len(char *export, t_var_info *var_info,
 	while (is_var_char(export[name_len]))
 		name_len++;
 	var_len = name_len;
-	if (var_info->stat == VAR_IN_ENV
-		&& var_info->operation == TO_ENV_APPND)
-		var_len += str_len(env->envp[var_info->index] + name_len + 1);
+	if (var_info->stat == VAR_IN_ENVP
+		&& var_info->operation == TO_ENVP_APPND)
+		var_len += str_len(env->envp[var_info->envp_index] + name_len + 1);
 	var_len += str_len(export + name_len
-		+ (var_info->operation != TO_EXPORT)
-		+ (var_info->operation == TO_ENV_APPND));
-	return (var_len + (var_info->operation != TO_EXPORT));
+		+ (var_info->operation != TO_EXPORTP)
+		+ (var_info->operation == TO_ENVP_APPND));
+	return (var_len + (var_info->operation != TO_EXPORTP));
 }
 
 char	*convert_export_to_var(char *export, char **var_dst,
@@ -77,9 +77,9 @@ char	*convert_export_to_var(char *export, char **var_dst,
 		if (!has_passed_operator && ((*export == '=')))
 		{
 			has_passed_operator = true;
-			if (var_info->stat == VAR_IN_ENV
-				&& var_info->operation == TO_ENV_APPND)
-				appnd_env_var(var_info->index, var_dst, &i, env);
+			if (var_info->stat == VAR_IN_ENVP
+				&& var_info->operation == TO_ENVP_APPND)
+				appnd_env_var(var_info->envp_index, var_dst, &i, env);
 		}
 		export++;
 	}
@@ -87,20 +87,20 @@ char	*convert_export_to_var(char *export, char **var_dst,
 	return (false);
 }
 
-int	main(int argc, char **argv)
-{
-	(void) argc;
+// int	main(int argc, char **argv)
+// {
+// 	(void) argc;
 
-	t_env env;
-	env.envp = malloc(sizeof(char *) * 4);
-	env.envp[3] = NULL;
-	env.envp[0] = "bousiller="; env.envp[1] = "kiri=123456"; env.envp[2] = "fort=rin tin tin ";
-	env.err = 0;
-	char *var = convert_export_to_var(argv[1], atoi(argv[2]), atoi(argv[3]), &env);
-	if (!var)
-		write(1, "wadahelli", 10);
-	else
-		while (*var)
-			write(1, var++, 1);
-	write(1, "\n", 1);
-}
+// 	t_env env;
+// 	env.envp = malloc(sizeof(char *) * 4);
+// 	env.envp[3] = NULL;
+// 	env.envp[0] = "bousiller="; env.envp[1] = "kiri=123456"; env.envp[2] = "fort=rin tin tin ";
+// 	env.err = 0;
+// 	char *var = convert_export_to_var(argv[1], atoi(argv[2]), atoi(argv[3]), &env);
+// 	if (!var)
+// 		write(1, "wadahelli", 10);
+// 	else
+// 		while (*var)
+// 			write(1, var++, 1);
+// 	write(1, "\n", 1);
+// }
