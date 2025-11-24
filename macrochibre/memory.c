@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 10:15:39 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/13 14:28:15 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/24 10:15:56 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,18 +64,13 @@ inline bool	safe_challoc(char **dst, size_t len, t_env *env)
 
 inline bool	safe_lalloc(char ***dst, size_t len, t_env *env)
 {
-	if (!len)
-		*dst = env->empty_list;
-	else
+	*dst = malloc(sizeof(char *) * (len + 1));
+	if (!*dst)
 	{
-		*dst = malloc(sizeof(char *) * (len + 1));
-		if (!*dst)
-		{
-			create_error("malloc()", SYS_ERR, env);
-			return (true);
-		}
-		(*dst)[0] = NULL;
-		(*dst)[len] = NULL;
+		create_error("malloc()", SYS_ERR, env);
+		return (true);
 	}
+	(*dst)[0] = NULL;
+	(*dst)[len] = NULL;
 	return (false);
 }
