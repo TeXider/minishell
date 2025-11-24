@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 09:25:05 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/21 10:38:30 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/24 13:31:05 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,25 +35,16 @@
 # define P_WRITE 1
 # define CULPRIT_LENGTH 32
 
+# define VAR_DOES_NOT_EXIST 0
+# define VAR_IN_EXPORTP 1
+# define VAR_IN_ENVP 2
+# define TO_EXPORTP 0
+# define TO_ENVP 1
+# define TO_ENVP_APPND 2
+
 typedef unsigned char	t_uchar;
 typedef struct termios	t_term;
 extern int				g_sig;
-
-typedef enum s_varop
-{
-	TO_EXPORT,
-	TO_ENV,
-	TO_ENV_APPND,
-}	t_varop;
-
-typedef enum s_var_stat
-{
-	VAR_ERROR,
-	VAR_DOES_NOT_EXIST,
-	VAR_FOUND,
-	VAR_IN_EXPORT,
-	VAR_IN_ENV
-}	t_var_stat;
 
 typedef enum e_err
 {
@@ -134,18 +125,12 @@ typedef struct s_hist
 	struct s_hist	*prev;
 }	t_hist;
 
-typedef struct s_exprt
-{
-	char			*name;
-	struct s_exprt	*next;
-}	t_exprt;
-
 typedef struct s_env
 {
 	char	**envp;
-	t_exprt	*exportp;
+	char	**exportp;
 	size_t	envp_len;
-	size_t	export_len;
+	size_t	exportp_len;
 	char	empty_string[1];
 	char	*empty_list[2];
 	//
@@ -165,6 +150,14 @@ typedef struct s_env
 	t_uchar	exit_code;
 	bool	exit_cmd;
 }	t_env;
+
+typedef struct s_var_info
+{
+	char	stat;
+	char	operation;
+	size_t	envp_index;
+	size_t	exportp_index;
+}	t_var_info;
 
 typedef struct s_cmd_parsing
 {
