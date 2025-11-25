@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 18:59:47 by tpanou-d          #+#    #+#             */
-/*   Updated: 2025/11/24 13:30:23 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/25 08:30:44 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static inline t_var_stat	search_var_in_list(char *var_name, char **list,
 			return (VAR_FOUND);
 		}
 	}
-	return (VAR_DOES_NOT_EXIST);
+	return (VAR_INEXISTANT);
 }
 
 static inline t_var_stat	get_var(char *var_name, char ***var_addrs,
@@ -67,7 +67,7 @@ static inline t_var_stat	get_var(char *var_name, char ***var_addrs,
 	}
 	if (var_stat == VAR_FOUND)
 		return (VAR_IN_EXPORT);
-	return (VAR_DOES_NOT_EXIST);
+	return (VAR_INEXISTANT);
 }
 
 static inline bool	get_new_var(char *export, char **new_var, t_varop *var_op,
@@ -88,7 +88,7 @@ static inline bool	get_new_var(char *export, char **new_var, t_varop *var_op,
 		return (true);
 	new_var[0] = '\0';
 	if (*var_op == TO_ENVP_APPND
-		&& get_var(export, &var_addrs, env) != VAR_DOES_NOT_EXIST)
+		&& get_var(export, &var_addrs, env) != VAR_INEXISTANT)
 		cpy_var(*var_addrs, new_var);
 	cpy_var(export, *new_var);
 	return (false);
@@ -150,7 +150,7 @@ bool	builtin_export(char **argv, t_env *env)
 		var_stat = get_var(*argv, &var_addrs, env);
 		if (var_stat == VAR_ERROR)
 			return (true);
-		if (var_stat == VAR_DOES_NOT_EXIST)
+		if (var_stat == VAR_INEXISTANT)
 		{
 			if (create_var(*argv, env))
 				return (true);

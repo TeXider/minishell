@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/21 10:48:16 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/24 13:30:23 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/25 09:20:28 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static inline size_t	compute_var_len(char *export, t_var_info *var_info,
 	return (var_len + (var_info->operation != TO_EXPORTP));
 }
 
-char	*convert_export_to_var(char *export, char **var_dst,
+bool	convert_export_to_var(char *export, char **var_dst,
 	t_var_info *var_info, t_env *env)
 {
 	bool	has_passed_operator;
@@ -79,7 +79,7 @@ char	*convert_export_to_var(char *export, char **var_dst,
 			has_passed_operator = true;
 			if (var_info->stat == VAR_IN_ENVP
 				&& var_info->operation == TO_ENVP_APPND)
-				appnd_env_var(var_info->envp_index, var_dst, &i, env);
+				appnd_env_var(var_info->envp_index, *var_dst, &i, env);
 		}
 		export++;
 	}

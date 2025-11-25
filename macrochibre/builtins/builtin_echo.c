@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo.c                                             :+:      :+:    :+:   */
+/*   builtin_echo.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 18:40:50 by tpanou-d          #+#    #+#             */
-/*   Updated: 2025/11/21 09:02:29 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/25 09:07:43 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-bool	check_new_line(char *arg)
+static inline bool	check_new_line(char *arg)
 {
 	if (*arg != '-')
 		return (true);

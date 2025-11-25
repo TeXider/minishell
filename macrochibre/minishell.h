@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 09:25:05 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/24 13:31:05 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/25 09:19:08 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@
 # define P_WRITE 1
 # define CULPRIT_LENGTH 32
 
-# define VAR_DOES_NOT_EXIST 0
+# define VAR_INEXISTANT 0
 # define VAR_IN_EXPORTP 1
 # define VAR_IN_ENVP 2
 # define TO_EXPORTP 0
@@ -239,6 +239,20 @@ bool	open_redirs(t_cmd *cmd, t_env *env);
 bool	exec_cmd_line(t_cmd *cmd_list, size_t cmd_list_len, t_env *env);
 //
 bool	get_line(char **dst, char *prompt, t_env *env);
+//
+void	builtin_echo(char **args);
+void	builtin_env(t_env *env);
+bool	builtin_exit(char **args, t_env *env);
+bool	builtin_export(char **args, t_env *env);
+bool	builtin_pwd(t_env *env);
+bool	builtin_unset(char **args, t_env *env);
+bool	convert_export_to_var(char *export, char **var_dst,
+	t_var_info *var_info, t_env *env);
+bool	add_to_envp(char *new_var, t_env *env);
+bool	remove_from_envp(size_t var_index, t_env *env);
+bool	add_to_exportp(char *new_var, t_env *env);
+bool	remove_from_exportp(size_t var_index, t_env *env);
+void	find_var(char *var, t_var_info *var_info, t_env *env);
 //
 bool	create_error(char *culprit, t_err err, t_env *env);
 void	throw_error(t_env *env);

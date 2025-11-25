@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/21 09:14:27 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/24 11:43:15 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/25 09:30:32 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,16 @@
 
 static inline bool	var_eq(char *var1, char *var2)
 {
-	size_t i;
+	size_t	i;
+
+	i = 0;
 	while (is_var_char(var1[i]) && is_var_char(var2[i]) && var1[i] == var2[i])
 		i++;
 	return ((!var1[i] || var1[i] == '=' || var1[i] == '+')
 		&& (!var2[i] || var2[i] == '=' || var2[i] == '+'));
 }
 
-void	get_var_indexes(char *var, t_var_info *var_info, t_env *env)
+void	find_var(char *var, t_var_info *var_info, t_env *env)
 {
 	bool	found_in_envp;
 	bool	found_in_exportp;
@@ -35,14 +37,14 @@ void	get_var_indexes(char *var, t_var_info *var_info, t_env *env)
 	while ((!found_in_exportp && exportp_i < env->exportp_len)
 		|| (!found_in_envp && envp_i < env->envp_len))
 	{
-		if (!found_in_envp && var_eq(env->envp[envp_i], var))
-			found_in_envp = true;
-		if (!found_in_exportp && var_eq(env->exportp[exportp_i], var))
-			found_in_envp = true;
+		found_in_envp |= (envp_i < env->envp_len && !found_in_envp
+			&& var_eq(env->envp[envp_i], var));
+		found_in_exportp |= (exportp_i < env->exportp_len && !found_in_exportp
+			&& var_eq(env->exportp[exportp_i], var));
 		envp_i += (!found_in_envp && envp_i < env->envp_len);
 		exportp_i += (!found_in_exportp && exportp_i < env->exportp_len);
 	}
-	var_info->stat = VAR_DOES_NOT_EXIST
+	var_info->stat = VAR_INEXISTANT
 		+ VAR_IN_EXPORTP * (found_in_exportp && !found_in_envp)
 		+ VAR_IN_ENVP * (found_in_envp);
 	var_info->envp_index = envp_i;
