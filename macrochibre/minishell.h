@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 09:25:05 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/25 09:19:08 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/25 10:46:40 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,10 @@ typedef enum e_builtin_err
 
 typedef enum e_builtin_err_ctxt
 {
-	INVALID_PARAM,
-	TOO_MANY_PARAMS
+	INVALID_PARAM_BERR,
+	TOO_MANY_PARAMS_BERR,
+	VAR_NOT_SET_BERR,
+	INTERNAL_BERR,
 }	t_builtin_err_ctxt;
 
 typedef enum e_rtype

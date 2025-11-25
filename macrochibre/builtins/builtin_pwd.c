@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   builtin_pwd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/20 11:48:00 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/20 12:09:17 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/25 10:50:59 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ bool	builtin_pwd(t_env *env)
 	curr_path = getcwd(NULL, 0);
 	if (!curr_path)
 	{
-		throw_builtin_error(NULL, PWD_ERR, 0, env);
+		throw_builtin_error(NULL, PWD_ERR, INTERNAL_BERR, env);
 		return (true);
 	}
 	print_str(curr_path);
