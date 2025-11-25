@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/20 09:43:51 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/25 10:46:24 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/25 13:51:09 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,6 @@ bool	builtin_export(char **args, t_env *env)
 		if (check_export_parsing(*args, &var_info))
 		{
 			//throw_builtin_error(*args, EXPORT_ERR, INVALID_PARAM_BERR, env);
-			write(1, "avoufouinfouinfouin\n", 21);
 			has_error = true;
 		}
 		else if (!(**args == '_'
@@ -108,17 +107,17 @@ bool	builtin_export(char **args, t_env *env)
 	return (has_error);
 }
 
-int	main(int argc, char **argv, char **envp)
-{
-	(void) argc; (void) argv; (void) envp;
-	t_env env;
-	env.exportp = malloc(sizeof(char *));
-	env.exportp[0] = NULL;
-	env.exportp_len = 0;
-	env.envp = malloc(sizeof(char *));
-	env.envp[0] = NULL;
-	env.envp_len = 0;
-	builtin_export(argv + 1, &env);
-	print_export(&env);
-	free(env.exportp);
-}
+// int	main(int argc, char **argv, char **envp)
+// {
+// 	(void) argc; (void) argv; (void) envp;
+// 	t_env env;
+// 	env.exportp = malloc(sizeof(char *));
+// 	env.exportp[0] = NULL;
+// 	env.exportp_len = 0;
+// 	env.envp = malloc(sizeof(char *));
+// 	env.envp[0] = NULL;
+// 	env.envp_len = 0;
+// 	builtin_export(argv + 1, &env);
+// 	print_export(&env);
+// 	free(env.exportp);
+// }
