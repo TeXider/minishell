@@ -1,0 +1,2 @@
+command not executable is exit code 126
+exec builtins not fork if only one command
