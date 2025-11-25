@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 09:25:05 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/25 10:46:40 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/25 14:25:37 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,16 @@
 # define TO_EXPORTP 0
 # define TO_ENVP 1
 # define TO_ENVP_APPND 2
+
+# define BLACK	"\033[0;30m"
+# define RED	"\033[0;31m"
+# define GREEN	"\033[0;32m"
+# define YELLOW	"\033[0;33m"
+# define BLUE	"\033[0;34m"
+# define PURPLE	"\033[0;35m"
+# define CYAN	"\033[0;36m"
+# define WHITE	"\033[0;37m"
+# define RST	"\033[0m"
 
 typedef unsigned char	t_uchar;
 typedef struct termios	t_term;
