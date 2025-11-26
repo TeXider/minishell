@@ -11,3 +11,8 @@ if (!access(X))
 	permission_denied = true
 else
 	exit_code = 0
+
+if (WIFEXITED(ec))
+	ec = WEXITSTATUS(ec);
+else if (WIFSIGNALED(ec))
+	ec = 128 + WTERMSIG(ec);
