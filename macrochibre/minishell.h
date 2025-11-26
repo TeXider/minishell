@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 09:25:05 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/26 10:56:51 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/26 11:35:19 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -267,14 +267,14 @@ bool	builtin_export(char **args, t_env *env);
 bool	builtin_pwd(t_env *env);
 bool	builtin_unset(char **args, t_env *env);
 bool	convert_export_to_var(char *export, char **var_dst,
-	t_var_info *var_info, t_env *env);
+			t_var_info *var_info, t_env *env);
 bool	add_to_envp(char *new_var, t_env *env);
 bool	remove_from_envp(size_t var_index, t_env *env);
 bool	add_to_exportp(char *new_var, t_env *env);
 bool	remove_from_exportp(size_t var_index, t_env *env);
 void	find_var(char *var, t_var_info *var_info, t_env *env);
 void	throw_builin_error(char *culprit, t_builtin_err err,
-	t_builtin_err_ctxt err_ctxt, t_env *env);
+			t_builtin_err_ctxt err_ctxt, t_env *env);
 //
 bool	create_error(char *culprit, t_err err, t_env *env);
 void	throw_error(t_env *env);

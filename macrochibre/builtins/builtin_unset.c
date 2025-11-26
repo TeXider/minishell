@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/21 14:18:30 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/25 09:48:03 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/26 11:21:59 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,10 @@ bool	builtin_unset(char **args, t_env *env)
 		{
 			find_var(*args, &var_info, env);
 			if ((var_info.stat != VAR_INEXISTANT
-				&& remove_from_exportp(var_info.exportp_index, env))
+					&& remove_from_exportp(var_info.exportp_index, env))
 				|| (var_info.stat == VAR_IN_ENVP
-				&& remove_from_envp(var_info.envp_index, env)))
-					return (true);
+					&& remove_from_envp(var_info.envp_index, env)))
+				return (true);
 		}
 		args++;
 	}

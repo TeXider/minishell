@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/25 10:10:23 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/26 11:07:54 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/26 11:25:41 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static inline bool	create_cd_var(char *name, char *val,
 {
 	size_t	name_i;
 	size_t	val_i;
-	
+
 	name_i = 0;
 	val_i = 0;
 	while (name[name_i] || val[val_i])
@@ -43,7 +43,7 @@ static inline bool	create_cd_var(char *name, char *val,
 	while (name[name_i] || val[val_i])
 	{
 		(*var_dst)[name_i + val_i + (!name[name_i])] = name[name_i]
-				+ val[val_i] * (!name[name_i]);
+			+ val[val_i] * (!name[name_i]);
 		val_i += (!name[name_i] && val[val_i] != '\0');
 		name_i += (name[name_i] != '\0');
 	}
@@ -77,7 +77,8 @@ static inline bool	get_new_dir(char *dir, char **new_dir_dst, t_env *env)
 	return (false);
 }
 
-static inline bool set_dirs(char *dir, char *old_dir, char *new_dir, t_env *env)
+static inline bool	set_dirs(char *dir, char *old_dir, char *new_dir,
+	t_env *env)
 {
 	char	**export_args;
 	bool	err;
@@ -124,26 +125,3 @@ bool	builtin_cd(char **args, t_env *env)
 	free(old_dir);
 	return (false);
 }
-// #include <stdio.h>
-
-// int	main(int argc, char **argv)
-// {
-// 	t_env	env;
-	
-// 	(void) argc;
-// 	env.exportp = malloc(sizeof(char *));
-// 	env.exportp[0] = NULL;
-// 	env.exportp_len = 0;
-// 	env.envp = malloc(sizeof(char *));
-// 	env.envp[0] = NULL;
-// 	env.envp_len = 0;
-// 	builtin_cd(argv + 1, &env);
-// 	char *dir = getcwd(NULL, 0);
-// 	builtin_export(& (char *) { NULL }, &env);
-// 	printf("%s\n", dir);
-// 	free(env.exportp[0]);
-// 	free(env.exportp[1]);
-// 	free(env.exportp);
-// 	free(env.envp);
-// 	free(dir);
-// }

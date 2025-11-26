@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/14 13:41:55 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/18 12:12:13 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/26 11:27:38 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static inline bool	join_path(char **path_dst, char **path_var, char *cmd_name,
 static inline bool	get_path_var(char **path_var, t_env *env)
 {
 	size_t	i;
-	
+
 	i = -1;
 	while (env->envp[++i])
 	{
@@ -77,7 +77,7 @@ static inline bool	get_path_var(char **path_var, t_env *env)
 bool	get_path(t_cmd *cmd, t_env *env)
 {
 	char	*path_var;
-	
+
 	if (cmd->cmd_name_is_path
 		|| get_path_var(&path_var, env))
 	{

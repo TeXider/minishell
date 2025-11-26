@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/23 15:56:03 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/24 11:32:05 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/26 11:20:18 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,48 +69,3 @@ bool	remove_from_exportp(size_t var_index, t_env *env)
 	env->exportp = new_exportp;
 	return (false);
 }
-
-// size_t	str_len(char *str)
-// {
-// 	size_t	len;
-
-// 	len = 0;
-// 	while (str[len])
-// 		len++;
-// 	return (len);
-// }
-// 
-// int	main(int argc, char **argv, char **envp)
-// {
-// 	(void) argc; (void) argv;
-// 	t_env env;
-// 	env.exportp = malloc(sizeof(char *));
-// 	env.exportp[0] = NULL;
-// 	env.exportp_len = 0;
-// 	size_t	max_len = 0;
-// 	size_t	j;
-// 	for (size_t i = 0; envp[i]; i++)
-// 	{
-// 		for (j = 0; is_var_char(envp[i][j]); j++)
-// 			;
-// 		if (j > max_len)
-// 			max_len = j;
-// 	}
-// 	for (size_t i = 0; envp[i]; i++)
-// 		add_to_exportp(envp[i], &env);
-// 	for (size_t i = 0; envp[i]; i++)
-// 	{
-// 		for (j = 0; is_var_char(envp[i][j]); j++)
-// 			write(1, envp[i] + j, 1);
-// 		for (; j < max_len + 1; j++)
-// 			write(1, " ", 1);
-// 		for (j = 0; i < env.exportp_len&&  is_var_char(env.exportp[i][j]); j++)
-// 			write(1, env.exportp[i] + j, 1);
-// 		write(1, "\n", 1);
-// 	}
-// 	while (env.exportp_len)
-// 		remove_from_exportp(0, &env);
-// 	if (!env.exportp[0])
-// 		write(1, "negga\n", 6);
-// 	free(env.exportp);
-// }

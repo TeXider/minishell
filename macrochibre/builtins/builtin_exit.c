@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/20 12:06:32 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/26 11:07:46 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/26 11:22:58 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,3 @@ bool	builtin_exit(char **args, t_env *env)
 	}
 	return (false);
 }
-

@@ -6,13 +6,13 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/25 13:51:42 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/26 10:51:10 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/26 11:22:26 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static inline void print_str_err(char *str)
+static inline void	print_str_err(char *str)
 {
 	while (*str)
 		write(2, str++, 1);
@@ -60,5 +60,5 @@ void	throw_builin_error(char *culprit, t_builtin_err err,
 	write(2, RABOUSHELL, RBS_LEN);
 	print_err_origin(err);
 	print_err_ctxt(culprit, err_ctxt);
-	env->exit_code = 1 + (err_ctxt != INTERNAL_BERR); 
+	env->exit_code = 1 + (err_ctxt != INTERNAL_BERR);
 }

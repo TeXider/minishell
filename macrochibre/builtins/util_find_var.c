@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/21 09:14:27 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/25 09:30:32 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/26 11:23:26 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,9 @@ void	find_var(char *var, t_var_info *var_info, t_env *env)
 		|| (!found_in_envp && envp_i < env->envp_len))
 	{
 		found_in_envp |= (envp_i < env->envp_len && !found_in_envp
-			&& var_eq(env->envp[envp_i], var));
+				&& var_eq(env->envp[envp_i], var));
 		found_in_exportp |= (exportp_i < env->exportp_len && !found_in_exportp
-			&& var_eq(env->exportp[exportp_i], var));
+				&& var_eq(env->exportp[exportp_i], var));
 		envp_i += (!found_in_envp && envp_i < env->envp_len);
 		exportp_i += (!found_in_exportp && exportp_i < env->exportp_len);
 	}
