@@ -1,8 +1,9 @@
 #include <termios.h>
 #include <unistd.h>
 #include <stdio.h>
+#include <errno.h>
 
-int main()
+int main(int argc, char **argv, char **envp)
 {
-	printf("%d", -8 % 5);
+	while(1);
 }
