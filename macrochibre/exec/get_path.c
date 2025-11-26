@@ -3,14 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   get_path.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/14 13:41:55 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/26 11:27:38 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/26 13:30:53 by tpanou-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+static inline bool	is_correc_path(char *path, t_env *env)
+{
+	if (!access(path, F_OK))
+	{
+		if (!access(path, X_OK))
+		{
+			env->err = SUCCESS;
+			return (true);
+		}
+		create_error(path, CMD_NOT_EXEC_ERR, env);
+	}
+	return (false);
+}
 
 static inline void	get_join_path_lens(size_t *path_len, size_t *name_len,
 	char *path, char *name)
@@ -88,11 +102,12 @@ bool	get_path(t_cmd *cmd, t_env *env)
 	{
 		if (join_path(&cmd->path, &path_var, cmd->argv[0], env))
 			return (true);
-		if (!access(cmd->path, F_OK | X_OK))
+		if (is_correct_path(cmd->path, env))
 			return (false);
 		if (cmd->path != cmd->argv[0])
 			free(cmd->path);
 	}
-	create_error(cmd->argv[0], EXEC_ERR, env);
+	if (env->err != CMD_NOT_EXEC_ERR)
+		create_error(cmd->argv[0], CMD_NOT_FOUND_ERR, env);
 	return (true);
 }

@@ -3,18 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   .main.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/10 10:53:41 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/14 12:20:47 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/26 13:52:31 by tpanou-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static inline void	init_env(t_env *env, char **envp)
+static inline bool	init_env(t_env *env, char **envp)
 {
-	env->envp = envp;
+	if (safe_lalloc(&env->envp, 1, env)
+		|| safe_lalloc(&env->exportp, 1, env)
+		|| builtin_export(envp, env))
+		return (true);
 	env->empty_string[0] = '\0';
 	env->empty_list[0] = NULL;
 	env->empty_list[1] = NULL;
@@ -29,9 +32,11 @@ static inline void	raboushell(char *input, t_env *env)
 	t_cmd	*cmd_list;
 	size_t	cmd_list_len;
 	
-	if (get_cmd_line(input, &cmd_list, &cmd_list_len, env)
-		|| exec_cmd_line(cmd_list, cmd_list_len, env))
+	if (get_cmd_line(input, &cmd_list, &cmd_list_len, env))
+	{
+		free_cmd_list(cmd_list, cmd_list_len);
 		throw_error(env);
+	}
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -45,7 +50,7 @@ int	main(int argc, char **argv, char **envp)
 	while (true)
 	{
 		if (get_line(&input, "raboushell> ", &env))
-			return (true);
+			throw_error(&env);
 		raboushell(input, &env);
 		free(input);
 	}

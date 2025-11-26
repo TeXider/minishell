@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   create_error.c                                     :+:      :+:    :+:   */
+/*   .create_error.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 08:14:55 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/18 17:42:57 by tpanou-d         ###   ########.fr       */
+/*   Updated: 2025/11/26 13:39:58 by tpanou-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,17 @@ void	throw_error(t_env *env)
 bool	create_error(char *culprit, t_err err, t_env *env)
 {
 	size_t	i;
-	
+
 	env->err = err;
 	i = -1;
-	while (++i < CULPRIT_LENGTH && culprit[i])
-		env->culprit[i] = culprit[i];
+	if (err == UNCLOSED_QUOTES_ERR || err == UNEXPECTED_TOKEN_ERR)
+	{
+		env->culprit[0] = *culprit;
+		i = 1;
+	}
+	else
+		while (++i < CULPRIT_LENGTH && culprit[i])
+			env->culprit[i] = culprit[i];
 	if (culprit[i] && i == CULPRIT_LENGTH)
 	{
 		env->culprit[i - 1] = '.';

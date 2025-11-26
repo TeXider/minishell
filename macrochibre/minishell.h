@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 09:25:05 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/26 11:40:14 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/26 13:21:51 by tpanou-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,14 +63,17 @@ typedef enum e_err
 {
 	SUCCESS,
 	ERR,
-	SYS_ERR,
-	TERM_ERR,
-	EXEC_ERR,
-	FILE_ERR,
-	AMBI_REDIR_ERR,
+	PARSING_ERR,
 	UNCLOSED_QUOTES_ERR,
 	UNEXPECTED_TOKEN_ERR,
+	EXEC_ERR,
+	CMD_NOT_FOUND_ERR,
+	CMD_NOT_EXEC_ERR,
+	FILE_ERR,
+	AMBI_REDIR_ERR,
 	BUILTIN_ERR,
+	TERM_ERR,
+	SYS_ERR,
 }	t_err;
 
 typedef enum e_builtin_err

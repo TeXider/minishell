@@ -3,6 +3,8 @@ QUIT is 131
 -> Prints "(core dumped) [cmd_line]" when is final cmd is ctrl-d,
 	othewise just prints ^\
 exec builtins not fork if only one command
+Better PATH parsing in case of ':' in the PATH
+
 
 if (access(F))
 	blah bluh blah
