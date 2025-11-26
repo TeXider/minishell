@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/20 09:43:51 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/25 13:51:09 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/26 09:31:14 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ bool	builtin_export(char **args, t_env *env)
 	{
 		if (check_export_parsing(*args, &var_info))
 		{
-			//throw_builtin_error(*args, EXPORT_ERR, INVALID_PARAM_BERR, env);
+			throw_builtin_error(*args, EXPORT_ERR, INVALID_ID_BERR, env);
 			has_error = true;
 		}
 		else if (!(**args == '_'

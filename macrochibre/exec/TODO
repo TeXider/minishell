@@ -1,2 +1,13 @@
 command not executable is exit code 126
+QUIT is 131
+-> Prints "(core dumped) [cmd_line]" when is final cmd is ctrl-d,
+	othewise just prints ^\
 exec builtins not fork if only one command
+
+if (access(F))
+	blah bluh blah
+if (!access(X))
+	create_err()
+	permission_denied = true
+else
+	exit_code = 0

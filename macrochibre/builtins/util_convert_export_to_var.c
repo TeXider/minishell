@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/21 10:48:16 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/25 09:20:28 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/26 09:48:22 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,7 @@ bool	convert_export_to_var(char *export, char **var_dst,
 	bool	has_passed_operator;
 	size_t	i;
 
-	if (safe_challoc(var_dst,
-		compute_var_len(export, var_info, env), env))
+	if (safe_challoc(var_dst, compute_var_len(export, var_info, env), env))
 		return (true);
 	has_passed_operator = false;
 	i = 0;

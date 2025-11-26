@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 09:25:05 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/25 14:25:37 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/26 10:56:51 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,15 +42,22 @@
 # define TO_ENVP 1
 # define TO_ENVP_APPND 2
 
-# define BLACK	"\033[0;30m"
-# define RED	"\033[0;31m"
-# define GREEN	"\033[0;32m"
-# define YELLOW	"\033[0;33m"
-# define BLUE	"\033[0;34m"
-# define PURPLE	"\033[0;35m"
-# define CYAN	"\033[0;36m"
-# define WHITE	"\033[0;37m"
+# define BLACK	"\033[30m"
+# define RED	"\033[31m"
+# define GREEN	"\033[32m"
+# define SGREEN	"\033[92m"
+# define YELLOW	"\033[33m"
+# define BLUE	"\033[34m"
+# define PURPLE	"\033[35m"
+# define CYAN	"\033[36m"
+# define WHITE	"\033[37m"
+# define BOLD	"\033[1m"
+# define DIM	"\033[2m"
 # define RST	"\033[0m"
+
+# define RABOUSHELL BOLD "[" RST GREEN"rabou"RST BOLD SGREEN"shell"RST BOLD"] "\
+	RST
+# define RBS_LEN 48
 
 typedef unsigned char	t_uchar;
 typedef struct termios	t_term;
@@ -83,9 +90,10 @@ typedef enum e_builtin_err
 
 typedef enum e_builtin_err_ctxt
 {
-	INVALID_PARAM_BERR,
 	TOO_MANY_PARAMS_BERR,
-	VAR_NOT_SET_BERR,
+	NUM_ARG_BERR,
+	INVALID_ID_BERR,
+	HOME_NOT_SET_BERR,
 	INTERNAL_BERR,
 }	t_builtin_err_ctxt;
 
@@ -265,6 +273,8 @@ bool	remove_from_envp(size_t var_index, t_env *env);
 bool	add_to_exportp(char *new_var, t_env *env);
 bool	remove_from_exportp(size_t var_index, t_env *env);
 void	find_var(char *var, t_var_info *var_info, t_env *env);
+void	throw_builin_error(char *culprit, t_builtin_err err,
+	t_builtin_err_ctxt err_ctxt, t_env *env);
 //
 bool	create_error(char *culprit, t_err err, t_env *env);
 void	throw_error(t_env *env);

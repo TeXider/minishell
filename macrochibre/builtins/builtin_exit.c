@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/20 12:06:32 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/25 10:46:30 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/26 11:07:46 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,12 +46,12 @@ bool	builtin_exit(char **args, t_env *env)
 		return (false);
 	if (atouc(*args, &env->exit_code))
 	{
-		throw_builtin_err(*args, EXIT_ERR, INVALID_PARAM_BERR, env);
+		throw_builtin_error(*args, EXIT_ERR, NUM_ARG_BERR, env);
 		return (true);
 	}
 	if (*(args + 1))
 	{
-		throw_builtin_err(NULL, EXIT_ERR, TOO_MANY_PARAMS_BERR, env);
+		throw_builtin_error(NULL, EXIT_ERR, TOO_MANY_PARAMS_BERR, env);
 		return (true);
 	}
 	return (false);
