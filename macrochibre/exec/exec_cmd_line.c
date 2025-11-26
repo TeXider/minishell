@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 08:54:12 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/18 18:08:13 by tpanou-d         ###   ########.fr       */
+/*   Updated: 2025/11/26 11:14:54 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,10 +75,10 @@ bool	exec_cmd_line(t_cmd *cmd_list, size_t cmd_list_len, t_env *env)
 	}
 	close_pipes(&pipes);
 	env->last_pid = pid;
-	i = -1;
-	while (++i < cmd_list_len)
-		wait(NULL);
 	return (false);
 }
+//	i = -1;
+//	while (++i < cmd_list_len)
+//		wait(NULL);
 // put the wait in exec_cmd_line caller, therefore whether
 // there was an error or not, every child is waited for.
