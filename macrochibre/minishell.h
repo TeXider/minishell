@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 09:25:05 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/26 11:35:19 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/26 11:40:14 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,6 @@
 # define BOLD	"\033[1m"
 # define DIM	"\033[2m"
 # define RST	"\033[0m"
-
-# define RABOUSHELL BOLD "[" RST GREEN"rabou"RST BOLD SGREEN"shell"RST BOLD"] "\
-	RST
-# define RBS_LEN 48
 
 typedef unsigned char	t_uchar;
 typedef struct termios	t_term;
@@ -275,6 +271,8 @@ bool	remove_from_exportp(size_t var_index, t_env *env);
 void	find_var(char *var, t_var_info *var_info, t_env *env);
 void	throw_builin_error(char *culprit, t_builtin_err err,
 			t_builtin_err_ctxt err_ctxt, t_env *env);
+//
+void	print_raboushell(void);
 //
 bool	create_error(char *culprit, t_err err, t_env *env);
 void	throw_error(t_env *env);
