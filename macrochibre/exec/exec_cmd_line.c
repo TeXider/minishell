@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 08:54:12 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/27 13:54:34 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/27 13:55:20 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static inline bool	exec_cmd(t_cmd *cmd, t_pipes *pipes, t_env *env)
 		|| dup2(cmd->fd_out, STD_OUT) == -1)
 	{
 		create_error("dup2()", SYS_ERR, env);
-		return ;
+		return (true);
 	}
 	if (cmd->fd_in_type != PIPE)
 		safe_close(&cmd->fd_in, FD_NULL);
