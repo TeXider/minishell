@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   get_path.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/14 13:41:55 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/26 13:30:53 by tpanou-d         ###   ########.fr       */
+/*   Updated: 2025/11/27 15:01:09 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static inline bool	is_correc_path(char *path, t_env *env)
+static inline bool	is_correct_path(char *path, t_env *env)
 {
 	if (!access(path, F_OK))
 	{
@@ -45,24 +45,25 @@ static inline bool	join_path(char **path_dst, char **path_var, char *cmd_name,
 	size_t	name_len;
 	size_t	i;
 
-	*path_var += (**path_var == ':' && *(*path_var - 1) != '=');
+	*path_var += (**path_var == ':' && (*(*path_var - 1) != '=' && *(*path_var - 1) != ':'));
 	get_join_path_lens(&path_len, &name_len, *path_var, cmd_name);
 	if (!path_len)
 	{
+		*path_var += (**path_var == ':');
 		*path_dst = cmd_name;
 		return (false);
 	}
 	if (safe_challoc(path_dst, path_len + name_len + 1, env))
 		return (true);
 	i = -1;
-	while (++i < path_len + name_len + (path_len != 0))
+	while (++i < path_len + name_len + 1)
 	{
 		if (i < path_len)
 			(*path_dst)[i] = (*path_var)[i];
-		else if (path_len && i == path_len)
+		else if (i == path_len)
 			(*path_dst)[i] = '/';
 		else
-			(*path_dst)[i] = cmd_name[i - (path_len != 0) - path_len];
+			(*path_dst)[i] = cmd_name[i - 1 - path_len];
 	}
 	*path_var += path_len;
 	return (false);
@@ -96,7 +97,7 @@ bool	get_path(t_cmd *cmd, t_env *env)
 		|| get_path_var(&path_var, env))
 	{
 		cmd->path = cmd->argv[0];
-		return (false);
+		return (!is_correct_path(cmd->path, env));
 	}
 	while (*path_var)
 	{

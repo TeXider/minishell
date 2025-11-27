@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 11:26:24 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/18 12:07:12 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/27 14:51:12 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ int	main(int argc, char **argv, char **envp)
 	cmd.argv[0] = argv[1];
 	cmd.argv[1] = NULL;
 	cmd.cmd_name_is_path = false;
+	env.err = SUCCESS;
 	if (get_path(&cmd, &env))
 		return (1);
 	char *tmp = cmd.path;
