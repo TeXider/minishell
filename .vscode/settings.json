@@ -42,6 +42,7 @@
 		"span": "c",
 		"streambuf": "c",
 		"text_encoding": "c",
-		"typeinfo": "c"
+		"typeinfo": "c",
+		"signal.h": "c"
 	}
 }

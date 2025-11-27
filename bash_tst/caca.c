@@ -1,3 +1,4 @@
+#include <signal.h>
 #include <termios.h>
 #include <unistd.h>
 #include <stdio.h>
@@ -10,9 +11,12 @@ int main(int argc, char **argv, char **envp)
 	int pid = fork();
 	if (!pid)
 	{
-		execve("segfault", argv, envp);
+		execve("inf_loop", argv, envp);
 	}
 	int ec;
+	struct sigaction sa;
+	sa.sa_handler = SIG_IGN;
+	sigaction(SIGQUIT,&sa, NULL);
 	waitpid(pid, &ec, 0);
 	if (WIFEXITED(ec))
 		ec = WEXITSTATUS(ec);
