@@ -6,13 +6,32 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 08:54:12 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/27 10:49:12 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/27 11:06:42 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static inline void	exec_cmd(t_cmd *cmd, t_pipes *pipes, t_env *env)
+static inline bool	exec_builtin(t_cmd *cmd, t_env *env)
+{
+	if (cmd->builtin == ECHO_BUILTIN)
+		builtin_echo(cmd->argv + 1);
+	else if (cmd->builtin == ENV_BUILTIN)
+		builtin_env(env);
+	if (cmd->builtin == CD_BUILTIN)
+		return (builtin_cd(cmd->argv + 1, env));
+	if (cmd->builtin == EXIT_BUILTIN)
+		return (builtin_exit(cmd->argv + 1, env));
+	if (cmd->builtin == EXPORT_BUILTIN)
+		return (builtin_export(cmd->argv + 1, env));
+	if (cmd->builtin == PWD_BUILTIN)
+		return (builtin_pwd(env));
+	if (cmd->builtin == UNSET_BUILTIN)
+		return (builtin_unset(cmd->argv + 1, env));
+	return (false);
+}
+
+static inline bool	exec_cmd(t_cmd *cmd, t_pipes *pipes, t_env *env)
 {
 	if (dup2(cmd->fd_in, STD_IN) == -1
 		|| dup2(cmd->fd_out, STD_OUT) == -1)
@@ -26,14 +45,11 @@ static inline void	exec_cmd(t_cmd *cmd, t_pipes *pipes, t_env *env)
 		safe_close(&cmd->fd_out, FD_NULL);
 	close_pipes(pipes);
 	if (cmd->builtin)
-		exec_builtin(cmd, env);
-	else
-	{
-		execve(cmd->path, cmd->argv, env->envp);
-		create_error("execve()", SYS_ERR, env);
-	}
+		return (exec_builtin(cmd, env));
+	execve(cmd->path, cmd->argv, env->envp);
+	create_error("execve()", SYS_ERR, env);
+	return (true);
 }
-//add if is_builtin() exec_builtin(); else execve()
 
 static inline bool	handle_fork(t_cmd *cmd, pid_t *pid, t_pipes *pipes,
 	t_env *env)
@@ -57,9 +73,11 @@ static inline bool	handle_fork(t_cmd *cmd, pid_t *pid, t_pipes *pipes,
 			* (cmd->fd_out == STD_OUT);
 		cmd->fd_out_type = (PIPE - STD) * (cmd->fd_in_type == STD)
 			+ cmd->fd_in_type;
-		exec_cmd(cmd, pipes, env);
-		close_pipes(pipes);
-		return (true);
+		if (exec_cmd(cmd, pipes, env))
+		{
+			close_pipes(pipes);
+			return (true);
+		}
 	}
 	return (false);
 }
@@ -71,7 +89,7 @@ bool	exec_cmd_line(t_cmd *cmd_list, size_t cmd_list_len, t_env *env)
 	size_t	i;
 
 	if (cmd_list_len == 1 && (*cmd_list).builtin)
-		return (exec_builtin(*cmd_list, env));
+		return (exec_builtin(cmd_list, env));
 	init_pipes(&pipes);
 	i = -1;
 	while (++i < cmd_list_len)

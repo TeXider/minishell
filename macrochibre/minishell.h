@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 09:25:05 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/27 10:38:56 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/27 10:57:42 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -275,6 +275,7 @@ bool	get_line(char **dst, char *prompt, t_env *env);
 //
 void	builtin_echo(char **args);
 void	builtin_env(t_env *env);
+bool	builtin_cd(char **args, t_env *env);
 bool	builtin_exit(char **args, t_env *env);
 bool	builtin_export(char **args, t_env *env);
 bool	builtin_pwd(t_env *env);
