@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 09:25:05 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/27 10:23:25 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/27 10:38:56 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,18 @@ typedef enum e_builtin_err_ctxt
 	INTERNAL_BERR,
 }	t_builtin_err_ctxt;
 
+typedef enum e_builtin
+{
+	NOT_BUILTIN,
+	CD_BUILTIN,
+	ECHO_BUILTIN,
+	ENV_BUILTIN,
+	EXIT_BUILTIN,
+	EXPORT_BUILTIN,
+	PWD_BUILTIN,
+	UNSET_BUILTIN
+}	t_builtin;
+
 typedef enum e_rtype
 {
 	EMPTY_REDIR,
@@ -116,16 +128,16 @@ typedef struct s_redir
 
 typedef struct s_cmd
 {
-	char	*path;
-	bool	cmd_name_is_path;
-	char	**argv;
-	t_redir	*redirv;
-	size_t	redirv_len;
-	int		fd_in;
-	int		fd_out;
-	t_rtype	fd_in_type;
-	t_rtype	fd_out_type;
-	bool	is_builtin;
+	char		*path;
+	bool		cmd_name_is_path;
+	char		**argv;
+	t_redir		*redirv;
+	size_t		redirv_len;
+	int			fd_in;
+	int			fd_out;
+	t_rtype		fd_in_type;
+	t_rtype		fd_out_type;
+	t_builtin	builtin;
 }	t_cmd;
 
 typedef struct s_line

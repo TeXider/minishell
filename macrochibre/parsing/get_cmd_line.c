@@ -6,11 +6,31 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 09:50:16 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/14 09:13:05 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/27 10:46:41 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+static t_builtin	builtin_type(char *cmd)
+{
+	if (!(cmd))
+		return (NOT_BUILTIN);
+	return (NOT_BUILTIN
+		+ CD_BUILTIN * (cmd[0] == 'c' && cmd[1] == 'd' && !cmd[2])
+		+ ECHO_BUILTIN * (cmd[0] == 'e' && cmd[1] == 'c' && cmd[2] == 'h'
+			&& cmd[3] == 'o' && !cmd[4])
+		+ ENV_BUILTIN * (cmd[0] == 'e' && cmd[1] == 'n' && cmd[2] == 'v'
+			&& !cmd[3])
+		+ EXIT_BUILTIN * (cmd[0] == 'e' && cmd[1] == 'x' && cmd[2] == 'i'
+			&& cmd[3] == 't' && !cmd[4])
+		+ EXPORT_BUILTIN * (cmd[0] == 'e' && cmd[1] == 'x' && cmd[2] == 'p'
+			&& cmd[3] == 'o' && cmd[4] == 'r' && cmd[5] == 't' && !cmd[6])
+		+ PWD_BUILTIN * (cmd[0] == 'p' && cmd[1] == 'w' && cmd[2] == 'd'
+			&& !cmd[3])
+		+ UNSET_BUILTIN * (cmd[0] == 'u' && cmd[1] == 'n' && cmd[2] == 's'
+			&& cmd[3] == 'e' && cmd[4] == 't' && !cmd[5]));
+}
 
 static bool	get_cmd(t_cmd_parsing *cmdp, t_env *env)
 {
@@ -35,6 +55,7 @@ static bool	get_cmd(t_cmd_parsing *cmdp, t_env *env)
 		if (is_end_of_expand(cmdp))
 			exit_expand(cmdp);
 	}
+	cmdp->cmd->argv = builtin_type(*(cmdp->cmd->argv));
 	return (false);
 }
 
