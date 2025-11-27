@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 08:54:12 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/27 11:06:42 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/27 13:54:34 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,18 @@ static inline bool	exec_cmd(t_cmd *cmd, t_pipes *pipes, t_env *env)
 	return (true);
 }
 
+static inline void	set_cmd_fds(t_cmd *cmd, t_pipes *pipes)
+{
+	cmd->fd_in += (pipes->fd_read - cmd->fd_in)
+		* (cmd->fd_in == STD_IN);
+	cmd->fd_in_type = (PIPE - STD) * (cmd->fd_in_type == STD)
+		+ cmd->fd_in_type;
+	cmd->fd_out += (pipes->fd_write - cmd->fd_out)
+		* (cmd->fd_out == STD_OUT);
+	cmd->fd_out_type = (PIPE - STD) * (cmd->fd_in_type == STD)
+		+ cmd->fd_in_type;
+}
+
 static inline bool	handle_fork(t_cmd *cmd, pid_t *pid, t_pipes *pipes,
 	t_env *env)
 {
@@ -66,13 +78,7 @@ static inline bool	handle_fork(t_cmd *cmd, pid_t *pid, t_pipes *pipes,
 		if (open_redirs(cmd, env)
 			|| (!cmd->builtin && get_path(cmd, env)))
 			return (true);
-		cmd->fd_in += (pipes->fd_read - cmd->fd_in) * (cmd->fd_in == STD_IN);
-		cmd->fd_in_type = (PIPE - STD) * (cmd->fd_in_type == STD)
-			+ cmd->fd_in_type;
-		cmd->fd_out += (pipes->fd_write - cmd->fd_out)
-			* (cmd->fd_out == STD_OUT);
-		cmd->fd_out_type = (PIPE - STD) * (cmd->fd_in_type == STD)
-			+ cmd->fd_in_type;
+		set_cmd_fds(cmd, pipes);
 		if (exec_cmd(cmd, pipes, env))
 		{
 			close_pipes(pipes);
