@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 09:25:05 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/26 13:21:51 by tpanou-d         ###   ########.fr       */
+/*   Updated: 2025/11/27 10:23:25 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,7 @@ typedef struct s_cmd
 	int		fd_out;
 	t_rtype	fd_in_type;
 	t_rtype	fd_out_type;
+	bool	is_builtin;
 }	t_cmd;
 
 typedef struct s_line
@@ -163,6 +164,7 @@ typedef struct s_env
 	bool	update_history;
 	bool	is_ctrl;
 	//
+	bool	in_fork;
 	pid_t	last_pid;
 	t_err	err;
 	char	culprit[CULPRIT_LENGTH];
