@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 09:25:05 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/27 10:57:42 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/28 10:05:01 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ typedef enum e_err
 	EXEC_ERR,
 	CMD_NOT_FOUND_ERR,
 	CMD_NOT_EXEC_ERR,
+	CMD_FILE_NOT_FOUND_ERR,
 	FILE_ERR,
 	AMBI_REDIR_ERR,
 	BUILTIN_ERR,
