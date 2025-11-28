@@ -6,11 +6,40 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/10 10:53:41 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/27 15:12:43 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/28 11:44:27 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static inline void	wait_children(t_env *env)
+{
+	pid_t	wait_pid;
+	int		status;
+
+	wait_pid = wait(&status);
+	while (wait_pid != -1)
+	{
+		set_exit_code((wait_pid == env->last_pid) 
+			* (WIFEXITED(status) * WEXITSTATUS(status)
+			+ WIFSIGNALED(status) * (128 + WTERMSIG(status))), env);
+		wait_pid = wait(&status);
+	}
+}
+
+static inline void	raboushell(char *input, t_env *env)
+{
+	t_cmd	*cmd_list;
+	size_t	cmd_list_len;
+	
+	cmd_list = NULL;
+	if (!get_cmd_line(input, &cmd_list, &cmd_list_len, env))
+	{
+		exec_cmd_line(cmd_list, cmd_list_len, env);
+		wait_children(env);
+	}
+	free_cmd_list(cmd_list, cmd_list_len);
+}
 
 static inline bool	init_env(t_env *env, char **envp)
 {
@@ -27,20 +56,6 @@ static inline bool	init_env(t_env *env, char **envp)
 	env->update_history = true;
 }
 
-static inline void	raboushell(char *input, t_env *env)
-{
-	t_cmd	*cmd_list;
-	size_t	cmd_list_len;
-	
-	if (get_cmd_line(input, &cmd_list, &cmd_list_len, env)
-		|| exec_cmd_line(cmd_list, cmd_list_len, env))
-	{
-		free(input);
-		free_cmd_list(cmd_list, cmd_list_len);
-		throw_error(env);
-	}
-}
-
 int	main(int argc, char **argv, char **envp)
 {
 	t_env	env;
@@ -48,14 +63,16 @@ int	main(int argc, char **argv, char **envp)
 
 	(void) argc;
 	(void) argv;
-	if (init_env(&env, envp))
-		throw_error(&env);
-	while (true)
+	if (!init_env(&env, envp))
 	{
-		if (get_line(&input, "raboushell> ", &env))
-			throw_error(&env);
-		raboushell(input, &env);
-		free(input);
+		while (!is_end_of_raboushell(&env))
+		{
+			if (!get_line(&input, "raboushell> ", &env))
+			{
+				raboushell(input, &env);
+				free(input);
+			}
+		}
 	}
-	return (0);
+	exit_raboushell(&env);
 }
