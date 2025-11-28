@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/20 09:43:51 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/28 13:44:27 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/28 14:16:52 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static inline bool	compute_export(char *exp, t_var_info *var_info,
 
 static inline bool	check_export_parsing(char *exp, t_var_info *var_info)
 {
-	if (!*exp || (*exp >= '0' && *exp <= '9'))
+	if (!*exp || *exp == '=' ||(*exp >= '0' && *exp <= '9'))
 		return (true);
 	while (is_var_char(*exp))
 		exp++;
