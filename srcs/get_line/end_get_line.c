@@ -6,11 +6,11 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/28 17:14:17 by tpanou-d          #+#    #+#             */
-/*   Updated: 2025/11/28 12:11:42 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/28 13:43:15 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_line.h"
+#include "../includes/get_line.h"
 
 inline void	handle_get_line_error(t_gl *env)
 {

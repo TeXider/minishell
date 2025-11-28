@@ -6,11 +6,11 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 08:55:49 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/14 13:12:29 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/28 13:52:57 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../includes/parsing.h"
 
 static void	write_in_hdoc(t_cmd_parsing *cmdp, bool has_expand, int write_fd,
 	t_env *env)
@@ -38,7 +38,7 @@ static bool	open_hdoc(char *del, int write_fd, bool has_expand, t_env *env)
 
 	simple_init_cmd_parsing(&tmp_cmdp);
 	line = NULL;
-	env->update_history = false;
+	env->get_line_env.update_history = false;
 	while (!is_end_of_hdoc(del, line))
 	{
 		tmp_cmdp.str = line;
@@ -48,7 +48,7 @@ static bool	open_hdoc(char *del, int write_fd, bool has_expand, t_env *env)
 			return (true);
 	}
 	safe_free((void **) &line);
-	env->update_history = true;
+	env->get_line_env.update_history = true;
 	return (false);
 }
 

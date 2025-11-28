@@ -6,11 +6,11 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/25 10:10:23 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/26 11:25:41 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/28 13:44:04 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../includes/builtins.h"
 
 static inline void	free_set_dirs_data(char **export_args, char *new_dir)
 {

@@ -6,11 +6,11 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/20 12:06:32 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/26 11:22:58 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/28 13:44:23 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../includes/builtins.h"
 
 static inline bool	atouc(char *num_str, t_uchar *res)
 {

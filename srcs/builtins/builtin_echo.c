@@ -6,11 +6,11 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 18:40:50 by tpanou-d          #+#    #+#             */
-/*   Updated: 2025/11/25 14:35:00 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/28 13:44:15 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../includes/builtins.h"
 
 static inline bool	check_new_line(char *arg)
 {

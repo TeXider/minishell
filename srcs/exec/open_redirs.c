@@ -6,11 +6,11 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/14 09:54:07 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/14 13:11:31 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/28 13:45:56 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../includes/execution.h"
 
 static inline bool	open_redir(char *name, int *fd, t_rtype type, t_env *env)
 {

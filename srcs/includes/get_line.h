@@ -6,13 +6,14 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 11:24:12 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/28 12:14:29 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/28 13:15:56 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_LINE_H
 # define GET_LINE_H
 
+# include <sys/ioctl.h>
 # include "raboushell.h"
 
 # define LINE_LEN 1024 
@@ -31,19 +32,22 @@
 
 typedef struct termios	t_term;
 
-typedef struct s_gl
+typedef struct s_line
 {
-	t_term	old_term;
-	t_term	term;
-	t_hist	*history;
-	size_t	prompt_len;
-	int		win_cols;
-	size_t	prev_line_count;
-	size_t	prev_line_index;
-	bool	update_history;
-	bool	is_ctrl;
-	t_env	*main_env;
-}	t_gl;
+	char			curr_char;
+	char			*buffer;
+	size_t			index;
+	size_t			count;
+	size_t			len;
+}	t_line;
+
+typedef struct s_hist
+{
+	t_line			*edit_line;
+	t_line			*og_line;
+	struct s_hist	*next;
+	struct s_hist	*prev;
+}	t_hist;
 
 
 bool	end_get_line(t_line *line, char **dst, t_gl *env);

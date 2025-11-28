@@ -6,11 +6,11 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 09:26:39 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/14 13:16:37 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/28 13:53:16 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../includes/parsing.h"
 
 inline bool	is_end_of_cmd(t_cmd_parsing *cmdp)
 {

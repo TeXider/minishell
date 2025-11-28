@@ -6,11 +6,11 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/23 15:56:03 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/26 11:20:18 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/28 13:44:53 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../includes/builtins.h"
 
 static inline size_t	is_alph_order(char *var_str, char *exportp_str)
 {

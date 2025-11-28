@@ -6,11 +6,11 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 08:35:25 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/28 12:11:42 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/28 13:43:39 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_line.h"
+#include "../includes/get_line.h"
 
 static inline bool	set_correct_line_len(t_line *line, t_gl *env)
 {

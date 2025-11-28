@@ -6,11 +6,11 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/07 14:50:26 by tpanou-d          #+#    #+#             */
-/*   Updated: 2025/11/12 10:46:46 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/28 13:53:03 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../includes/parsing.h"
 
 static void	increment_len(t_cmd_parsing *cmdp, size_t *len, bool *end_of_redir,
 	bool *has_arg)

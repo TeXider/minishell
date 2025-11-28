@@ -6,11 +6,11 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/21 09:14:27 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/26 11:23:26 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/28 13:44:58 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../includes/builtins.h"
 
 static inline bool	var_eq(char *var1, char *var2)
 {

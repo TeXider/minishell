@@ -6,11 +6,11 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/28 17:17:31 by tpanou-d          #+#    #+#             */
-/*   Updated: 2025/11/28 12:11:42 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/28 13:43:27 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_line.h"
+#include "../includes/get_line.h"
 
 inline void	handle_lr_arrows(t_line *line, int term_cols, t_gl *env)
 {

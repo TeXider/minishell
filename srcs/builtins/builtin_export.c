@@ -6,11 +6,11 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/20 09:43:51 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/26 11:24:49 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/28 13:44:27 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../includes/builtins.h"
 
 static inline void	replace_var(char **list, size_t index, char *new_var)
 {
@@ -18,18 +18,18 @@ static inline void	replace_var(char **list, size_t index, char *new_var)
 	list[index] = new_var;
 }
 
-static inline bool	compute_export(char *export, t_var_info *var_info,
+static inline bool	compute_export(char *exp, t_var_info *var_info,
 	t_env *env)
 {
 	char	*new_var;
 
-	if (export[0] == '_' && !is_var_char(export[1]))
+	if (exp[0] == '_' && !is_var_char(exp[1]))
 		return (false);
-	find_var(export, var_info, env);
+	find_var(exp, var_info, env);
 	if (var_info->stat != VAR_INEXISTANT
 		&& var_info->operation == TO_EXPORTP)
 		return (false);
-	if (convert_export_to_var(export, &new_var, var_info, env))
+	if (convert_export_to_var(exp, &new_var, var_info, env))
 		return (true);
 	if (var_info->stat != VAR_IN_ENVP
 		&& ((var_info->stat != VAR_IN_EXPORTP && add_to_exportp(new_var, env))
@@ -43,17 +43,17 @@ static inline bool	compute_export(char *export, t_var_info *var_info,
 	return (false);
 }
 
-static inline bool	check_export_parsing(char *export, t_var_info *var_info)
+static inline bool	check_export_parsing(char *exp, t_var_info *var_info)
 {
-	if (!*export || (*export >= '0' && *export <= '9'))
+	if (!*exp || (*exp >= '0' && *exp <= '9'))
 		return (true);
-	while (is_var_char(*export))
-		export++;
-	var_info->operation = TO_EXPORTP * (!*export)
-		+ TO_ENVP * (*export == '=')
-		+ TO_ENVP_APPND * (*export == '+');
-	return (*export
-		&& (*export != '=' && !(*export == '+' && *(export + 1) == '=')));
+	while (is_var_char(*exp))
+		exp++;
+	var_info->operation = TO_EXPORTP * (!*exp)
+		+ TO_ENVP * (*exp == '=')
+		+ TO_ENVP_APPND * (*exp == '+');
+	return (*exp
+		&& (*exp != '=' && !(*exp == '+' && *(exp + 1) == '=')));
 }
 
 static inline void	print_export(t_env *env)

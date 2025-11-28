@@ -6,11 +6,11 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/20 11:48:00 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/26 11:22:44 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/28 13:44:31 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../includes/builtins.h"
 
 bool	builtin_pwd(t_env *env)
 {

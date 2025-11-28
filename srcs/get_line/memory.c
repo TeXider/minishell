@@ -6,11 +6,11 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 10:15:39 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/28 12:11:42 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/28 13:43:42 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_line.h"
+#include "../includes/get_line.h"
 
 inline bool	safe_line_alloc(t_line **line, size_t len, t_gl *env)
 {

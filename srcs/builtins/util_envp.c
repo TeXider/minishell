@@ -6,11 +6,11 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/22 14:48:43 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/26 11:20:08 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/28 13:44:43 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../includes/builtins.h"
 
 bool	add_to_envp(char *new_var, t_env *env)
 {

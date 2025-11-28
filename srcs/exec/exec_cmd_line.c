@@ -6,11 +6,11 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 08:54:12 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/27 13:55:20 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/28 13:28:16 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../includes/execution.h"
 
 static inline bool	exec_builtin(t_cmd *cmd, t_env *env)
 {
@@ -109,8 +109,3 @@ bool	exec_cmd_line(t_cmd *cmd_list, size_t cmd_list_len, t_env *env)
 	env->last_pid = pid;
 	return (false);
 }
-//	i = -1;
-//	while (++i < cmd_list_len)
-//		wait(NULL);
-// put the wait in exec_cmd_line caller, therefore whether
-// there was an error or not, every child is waited for.

@@ -6,11 +6,11 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 11:26:24 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/27 14:51:12 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/28 13:45:44 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../includes/execution.h"
 
 int	main(int argc, char **argv, char **envp)
 {

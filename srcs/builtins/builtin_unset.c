@@ -6,11 +6,11 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/21 14:18:30 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/26 11:21:59 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/28 13:44:35 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../includes/builtins.h"
 
 static inline bool	is_valid_var(char *var)
 {

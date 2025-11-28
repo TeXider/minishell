@@ -43,6 +43,7 @@
 		"streambuf": "c",
 		"text_encoding": "c",
 		"typeinfo": "c",
-		"signal.h": "c"
+		"signal.h": "c",
+		"parsing.h": "c"
 	}
 }

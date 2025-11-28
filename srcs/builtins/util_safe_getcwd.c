@@ -6,11 +6,11 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/25 13:58:27 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/26 11:22:34 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/28 13:45:02 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../includes/builtins.h"
 
 bool	safe_getcwd(char **dst, t_env *env)
 {
