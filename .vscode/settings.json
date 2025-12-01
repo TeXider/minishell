@@ -44,6 +44,8 @@
 		"text_encoding": "c",
 		"typeinfo": "c",
 		"signal.h": "c",
-		"parsing.h": "c"
+		"parsing.h": "c",
+		"wait.h": "c",
+		"types.h": "c"
 	}
 }
