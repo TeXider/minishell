@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raboushell.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 13:59:03 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/01 11:56:00 by tpanou-d         ###   ########.fr       */
+/*   Updated: 2025/12/01 13:52:44 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ static inline void free_cmd_list(t_cmd *cmd_list, size_t len)
 		while (cmd->redirv && --(cmd->redirv_len))
 			safe_free(cmd->redirv[cmd->redirv_len].name);
 		safe_free(cmd->redirv);
-		safe_close(cmd->fd_in);
-		safe_close(cmd->fd_out);
+		safe_close(cmd->fd_in, FD_NULL);
+		safe_close(cmd->fd_out, FD_NULL);
 	}
 }
 

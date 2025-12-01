@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/25 10:10:23 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/28 13:44:04 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/01 13:23:32 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ static inline bool	set_dirs(char *dir, char *old_dir, char *new_dir,
 		return (true);
 	}
 	if (create_cd_var("OLD_PWD", old_dir, export_args, env)
-		|| safe_getcwd(&new_dir, CD_ERR, env)
+		|| safe_getcwd(&new_dir, env)
 		|| create_cd_var("PWD", new_dir, export_args + 1, env)
 		|| builtin_export(export_args, env))
 		err = true;

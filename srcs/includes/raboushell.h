@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raboushell.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 09:25:05 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/01 11:56:18 by tpanou-d         ###   ########.fr       */
+/*   Updated: 2025/12/01 13:45:11 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,7 @@ typedef struct s_env
 	size_t	envp_len;
 	size_t	exportp_len;
 	//
-	t_gl	get_line_env;
+	t_gl	*get_line_env;
 	//
 	bool	in_fork;
 	pid_t	last_pid;
@@ -144,6 +144,7 @@ typedef struct s_env
 	bool	end_of_raboushell;
 }	t_env;
 
+void	raboushell(char *input, t_env *env);
 //
 void	set_new_cmd(t_cmd *cmd, t_env *env);
 bool	is_empty_cmd(t_cmd *cmd);
@@ -163,9 +164,12 @@ bool	get_line(char **dst, char *prompt, t_gl *env);
 //
 bool	is_var_char(char c);
 void	print_raboushell(void);
+void	print_str(char *str);
 void	set_exit_code(t_uchar exit_code, t_env *env);
+void	safe_close(int *fd, int new_fd);
 //
 void	create_error(char *culprit, t_err err, t_env *env);
 void	throw_error(t_env *env);
+void	exit_raboushell(t_env *env);
 
 #endif

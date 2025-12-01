@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/14 13:41:55 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/28 13:45:52 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/01 13:22:17 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,13 +99,13 @@ bool	get_path(t_cmd *cmd, t_env *env)
 		|| get_path_var(&path_var, env))
 	{
 		cmd->path = cmd->argv[0];
-		return (!is_correct_path(cmd->path, env));
+		return (!is_correct_path(cmd, env));
 	}
 	while (*path_var)
 	{
 		if (join_path(&cmd->path, &path_var, cmd->argv[0], env))
 			return (true);
-		if (is_correct_path(cmd->path, env))
+		if (is_correct_path(cmd, env))
 			return (false);
 		if (cmd->path != cmd->argv[0])
 			free(cmd->path);

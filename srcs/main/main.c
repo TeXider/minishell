@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/10 10:53:41 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/01 11:59:30 by tpanou-d         ###   ########.fr       */
+/*   Updated: 2025/12/01 13:17:20 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/raboushell.h"
+#include "../includes/builtins.h"
+
 
 static inline bool	init_env(t_env *env, char **envp)
 {
@@ -26,6 +28,7 @@ static inline bool	init_env(t_env *env, char **envp)
 	env->end_of_raboushell = false;
 	env->err = SUCCESS;
 	env->exit_code = 0;
+	return (false);
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -39,7 +42,7 @@ int	main(int argc, char **argv, char **envp)
 	{
 		while (!env.in_fork && !env.end_of_raboushell)
 		{
-			if (!get_line(&input, "raboushell> ", &env))
+			if (!get_line(&input, "raboushell> ", &env.get_line_env))
 			{
 				raboushell(input, &env);
 				free(input);

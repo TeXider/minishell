@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 11:24:12 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/01 12:37:35 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/01 13:47:24 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 
 # include <sys/ioctl.h>
 # include <termios.h>
-# include "raboushell.h"
+# include <stdbool.h>
+# include <stdlib.h>
 
 # define LINE_LEN 1024 
 # define ESC_CHAR 27
@@ -52,17 +53,19 @@ typedef struct s_hist
 
 typedef struct s_gl
 {
-	t_term			old_term;
-	t_term			term;
-	t_hist			*history;
-	size_t			prompt_len;
-	int				win_cols;
-	size_t			prev_line_count;
-	size_t			prev_line_index;
-	bool			update_history;
-	bool			is_ctrl;
-	struct s_env	*main_env;
+	t_term	old_term;
+	t_term	term;
+	t_hist	*history;
+	size_t	prompt_len;
+	int		win_cols;
+	size_t	prev_line_count;
+	size_t	prev_line_index;
+	bool	update_history;
+	bool	is_ctrl;
+	void	*main_env;
 }	t_gl;
+
+# include "raboushell.h"
 
 bool	end_get_line(t_line *line, char **dst, t_gl *env);
 bool	is_special_key(char c);

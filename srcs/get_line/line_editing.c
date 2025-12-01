@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 08:35:25 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/28 13:43:39 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/01 13:50:23 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static inline bool	set_correct_line_len(t_line *line, t_gl *env)
 
 	if (line->count < line->len)
 		return (false);
-	if (safe_challoc(&tmp, line->len + LINE_LEN, env))
+	if (safe_challoc(&tmp, line->len + LINE_LEN, env->main_env))
 		return (true);
 	i = -1;
 	while (++i < line->len)

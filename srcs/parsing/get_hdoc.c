@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 08:55:49 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/28 13:52:57 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/01 13:19:33 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static bool	open_hdoc(char *del, int write_fd, bool has_expand, t_env *env)
 		tmp_cmdp.str = line;
 		write_in_hdoc(&tmp_cmdp, has_expand, write_fd, env);
 		safe_free((void **) &line);
-		if (get_line(&line, "> ", env))
+		if (get_line(&line, "> ", &env->get_line_env))
 			return (true);
 	}
 	safe_free((void **) &line);

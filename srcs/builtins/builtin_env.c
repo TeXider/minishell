@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/20 11:54:05 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/28 13:44:19 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/01 13:24:55 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	builtin_env(t_env *env)
 	i = 0;
 	while (env->envp[i])
 	{
-		print_str(env->envp);
+		print_str(env->envp[i]);
 		write(1, "\n", 1);
 		i++;
 	}

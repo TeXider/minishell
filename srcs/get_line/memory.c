@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 10:15:39 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/01 12:37:22 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/01 13:51:10 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ inline bool	safe_line_alloc(t_line **line, size_t len, t_gl *env)
 		create_error("malloc()", SYS_ERR, env->main_env);
 		return (true);
 	}
-	if (safe_challoc(&(*line)->buffer, len, env))
+	if (safe_challoc(&(*line)->buffer, len, env->main_env))
 	{
 		free(*line);
 		create_error("malloc()", SYS_ERR, env->main_env);

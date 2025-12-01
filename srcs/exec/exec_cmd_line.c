@@ -6,11 +6,12 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 08:54:12 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/01 12:29:06 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/01 13:20:07 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/execution.h"
+#include "../includes/builtins.h"
 
 static inline bool	exec_builtin(t_cmd *cmd, t_env *env)
 {

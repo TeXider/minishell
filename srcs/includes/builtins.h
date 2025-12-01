@@ -6,12 +6,12 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 12:26:23 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/28 13:40:03 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/01 13:23:58 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef BUILTINS_H
-# define BUITLINS_H
+# define BUILTINS_H
 
 # include "raboushell.h"
 
@@ -63,7 +63,8 @@ bool	remove_from_envp(size_t var_index, t_env *env);
 bool	add_to_exportp(char *new_var, t_env *env);
 bool	remove_from_exportp(size_t var_index, t_env *env);
 void	find_var(char *var, t_var_info *var_info, t_env *env);
-void	throw_builin_error(char *culprit, t_builtin_err err,
+void	throw_builtin_error(char *culprit, t_builtin_err err,
 			t_builtin_err_ctxt err_ctxt, t_env *env);
+bool	safe_getcwd(char **dst, t_env *env);
 
 # endif

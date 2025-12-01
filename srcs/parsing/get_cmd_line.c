@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 09:50:16 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/28 13:52:36 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/01 13:19:14 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static bool	get_cmd(t_cmd_parsing *cmdp, t_env *env)
 		if (is_end_of_expand(cmdp))
 			exit_expand(cmdp);
 	}
-	cmdp->cmd->argv = builtin_type(*(cmdp->cmd->argv));
+	cmdp->cmd->builtin = builtin_type(*(cmdp->cmd->argv));
 	return (false);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   util_throw_builtin_error.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/25 13:51:42 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/01 12:00:29 by tpanou-d         ###   ########.fr       */
+/*   Updated: 2025/12/01 13:51:56 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static inline void	print_err_origin(t_builtin_err err)
 	write(2, ": "RST, 7);
 }
 
-void	throw_builin_error(char *culprit, t_builtin_err err,
+void	throw_builtin_error(char *culprit, t_builtin_err err,
 	t_builtin_err_ctxt err_ctxt, t_env *env)
 {
 	if (env->err == SYS_ERR)
