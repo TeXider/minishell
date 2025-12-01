@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_error.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 08:14:55 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/01 10:28:51 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/01 11:56:18 by tpanou-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ static inline void	create_exit_code(t_env *env)
 		+ 127 * (env->err == CMD_FILE_NOT_FOUND_ERR
 			|| env->err == CMD_NOT_FOUND_ERR);
 	env->exit_code += !(env->exit_code);
+	set_exit_code(env->exit_code, env);
 }
 
 void	create_error(char *culprit, t_err err, t_env *env)

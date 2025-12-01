@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/10 10:53:41 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/01 10:01:15 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/01 11:59:30 by tpanou-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	main(int argc, char **argv, char **envp)
 	(void) argv;
 	if (!init_env(&env, envp))
 	{
-		while (!env.end_of_raboushell)
+		while (!env.in_fork && !env.end_of_raboushell)
 		{
 			if (!get_line(&input, "raboushell> ", &env))
 			{

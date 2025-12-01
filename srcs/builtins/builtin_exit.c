@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_exit.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/20 12:06:32 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/28 13:44:23 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/01 11:58:32 by tpanou-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,5 +54,7 @@ bool	builtin_exit(char **args, t_env *env)
 		throw_builtin_error(NULL, EXIT_ERR, TOO_MANY_PARAMS_BERR, env);
 		return (true);
 	}
+	set_exit_code(env->exit_code, env);
+	env->end_of_raboushell = true;
 	return (false);
 }

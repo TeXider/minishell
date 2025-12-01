@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raboushell.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 09:25:05 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/01 10:21:53 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/01 11:56:18 by tpanou-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,6 +140,7 @@ typedef struct s_env
 	t_err	err;
 	char	culprit[CULPRIT_LENGTH];
 	t_uchar	exit_code;
+	char	exit_code_str[3];
 	bool	end_of_raboushell;
 }	t_env;
 
@@ -162,6 +163,7 @@ bool	get_line(char **dst, char *prompt, t_gl *env);
 //
 bool	is_var_char(char c);
 void	print_raboushell(void);
+void	set_exit_code(t_uchar exit_code, t_env *env);
 //
 void	create_error(char *culprit, t_err err, t_env *env);
 void	throw_error(t_env *env);
