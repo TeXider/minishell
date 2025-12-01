@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/28 17:13:27 by tpanou-d          #+#    #+#             */
-/*   Updated: 2025/11/28 13:43:34 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/01 12:39:02 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,5 @@ inline void	update_history(t_line *line, t_gl *env)
 		overwrite_new_history_entry(line, env);
 	if (!env->update_history || !line->count)
 		remove_new_history_entry(env);
-	if (env->history)
-		go_to_last_history_entry(env);
+	go_to_last_history_entry(env);
 }

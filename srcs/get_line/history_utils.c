@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/29 14:09:57 by tpanou-d          #+#    #+#             */
-/*   Updated: 2025/11/28 13:43:30 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/01 12:36:49 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 inline void	go_to_last_history_entry(t_gl *env)
 {
+	if (!env->history)
+		return ;
 	while (env->history->next)
 		env->history = env->history->next;
 }

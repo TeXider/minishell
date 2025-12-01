@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 10:15:39 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/01 09:50:58 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/01 12:37:22 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,4 +63,20 @@ inline bool	safe_history_alloc(t_hist **history, t_gl *env)
 	(*history)->prev = NULL;
 	(*history)->next = NULL;
 	return (false);
+}
+
+inline void	clear_history(t_gl *env)
+{
+	t_hist	*tmp;
+
+	go_to_last_history_entry(env);
+	while (env->history)
+	{
+		if (env->history->edit_line != env->history->og_line)
+			safe_free((void **) env->history->edit_line);
+		safe_free((void **) env->history->og_line);
+		tmp = env->history->prev;
+		free(env->history);
+		env->history = tmp;
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 11:24:12 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/01 09:45:40 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/01 12:37:35 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ bool	is_special_key(char c);
 void	safe_free_line(t_line **line);
 bool	safe_line_alloc(t_line **line, size_t len, t_gl *env);
 bool	safe_history_alloc(t_hist **history, t_gl *env);
+void	clear_history(t_gl *env);
 int		get_curr_col(size_t index, int term_cols, t_gl *env);
 bool	get_term_cols(int *term_cols, t_gl *env);
 void	move_cursor(ssize_t distance, size_t index, int term_cols, t_gl *env);
