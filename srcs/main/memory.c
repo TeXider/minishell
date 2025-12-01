@@ -6,11 +6,11 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 10:15:39 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/24 10:15:56 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/30 14:02:07 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../includes/raboushell.h"
 
 inline void	safe_free(void **ptr)
 {

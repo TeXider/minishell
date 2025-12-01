@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/10 10:53:41 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/28 13:58:56 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/01 10:01:15 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,5 +46,6 @@ int	main(int argc, char **argv, char **envp)
 			}
 		}
 	}
+	throw_error(&env);
 	exit_raboushell(&env);
 }

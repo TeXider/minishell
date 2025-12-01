@@ -1,33 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   .create_error.c                                    :+:      :+:    :+:   */
+/*   create_error.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 08:14:55 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/28 13:42:58 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/01 10:28:51 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/raboushell.h"
 
-void	throw_error(t_env *env)
+static inline void	create_exit_code(t_env *env)
 {
-	if (env->err == SYS_ERR || env->err == FILE_ERR)
-		{printf("%s ", env->culprit); perror("wallah c'est le systeme pas moi");}
-	else if (env->err == AMBI_REDIR_ERR)
-		printf("tu pouvais pas etre plus clair dans tes redirections: %s\n", env->culprit);
-	else if (env->err == UNCLOSED_QUOTES_ERR)
-		printf("t'as pas fermé la quote zeubi : %c\n", *(env->culprit));
-	else if (env->err == UNEXPECTED_TOKEN_ERR)
-		printf("balletrou qu'est-ce que tu veux que je fasse avec ça: %c\n", *(env->culprit));
-	else if (env->err == EXEC_ERR)
-		printf("hocus pocus brocus focus nikkus niggus : %s\n", env->culprit);
-	exit(env->err);
+	env->exit_code = 2 * (env->err == UNCLOSED_QUOTES_ERR
+			|| env->err == UNEXPECTED_TOKEN_ERR)
+		+ 126 * (env->err == CMD_NOT_EXEC_ERR)
+		+ 127 * (env->err == CMD_FILE_NOT_FOUND_ERR
+			|| env->err == CMD_NOT_FOUND_ERR);
+	env->exit_code += !(env->exit_code);
 }
 
-bool	create_error(char *culprit, t_err err, t_env *env)
+void	create_error(char *culprit, t_err err, t_env *env)
 {
 	size_t	i;
 
@@ -50,5 +45,6 @@ bool	create_error(char *culprit, t_err err, t_env *env)
 		}
 	}
 	env->culprit[i] = '\0';
-	return (true);
+	env->end_of_raboushell = (err == SYS_ERR || err == TERM_ERR);
+	create_exit_code(env);
 }

@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 09:25:05 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/28 13:26:15 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/28 14:53:11 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # include <errno.h>
 # include <fcntl.h>
 # include <sys/wait.h>
-# include <termios.h>
+# include "get_line.h"
 
 # define READ 1
 # define HAS_QUOTES -1
@@ -55,7 +55,6 @@
 # define RST	"\033[0m"
 
 typedef unsigned char	t_uchar;
-typedef struct s_gl		t_gl;
 extern int				g_sig;
 
 typedef enum e_err
@@ -119,20 +118,6 @@ typedef struct s_cmd
 	t_rtype		fd_out_type;
 	t_builtin	builtin;
 }	t_cmd;
-
-typedef struct s_gl
-{
-	t_term	old_term;
-	t_term	term;
-	t_hist	*history;
-	size_t	prompt_len;
-	int		win_cols;
-	size_t	prev_line_count;
-	size_t	prev_line_index;
-	bool	update_history;
-	bool	is_ctrl;
-	t_env	*main_env;
-}	t_gl;
 
 typedef struct s_env
 {

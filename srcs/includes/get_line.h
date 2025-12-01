@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 11:24:12 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/28 13:15:56 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/28 14:53:00 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define GET_LINE_H
 
 # include <sys/ioctl.h>
+# include <termios.h>
 # include "raboushell.h"
 
 # define LINE_LEN 1024 
