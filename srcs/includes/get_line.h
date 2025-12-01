@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 11:24:12 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/28 14:53:00 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/01 09:45:40 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,19 @@ typedef struct s_hist
 	struct s_hist	*prev;
 }	t_hist;
 
+typedef struct s_gl
+{
+	t_term			old_term;
+	t_term			term;
+	t_hist			*history;
+	size_t			prompt_len;
+	int				win_cols;
+	size_t			prev_line_count;
+	size_t			prev_line_index;
+	bool			update_history;
+	bool			is_ctrl;
+	struct s_env	*main_env;
+}	t_gl;
 
 bool	end_get_line(t_line *line, char **dst, t_gl *env);
 bool	is_special_key(char c);

@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/28 17:17:31 by tpanou-d          #+#    #+#             */
-/*   Updated: 2025/11/28 13:43:27 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/01 09:47:47 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static inline bool	get_esc_seq(t_line *line, t_gl *env)
 	rd = read(0, seq, 6);
 	if (rd == -1)
 	{
-		create_error("read()", SYS_ERR, env);
+		create_error("read()", SYS_ERR, env->main_env);
 		return (true);
 	}
 	line->curr_char = ARROW_LEFT * (seq[1] == 'D' || seq[4] == 'D')

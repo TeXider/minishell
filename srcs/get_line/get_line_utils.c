@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 08:35:29 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/28 13:43:17 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/01 09:47:36 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,10 @@ inline bool	get_term_cols(int *term_cols, t_gl *env)
 	struct winsize	win;
 
 	if (ioctl(STD_IN, TIOCGWINSZ, &win))
-		return (create_error("ioctl()", SYS_ERR, env));
+	{
+		create_error("ioctl()", TERM_ERR, env->main_env);
+		return (true);
+	}
 	*term_cols = win.ws_col;
 	return (false);
 }

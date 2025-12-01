@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 11:23:11 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/28 13:43:21 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/01 09:46:21 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,12 @@ static inline bool	init_get_line(t_line **line, char **dst, t_gl *env)
 	*dst = NULL;
 	if (!isatty(STD_IN))
 	{
-		create_error("FD_IN is not a TTY", TERM_ERR, env);
+		create_error("isatty()", TERM_ERR, env->main_env);
 		return (true);
 	}
 	if (tcgetattr(STD_IN, &env->old_term))
 	{
-		create_error("tcgetattr()", TERM_ERR, env);
+		create_error("tcgetattr()", TERM_ERR, env->main_env);
 		return (true);
 	}
 	env->term = env->old_term;
@@ -30,7 +30,7 @@ static inline bool	init_get_line(t_line **line, char **dst, t_gl *env)
 	env->term.c_lflag &= ~(ECHO | ECHONL | ICANON | IEXTEN);
 	if (tcsetattr(STD_IN, TCSANOW, &env->term))
 	{
-		create_error("tcsetattr()", TERM_ERR, env);
+		create_error("tcsetattr()", TERM_ERR, env->main_env);
 		return (true);
 	}
 	if (new_history_entry(env))
@@ -52,7 +52,7 @@ bool	get_line(char **dst, char *prompt, t_gl *env)
 		env->prev_line_index = line->index;
 		if (read(0, &line->curr_char, 1) == -1)
 		{
-			create_error("read()", SYS_ERR, env);
+			create_error("read()", SYS_ERR, env->main_env);
 			handle_get_line_error(env);
 			return (true);
 		}

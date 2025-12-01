@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 09:25:05 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/28 14:53:11 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/01 10:21:53 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <errno.h>
 # include <fcntl.h>
 # include <sys/wait.h>
+# include <sys/types.h>
 # include "get_line.h"
 
 # define READ 1
@@ -52,9 +53,14 @@
 # define WHITE	"\033[37m"
 # define BOLD	"\033[1m"
 # define DIM	"\033[2m"
+# define ETXT	"\033[1;4;31m"
 # define RST	"\033[0m"
 
 typedef unsigned char	t_uchar;
+
+# define SIGNAL_INT 1
+# define SIGNAL_QUIT 2
+
 extern int				g_sig;
 
 typedef enum e_err
@@ -65,11 +71,11 @@ typedef enum e_err
 	UNCLOSED_QUOTES_ERR,
 	UNEXPECTED_TOKEN_ERR,
 	EXEC_ERR,
+	FILE_ERR,
+	AMBI_REDIR_ERR,
 	CMD_NOT_FOUND_ERR,
 	CMD_NOT_EXEC_ERR,
 	CMD_FILE_NOT_FOUND_ERR,
-	FILE_ERR,
-	AMBI_REDIR_ERR,
 	BUILTIN_ERR,
 	TERM_ERR,
 	SYS_ERR,
@@ -157,7 +163,7 @@ bool	get_line(char **dst, char *prompt, t_gl *env);
 bool	is_var_char(char c);
 void	print_raboushell(void);
 //
-bool	create_error(char *culprit, t_err err, t_env *env);
+void	create_error(char *culprit, t_err err, t_env *env);
 void	throw_error(t_env *env);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 08:54:12 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/28 13:28:16 by almighty         ###   ########.fr       */
+/*   Updated: 2025/11/30 16:48:53 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,10 @@ static inline bool	exec_builtin(t_cmd *cmd, t_env *env)
 	if (cmd->builtin == CD_BUILTIN)
 		return (builtin_cd(cmd->argv + 1, env));
 	if (cmd->builtin == EXIT_BUILTIN)
+	{
+		write(1, "exit\n", 5 * !env->in_fork);
 		return (builtin_exit(cmd->argv + 1, env));
+	}
 	if (cmd->builtin == EXPORT_BUILTIN)
 		return (builtin_export(cmd->argv + 1, env));
 	if (cmd->builtin == PWD_BUILTIN)
