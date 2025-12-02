@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/30 17:24:58 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/02 12:55:06 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/02 17:11:43 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,8 @@ void	throw_error(t_env *env)
 			set_err_msg(err_msg, &err_msg_len, env);
 			print_raboushell();
 			write(2, err_msg, err_msg_len);
-			if (env->err == SYS_ERR || env->err == TERM_ERR)
+			if (env->err == SYS_ERR || env->err == TERM_ERR
+				|| env->err == FILE_ERR)
 				perror(NULL);
 		}
 		env->err = SUCCESS;

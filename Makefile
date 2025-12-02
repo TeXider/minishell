@@ -1,3 +1,15 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: almighty <almighty@student.42.fr>          +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2025/12/02 13:34:07 by almighty          #+#    #+#              #
+#    Updated: 2025/12/02 18:07:32 by almighty         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 NAME            := minishell
 CC                      := cc
 CFLAGS          := -Wall -Wextra -Werror -g
@@ -28,8 +40,9 @@ SRCS 	:=	$(DIR_SRCS)/main/create_error.c\
 			$(DIR_SRCS)/parsing/parsing_utils3.c\
 			$(DIR_SRCS)/exec/exec_cmd_line.c\
 			$(DIR_SRCS)/exec/get_path.c\
-			$(DIR_SRCS)/exec/open_redirs.c\
-			$(DIR_SRCS)/exec/pipes.c\
+			$(DIR_SRCS)/exec/redirs.c\
+			$(DIR_SRCS)/exec/handle_pipes.c\
+			$(DIR_SRCS)/exec/dup_utils.c\
 			$(DIR_SRCS)/builtins/builtin_cd.c\
 			$(DIR_SRCS)/builtins/builtin_echo.c\
 			$(DIR_SRCS)/builtins/builtin_env.c\

@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 13:10:11 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/28 13:15:36 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/02 18:14:52 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,7 @@ typedef struct s_pipes
 
 /* PIPES */
 
-bool	repipe(int pipes_fds[2], bool is_last_cmd, t_env *env);
-void	init_pipes(t_pipes *pipes);
-void	close_pipes(t_pipes *pipes);
-bool	handle_pipes(t_pipes *pipes, size_t cmd_list_i, size_t cmd_list_len,
-			t_env *env);
+bool	handle_pipes(t_cmd *cmd, t_cmd *next_cmd, t_env *env);
 
 /* PATH */
 
@@ -38,6 +34,9 @@ bool	get_path(t_cmd *cmd, t_env *env);
 
 /* REDIRS */
 
-bool	open_redirs(t_cmd *cmd, t_env *env);
+bool	safe_dup(int dup_fd, int *dst, t_env *env);
+bool	dup2_std(int new_std_in, int new_std_out, t_env *env);
+bool	set_redirs(t_cmd *cmd, t_env *env);
+void	reset_redirs(t_cmd *cmd_list, size_t cmd_list_i, t_env *env);
 
 #endif

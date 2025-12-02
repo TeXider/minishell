@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/10 10:53:41 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/02 12:37:28 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/02 16:07:33 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,17 @@ static inline bool	init_env(t_env *env, char **envp)
 	env->get_line_env.update_history = true;
 	env->get_line_env.main_env = env;
 	env->in_fork = false;
-	env->end_of_raboushell = false;
-	env->err = SUCCESS;
-	env->exit_code = 0;
 	env->envp_len = 0;
 	env->exportp_len = 0;
+	env->saved_std_in = FD_NULL;
+	env->saved_std_out = FD_NULL;
 	if (safe_lalloc(&env->envp, 1, env)
 		|| safe_lalloc(&env->exportp, 1, env)
 		|| ((*envp) && builtin_export(envp, env)))
 		return (true);
+	env->end_of_raboushell = false;
+	env->err = SUCCESS;
+	env->exit_code = 0;
 	return (false);
 }
 

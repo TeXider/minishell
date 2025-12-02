@@ -6,13 +6,27 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 13:59:03 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/02 12:28:37 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/02 19:00:08 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/raboushell.h"
 
-static inline void free_cmd_list(t_cmd *cmd_list, size_t len)
+static inline void	free_redirs(t_cmd *cmd)
+{
+	if (cmd->redirv_len)
+	{
+		while (--(cmd->redirv_len) != (size_t)(-1))
+		{
+			safe_free((void **) &cmd->redirv[cmd->redirv_len].name);
+			if (cmd->redirv[cmd->redirv_len].type == AMBI_REDIR)
+				break ;
+		}
+	}
+	safe_free((void **) &cmd->redirv);
+}
+
+static inline void	free_cmd_list(t_cmd *cmd_list, size_t len)
 {
 	t_cmd	*cmd;
 	size_t	i;
@@ -28,10 +42,7 @@ static inline void free_cmd_list(t_cmd *cmd_list, size_t len)
 			while (cmd->argv && cmd->argv[++i])
 				free(cmd->argv[i]);
 			safe_free((void **) &cmd->argv);
-			if (cmd->redirv_len)
-				while (--(cmd->redirv_len))
-					safe_free((void **) &cmd->redirv[cmd->redirv_len].name);
-			safe_free((void **) &cmd->redirv);
+			free_redirs(cmd);
 			safe_close(&cmd->fd_in, FD_NULL);
 			safe_close(&cmd->fd_out, FD_NULL);
 		}

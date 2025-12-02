@@ -6,115 +6,88 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 08:54:12 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/02 12:23:47 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/02 18:59:36 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/execution.h"
 #include "../includes/builtins.h"
 
-static inline bool	exec_builtin(t_cmd *cmd, t_env *env)
+static inline void	exec_builtin(t_cmd *cmd, t_env *env)
 {
 	if (cmd->builtin == CD_BUILTIN)
-		return (builtin_cd(cmd->argv + 1, env));
-	if (cmd->builtin == EXIT_BUILTIN)
-	{
-		write(2, "exit\n", 5 * !env->in_fork);
-		return (builtin_exit(cmd->argv + 1, env));
-	}
-	if (cmd->builtin == EXPORT_BUILTIN)
-		return (builtin_export(cmd->argv + 1, env));
-	if (cmd->builtin == PWD_BUILTIN)
-		return (builtin_pwd(env));
-	if (cmd->builtin == UNSET_BUILTIN)
-		return (builtin_unset(cmd->argv + 1, env));
-	if (cmd->builtin == ECHO_BUILTIN)
+		builtin_cd(cmd->argv + 1, env);
+	else if (cmd->builtin == EXIT_BUILTIN)
+		builtin_exit(cmd->argv + 1, env);
+	else if (cmd->builtin == EXPORT_BUILTIN)
+		builtin_export(cmd->argv + 1, env);
+	else if (cmd->builtin == PWD_BUILTIN)
+		builtin_pwd(env);
+	else if (cmd->builtin == UNSET_BUILTIN)
+		builtin_unset(cmd->argv + 1, env);
+	else if (cmd->builtin == ECHO_BUILTIN)
 		builtin_echo(cmd->argv + 1);
 	else if (cmd->builtin == ENV_BUILTIN)
 		builtin_env(env);
-	return (false);
 }
 
-static inline bool	exec_cmd(t_cmd *cmd, t_pipes *pipes, t_env *env)
-{
-	if (dup2(cmd->fd_in, STD_IN) == -1
-		|| dup2(cmd->fd_out, STD_OUT) == -1)
-	{
-		create_error("dup2()", SYS_ERR, env);
-		return (true);
-	}
-	if (cmd->fd_in_type != PIPE)
-		safe_close(&cmd->fd_in, FD_NULL);
-	if (cmd->fd_out_type != PIPE)
-		safe_close(&cmd->fd_out, FD_NULL);
-	close_pipes(pipes);
-	if (cmd->builtin)
-		return (exec_builtin(cmd, env));
-	execve(cmd->path, cmd->argv, env->envp);
-	create_error("execve()", SYS_ERR, env);
-	return (true);
-}
-
-static inline void	set_cmd_fds(t_cmd *cmd, t_pipes *pipes)
-{
-	cmd->fd_in += (pipes->fd_read - cmd->fd_in)
-		* (cmd->fd_in == STD_IN);
-	cmd->fd_in_type = (PIPE - STD) * (cmd->fd_in_type == STD)
-		+ cmd->fd_in_type;
-	cmd->fd_out += (pipes->fd_write - cmd->fd_out)
-		* (cmd->fd_out == STD_OUT);
-	cmd->fd_out_type = (PIPE - STD) * (cmd->fd_in_type == STD)
-		+ cmd->fd_in_type;
-}
-
-static inline bool	handle_fork(t_cmd *cmd, pid_t *pid, t_pipes *pipes,
-	t_env *env)
+static inline void	exec_cmd(t_cmd *cmd, pid_t *pid, t_env *env)
 {
 	*pid = fork();
 	if (*pid == -1)
-	{
 		create_error("fork()", SYS_ERR, env);
-		return (true);
-	}
-	if (!*pid)
+	else if (!*pid)
 	{
 		env->in_fork = true;
-		if (open_redirs(cmd, env))
-			return (true);
-		if (*(cmd->argv))
+		if (!cmd->builtin && get_path(cmd, env))
+			return ;
+		safe_close(&cmd->fd_in, FD_NULL);
+		safe_close(&cmd->fd_out, FD_NULL);
+		if (cmd->builtin)
+			exec_builtin(cmd, env);
+		else
 		{
-			if (!cmd->builtin && get_path(cmd, env))
-				return (true);
-			set_cmd_fds(cmd, pipes);
-			if (*(cmd->argv) && exec_cmd(cmd, pipes, env))
-			{
-				close_pipes(pipes);
-				return (true);
-			}
+			execve(cmd->path, cmd->argv, env->envp);
+			create_error("execve()", SYS_ERR, env);
 		}
 	}
-	return (false);
 }
 
-bool	exec_cmd_line(t_cmd *cmd_list, size_t cmd_list_len, t_env *env)
+static inline void	exec_single_builtin(t_cmd *cmd, t_env *env)
 {
-	t_pipes	pipes;
+	if (!set_redirs(cmd, env)
+		&& !dup2_std(cmd->fd_in, cmd->fd_out, env))
+		exec_builtin(cmd, env);
+	safe_close(&cmd->fd_in, FD_NULL);
+	safe_close(&cmd->fd_out, FD_NULL);
+	dup2_std(env->saved_std_in, env->saved_std_out, env);
+}
+
+void	exec_cmd_line(t_cmd *cmd_list, size_t cmd_list_len, t_env *env)
+{
 	pid_t	pid;
 	size_t	i;
 
-	if (cmd_list_len == 1 && (*cmd_list).builtin)
-		return (exec_builtin(cmd_list, env));
-	init_pipes(&pipes);
-	i = -1;
-	while (++i < cmd_list_len)
+	pid = -1;
+	if (cmd_list_len == 1 && cmd_list->builtin)
+		exec_single_builtin(cmd_list, env);
+	else
 	{
-		if (handle_pipes(&pipes, i, cmd_list_len, env)
-			/*|| set_redirs(cmd_list + i, cmd_list_len, env)*/
-			|| handle_fork(cmd_list + i, &pid, &pipes, env))
-			return (true);
-		pipes.is_next_pipe = !pipes.is_next_pipe;
+		i = -1;
+		while (++i < cmd_list_len && !env->in_fork && env->err != SYS_ERR)
+		{
+			if (!set_redirs(cmd_list + i, env)
+				&& !handle_pipes(cmd_list + i, cmd_list + i
+					+ (i + 1 != cmd_list_len), env)
+				&& *(cmd_list[i].argv)
+				&& !dup2_std(cmd_list[i].fd_in, cmd_list[i].fd_out, env))
+				{
+					if (i > 0)
+						safe_close(&cmd_list[i - 1].fd_out, FD_NULL);
+					exec_cmd(cmd_list + i, &pid, env);
+				}
+			reset_redirs(cmd_list + i, i, env);
+		}
+		env->last_pid = pid;
 	}
-	close_pipes(&pipes);
-	env->last_pid = pid;
-	return (false);
 }

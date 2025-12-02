@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 09:25:05 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/02 10:29:12 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/02 18:01:33 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,16 +128,19 @@ typedef struct s_cmd
 
 typedef struct s_env
 {
+	/*ENVIRONMENT VARIABLES*/
 	char	**envp;
 	char	**exportp;
 	size_t	envp_len;
 	size_t	exportp_len;
-	//
+	/*GET LINE*/
 	t_gl	get_line_env;
-	//
+	/*EXECUTION*/
 	bool	in_fork;
 	pid_t	last_pid;
-	//
+	int		saved_std_in;
+	int		saved_std_out;
+	/*ERROR HANDLING*/
 	t_err	err;
 	char	culprit[CULPRIT_LENGTH];
 	t_uchar	exit_code;
@@ -159,7 +162,7 @@ bool	safe_challoc(char **dst, size_t len, t_env *env);
 bool	safe_lalloc(char ***dst, size_t len, t_env *env);
 bool	safe_malloc(void **dst, size_t len, t_env *env);
 //
-bool	exec_cmd_line(t_cmd *cmd_list, size_t cmd_list_len, t_env *env);
+void	exec_cmd_line(t_cmd *cmd_list, size_t cmd_list_len, t_env *env);
 //
 bool	get_line(char **dst, char *prompt, t_gl *env);
 //
