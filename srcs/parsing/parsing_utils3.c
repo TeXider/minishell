@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/10 13:40:22 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/01 13:20:33 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/02 10:57:54 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,4 +32,29 @@ inline void	reset_cmd_parsing(t_cmd_parsing *cmdp, t_cmd *cmd)
 	cmdp->redirv_i = 0;
 	cmdp->argv_i = 0;
 	cmdp->cmd = cmd;
+}
+
+inline bool	get_raw_arg(char **dst, t_cmd_parsing *cmdp, t_env *env)
+{
+	char	*tmp_str;
+	size_t	i;
+
+	i = 0;
+	tmp_str = cmdp->str;
+	while (!is_end_of_arg(cmdp))
+	{
+		set_sep(cmdp);
+		cmdp->str++;
+		i++;
+	}
+	if (safe_challoc(dst, i, env))
+		return (true);
+	cmdp->str = tmp_str;
+	i = 0;
+	while (!is_end_of_arg(cmdp))
+	{
+		set_sep(cmdp);
+		(*dst)[i++] = *(cmdp->str++);
+	}
+	return (false);
 }

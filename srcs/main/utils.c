@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 11:38:44 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/01 14:06:12 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/01 14:08:37 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,4 +38,10 @@ inline void	safe_close(int *fd, int new_fd)
 		close(*fd);
 		*fd = new_fd;
 	}
+}
+
+inline bool	is_var_char(char c)
+{
+	return ((c >= '0' && c <= '9') || (c >= 'a' && c <= 'z')
+		|| (c >= 'A' && c <= 'Z') || c == '_');
 }

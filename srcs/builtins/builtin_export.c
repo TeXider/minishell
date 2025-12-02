@@ -6,15 +6,17 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/20 09:43:51 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/28 14:16:52 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/02 11:49:36 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/builtins.h"
 
-static inline void	replace_var(char **list, size_t index, char *new_var)
+static inline void	replace_var(char **list, size_t index, char *new_var,
+	bool free_var)
 {
-	free(list[index]);
+	if (free_var)
+		free(list[index]);
 	list[index] = new_var;
 }
 
@@ -37,9 +39,12 @@ static inline bool	compute_export(char *exp, t_var_info *var_info,
 				&& add_to_envp(new_var, env))))
 		return (true);
 	if (var_info->stat != VAR_INEXISTANT)
-		replace_var(env->exportp, var_info->exportp_index, new_var);
-	if (var_info->stat == VAR_IN_ENVP)
-		replace_var(env->envp, var_info->envp_index, new_var);
+	{
+		free(env->exportp[var_info->exportp_index]);
+		env->exportp[var_info->exportp_index] = new_var;
+		if (var_info->stat == VAR_IN_ENVP)
+			env->envp[var_info->envp_index] = new_var;
+	}
 	return (false);
 }
 

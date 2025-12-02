@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 09:25:05 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/01 13:45:11 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/02 10:29:12 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ typedef enum e_err
 	AMBI_REDIR_ERR,
 	CMD_NOT_FOUND_ERR,
 	CMD_NOT_EXEC_ERR,
+	CMD_IS_DIR_ERR,
 	CMD_FILE_NOT_FOUND_ERR,
 	BUILTIN_ERR,
 	TERM_ERR,
@@ -132,7 +133,7 @@ typedef struct s_env
 	size_t	envp_len;
 	size_t	exportp_len;
 	//
-	t_gl	*get_line_env;
+	t_gl	get_line_env;
 	//
 	bool	in_fork;
 	pid_t	last_pid;

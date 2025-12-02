@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/25 10:10:23 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/01 13:23:32 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/02 11:53:50 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,10 +91,11 @@ static inline bool	set_dirs(char *dir, char *old_dir, char *new_dir,
 	*(export_args + 1) = NULL;
 	if (chdir(new_dir))
 	{
+		free(export_args);
 		throw_builtin_error(new_dir, CD_ERR, INTERNAL_BERR, env);
 		return (true);
 	}
-	if (create_cd_var("OLD_PWD", old_dir, export_args, env)
+	if (create_cd_var("OLDPWD", old_dir, export_args, env)
 		|| safe_getcwd(&new_dir, env)
 		|| create_cd_var("PWD", new_dir, export_args + 1, env)
 		|| builtin_export(export_args, env))

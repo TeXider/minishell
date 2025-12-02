@@ -8,6 +8,7 @@ DIR_OBJS                := objs
 
 SRCS 	:=	$(DIR_SRCS)/main/create_error.c\
 			$(DIR_SRCS)/main/main.c\
+			$(DIR_SRCS)/main/raboushell.c\
 			$(DIR_SRCS)/main/exit_raboushell.c\
 			$(DIR_SRCS)/main/throw_error.c\
 			$(DIR_SRCS)/main/utils.c\
@@ -33,6 +34,7 @@ SRCS 	:=	$(DIR_SRCS)/main/create_error.c\
 			$(DIR_SRCS)/builtins/builtin_echo.c\
 			$(DIR_SRCS)/builtins/builtin_env.c\
 			$(DIR_SRCS)/builtins/builtin_export.c\
+			$(DIR_SRCS)/builtins/builtin_exit.c\
 			$(DIR_SRCS)/builtins/builtin_pwd.c\
 			$(DIR_SRCS)/builtins/builtin_unset.c\
 			$(DIR_SRCS)/builtins/util_convert_export_to_var.c\
@@ -66,12 +68,10 @@ $(NAME): $(OBJS)
 
 clean :
 	@rm -rf $(DIR_OBJS)
-	@$(MAKE) -s -C $(DIR_LIBFT) clean
 	@echo "✅ clean done."
 
 fclean : clean
 	@rm -f $(NAME)
-	@$(MAKE) -s -C $(DIR_LIBFT) fclean
 	@echo "✅ fclean done."
 
 re : fclean all

@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/21 14:18:30 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/28 13:44:35 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/02 12:39:10 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static inline bool	is_valid_var(char *var)
 {
-	if (*var >= '0' || *var <= '9' || (*var == '_' && !*(var + 1)))
+	if ((*var >= '0' && *var <= '9') || (*var == '_' && !*(var + 1)))
 		return (false);
 	while (is_var_char(*var))
 		var++;

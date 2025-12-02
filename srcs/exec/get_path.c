@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/14 13:41:55 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/01 13:22:17 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/02 10:24:43 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,10 @@
 
 static inline bool	is_correct_path(t_cmd *cmd, t_env *env)
 {
-	if (!access(cmd->path, F_OK))
+	int	tmp_fd;
+
+	tmp_fd = open(cmd->path, __O_DIRECTORY);
+	if (tmp_fd == -1 && !access(cmd->path, F_OK))
 	{
 		if (!access(cmd->path, X_OK))
 		{
@@ -23,6 +26,8 @@ static inline bool	is_correct_path(t_cmd *cmd, t_env *env)
 		}
 		create_error(cmd->path, CMD_NOT_EXEC_ERR, env);
 	}
+	if (tmp_fd != -1)
+		close(tmp_fd);
 	create_error(cmd->argv[0],
 		CMD_NOT_FOUND_ERR + cmd->cmd_name_is_path
 			* (CMD_FILE_NOT_FOUND_ERR - CMD_NOT_FOUND_ERR), env);
@@ -110,5 +115,6 @@ bool	get_path(t_cmd *cmd, t_env *env)
 		if (cmd->path != cmd->argv[0])
 			free(cmd->path);
 	}
+	cmd->path = NULL;
 	return (true);
 }

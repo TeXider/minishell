@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/10 10:53:41 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/01 13:17:20 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/02 12:37:28 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,6 @@
 
 static inline bool	init_env(t_env *env, char **envp)
 {
-	if (safe_lalloc(&env->envp, 1, env)
-		|| safe_lalloc(&env->exportp, 1, env)
-		|| builtin_export(envp, env))
-		return (true);
 	env->get_line_env.history = NULL;
 	env->get_line_env.is_ctrl = false;
 	env->get_line_env.update_history = true;
@@ -28,6 +24,12 @@ static inline bool	init_env(t_env *env, char **envp)
 	env->end_of_raboushell = false;
 	env->err = SUCCESS;
 	env->exit_code = 0;
+	env->envp_len = 0;
+	env->exportp_len = 0;
+	if (safe_lalloc(&env->envp, 1, env)
+		|| safe_lalloc(&env->exportp, 1, env)
+		|| ((*envp) && builtin_export(envp, env)))
+		return (true);
 	return (false);
 }
 
@@ -45,6 +47,7 @@ int	main(int argc, char **argv, char **envp)
 			if (!get_line(&input, "raboushell> ", &env.get_line_env))
 			{
 				raboushell(input, &env);
+				throw_error(&env);
 				free(input);
 			}
 		}

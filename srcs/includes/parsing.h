@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 12:55:43 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/28 13:08:51 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/02 10:58:35 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,5 +73,6 @@ bool	change_of_sep(t_cmd_parsing *cmdp);
 bool	is_end_of_hdoc(char *del, char *line);
 bool	str_eq(char *str1, char *str2);
 void	reset_cmd_parsing(t_cmd_parsing *cmdp, t_cmd *cmd);
+bool	get_raw_arg(char **dst, t_cmd_parsing *cmdp, t_env *env);
 
 #endif

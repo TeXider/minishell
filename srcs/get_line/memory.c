@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 10:15:39 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/01 13:51:10 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/02 12:47:30 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,15 +51,16 @@ inline bool	safe_history_alloc(t_hist **history, t_gl *env)
 		create_error("malloc()", SYS_ERR, env->main_env);
 		return (true);
 	}
-	if (safe_line_alloc(&(*history)->edit_line, LINE_LEN, env))
+	if (safe_line_alloc(&(*history)->og_line, LINE_LEN, env))
 	{
 		free(*history);
+		*history = NULL;
 		create_error("malloc()", SYS_ERR, env->main_env);
 		return (true);
 	}
-	(*history)->edit_line->len = LINE_LEN;
-	(*history)->edit_line->count = 0;
-	(*history)->og_line = (*history)->edit_line;
+	(*history)->og_line->len = LINE_LEN;
+	(*history)->og_line->count = 0;
+	(*history)->edit_line = (*history)->og_line;
 	(*history)->prev = NULL;
 	(*history)->next = NULL;
 	return (false);
@@ -73,8 +74,8 @@ inline void	clear_history(t_gl *env)
 	while (env->history)
 	{
 		if (env->history->edit_line != env->history->og_line)
-			safe_free((void **) env->history->edit_line);
-		safe_free((void **) env->history->og_line);
+			safe_free_line(&env->history->edit_line);
+		safe_free_line(&env->history->og_line);
 		tmp = env->history->prev;
 		free(env->history);
 		env->history = tmp;

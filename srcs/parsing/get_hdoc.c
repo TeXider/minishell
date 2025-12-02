@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 08:55:49 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/01 13:19:33 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/02 12:00:09 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ static bool	open_hdoc(char *del, int write_fd, bool has_expand, t_env *env)
 
 	simple_init_cmd_parsing(&tmp_cmdp);
 	line = NULL;
+	env->get_line_env.prompt_len = 2;
 	env->get_line_env.update_history = false;
 	while (!is_end_of_hdoc(del, line))
 	{

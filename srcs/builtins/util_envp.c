@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/22 14:48:43 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/28 13:44:43 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/02 11:51:21 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ bool	remove_from_envp(size_t var_index, t_env *env)
 	i = -1;
 	while (++i < env->envp_len)
 		new_envp[i] = env->envp[i + (i >= var_index)];
-	free(env->envp[var_index]);
 	free(env->envp);
 	env->envp = new_envp;
 	return (false);

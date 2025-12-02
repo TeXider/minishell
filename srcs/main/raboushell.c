@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 13:59:03 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/01 13:52:44 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/02 12:28:37 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,21 +17,26 @@ static inline void free_cmd_list(t_cmd *cmd_list, size_t len)
 	t_cmd	*cmd;
 	size_t	i;
 
-	while (--len != (size_t)(-1))
+	if (cmd_list && len)
 	{
-		cmd = cmd_list + len;
-		if (cmd->argv && *(cmd->argv) != cmd->path)
-			safe_free(cmd->path);
-		i = -1;
-		while (cmd->argv && cmd->argv[++i])
-			free(cmd->argv[i]);
-		safe_free(cmd->argv);
-		while (cmd->redirv && --(cmd->redirv_len))
-			safe_free(cmd->redirv[cmd->redirv_len].name);
-		safe_free(cmd->redirv);
-		safe_close(cmd->fd_in, FD_NULL);
-		safe_close(cmd->fd_out, FD_NULL);
+		while (--len != (size_t)(-1))
+		{
+			cmd = cmd_list + len;
+			if (cmd->argv && *(cmd->argv) != cmd->path)
+				safe_free((void **) &cmd->path);
+			i = -1;
+			while (cmd->argv && cmd->argv[++i])
+				free(cmd->argv[i]);
+			safe_free((void **) &cmd->argv);
+			if (cmd->redirv_len)
+				while (--(cmd->redirv_len))
+					safe_free((void **) &cmd->redirv[cmd->redirv_len].name);
+			safe_free((void **) &cmd->redirv);
+			safe_close(&cmd->fd_in, FD_NULL);
+			safe_close(&cmd->fd_out, FD_NULL);
+		}
 	}
+	safe_free((void **) &cmd_list);
 }
 
 static inline void	wait_children(t_env *env)
@@ -61,6 +66,5 @@ void	raboushell(char *input, t_env *env)
 		exec_cmd_line(cmd_list, cmd_list_len, env);
 		wait_children(env);
 	}
-	if (cmd_list && cmd_list_len)
-		free_cmd_list(cmd_list, cmd_list_len);
+	free_cmd_list(cmd_list, cmd_list_len);
 }

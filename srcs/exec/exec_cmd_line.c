@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 08:54:12 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/01 13:20:07 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/02 12:23:47 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static inline bool	exec_builtin(t_cmd *cmd, t_env *env)
 		return (builtin_cd(cmd->argv + 1, env));
 	if (cmd->builtin == EXIT_BUILTIN)
 	{
-		write(1, "exit\n", 5 * !env->in_fork);
+		write(2, "exit\n", 5 * !env->in_fork);
 		return (builtin_exit(cmd->argv + 1, env));
 	}
 	if (cmd->builtin == EXPORT_BUILTIN)
@@ -79,14 +79,18 @@ static inline bool	handle_fork(t_cmd *cmd, pid_t *pid, t_pipes *pipes,
 	if (!*pid)
 	{
 		env->in_fork = true;
-		if (open_redirs(cmd, env)
-			|| (!cmd->builtin && get_path(cmd, env)))
+		if (open_redirs(cmd, env))
 			return (true);
-		set_cmd_fds(cmd, pipes);
-		if (exec_cmd(cmd, pipes, env))
+		if (*(cmd->argv))
 		{
-			close_pipes(pipes);
-			return (true);
+			if (!cmd->builtin && get_path(cmd, env))
+				return (true);
+			set_cmd_fds(cmd, pipes);
+			if (*(cmd->argv) && exec_cmd(cmd, pipes, env))
+			{
+				close_pipes(pipes);
+				return (true);
+			}
 		}
 	}
 	return (false);
@@ -105,6 +109,7 @@ bool	exec_cmd_line(t_cmd *cmd_list, size_t cmd_list_len, t_env *env)
 	while (++i < cmd_list_len)
 	{
 		if (handle_pipes(&pipes, i, cmd_list_len, env)
+			/*|| set_redirs(cmd_list + i, cmd_list_len, env)*/
 			|| handle_fork(cmd_list + i, &pid, &pipes, env))
 			return (true);
 		pipes.is_next_pipe = !pipes.is_next_pipe;

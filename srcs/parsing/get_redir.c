@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/29 10:02:10 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/28 13:53:08 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/02 11:00:07 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,8 @@ bool	get_redir(t_cmd_parsing *cmdp, t_env *env)
 		return (true);
 	if (status == AMBI_REDIR_ERR)
 	{
-		cmdp->curr_redir->name = cmdp->str;
+		if (get_raw_arg(&cmdp->curr_redir->name, cmdp, env))
+			return (true);
 		type = AMBI_REDIR;
 		go_to_end_of_arg(cmdp, env);
 	}
