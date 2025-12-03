@@ -6,7 +6,7 @@
 #    By: almighty <almighty@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/12/02 13:34:07 by almighty          #+#    #+#              #
-#    Updated: 2025/12/03 13:34:43 by almighty         ###   ########.fr        #
+#    Updated: 2025/12/03 20:01:04 by almighty         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -75,10 +75,15 @@ all : $(NAME)
 $(DIR_OBJS)/%.o: $(DIR_SRCS)/%.c
 	@mkdir -p $(dir $@)
 	@$(CC) $(CFLAGS) -c $< -o $@
-
+	@curr=$$(find objs -iname "*.o" | wc -l); \
+	printf "\rCompiling : ["; \
+	printf "%s" "$$(printf "%*s" $$curr "" | tr " " "#")"; \
+	printf "%*s" $$((49 - $$curr)); \
+	printf "] %d/49" $$curr;
+	
 $(NAME): $(OBJS)
 	@$(CC) $(CFLAGS) $(OBJS) -o $@
-	@echo "✅ Compilation completed: $(NAME)"
+	@echo -e "\n✅ Compilation completed: $(NAME)"
 
 clean :
 	@rm -rf $(DIR_OBJS)
