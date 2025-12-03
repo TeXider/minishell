@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 11:24:12 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/03 13:38:48 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/03 20:13:33 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,7 @@
 # define GET_LINE_H
 
 # include <sys/ioctl.h>
-# include <termios.h>
-# include <stdbool.h>
-# include <stdlib.h>
+# include "raboushell.h"
 
 # define LINE_LEN 5 
 # define ESC_CHAR 27
@@ -31,41 +29,6 @@
 # define CTRL_ARROW -8
 # define LEFT -1
 # define RIGHT 1
-
-typedef struct termios	t_term;
-
-typedef struct s_line
-{
-	char			curr_char;
-	char			*buffer;
-	size_t			index;
-	size_t			count;
-	size_t			len;
-}	t_line;
-
-typedef struct s_hist
-{
-	t_line			*edit_line;
-	t_line			*og_line;
-	struct s_hist	*next;
-	struct s_hist	*prev;
-}	t_hist;
-
-typedef struct s_gl
-{
-	t_term	old_term;
-	t_term	term;
-	t_hist	*history;
-	size_t	prompt_len;
-	int		win_cols;
-	size_t	prev_line_count;
-	size_t	prev_line_index;
-	bool	update_history;
-	bool	is_ctrl;
-	void	*main_env;
-}	t_gl;
-
-# include "raboushell.h"
 
 bool	end_get_line(t_line *line, char **dst, t_gl *env);
 bool	is_special_key(char c);

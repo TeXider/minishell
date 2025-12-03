@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 09:25:05 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/02 19:14:13 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/03 20:15:05 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@
 # include <fcntl.h>
 # include <sys/wait.h>
 # include <sys/types.h>
-# include "get_line.h"
+# include "cmd_struct.h"
+# include "get_line_struct.h"
 
 # define READ 1
 # define HAS_QUOTES -1
@@ -82,50 +83,6 @@ typedef enum e_err
 	SYS_ERR,
 }	t_err;
 
-typedef enum e_builtin
-{
-	NOT_BUILTIN,
-	CD_BUILTIN,
-	ECHO_BUILTIN,
-	ENV_BUILTIN,
-	EXIT_BUILTIN,
-	EXPORT_BUILTIN,
-	PWD_BUILTIN,
-	UNSET_BUILTIN
-}	t_builtin;
-
-typedef enum e_rtype
-{
-	EMPTY_REDIR,
-	HDOC,
-	IN,
-	OUT,
-	APPND,
-	PIPE,
-	STD,
-	AMBI_REDIR
-}	t_rtype;
-
-typedef struct s_redir
-{
-	char	*name;
-	t_rtype	type;
-}	t_redir;
-
-typedef struct s_cmd
-{
-	char		*path;
-	bool		cmd_name_is_path;
-	char		**argv;
-	t_redir		*redirv;
-	size_t		redirv_len;
-	int			fd_in;
-	int			fd_out;
-	t_rtype		fd_in_type;
-	t_rtype		fd_out_type;
-	t_builtin	builtin;
-}	t_cmd;
-
 typedef struct s_env
 {
 	/*ENVIRONMENT VARIABLES*/
@@ -166,6 +123,7 @@ bool	safe_malloc(void **dst, size_t len, t_env *env);
 void	exec_cmd_line(t_cmd *cmd_list, size_t cmd_list_len, t_env *env);
 //
 bool	get_line(char **dst, char *prompt, t_gl *env);
+void	safe_free_history(t_gl *env);
 //
 bool	is_var_char(char c);
 void	print_raboushell(void);
