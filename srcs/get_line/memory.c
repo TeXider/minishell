@@ -6,13 +6,13 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 10:15:39 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/02 12:47:30 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/03 08:07:49 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/get_line.h"
 
-inline bool	safe_line_alloc(t_line **line, size_t len, t_gl *env)
+inline bool safe_line_alloc(t_line **line, size_t len, t_gl *env)
 {
 	*line = malloc(sizeof(t_line));
 	if (!*line)
@@ -33,17 +33,32 @@ inline bool	safe_line_alloc(t_line **line, size_t len, t_gl *env)
 	return (false);
 }
 
-inline void	safe_free_line(t_line **line)
+inline bool	dup_line(t_line *src, t_line **dst, t_gl *env)
+{
+	size_t	i;
+
+	if (safe_line_alloc(dst, src->len, env))
+		return (true);
+	(*dst)->count = src->count;
+	(*dst)->index = src->index;
+	(*dst)->curr_char = src->curr_char;
+	i = -1;
+	while (++i < src->count)
+		(*dst)->buffer[i] = src->buffer[i];
+	return (false);
+}
+
+inline void safe_free_line(t_line **line)
 {
 	if (*line)
 	{
 		if ((*line)->buffer)
 			free((*line)->buffer);
-		safe_free((void **) line);
+		safe_free((void **)line);
 	}
 }
 
-inline bool	safe_history_alloc(t_hist **history, t_gl *env)
+inline bool safe_history_alloc(t_hist **history, t_gl *env)
 {
 	*history = malloc(sizeof(t_hist));
 	if (!*history)
@@ -66,9 +81,9 @@ inline bool	safe_history_alloc(t_hist **history, t_gl *env)
 	return (false);
 }
 
-inline void	clear_history(t_gl *env)
+inline void safe_free_history(t_gl *env)
 {
-	t_hist	*tmp;
+	t_hist *tmp;
 
 	go_to_last_history_entry(env);
 	while (env->history)

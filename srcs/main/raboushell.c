@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 13:59:03 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/02 19:00:08 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/03 08:17:19 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,15 +55,17 @@ static inline void	wait_children(t_env *env)
 	pid_t	wait_pid;
 	int		status;
 
-	wait_pid = wait(&status);
-	while (wait_pid != -1)
+	wait_pid = 0;
+	while (wait_pid > -1 && --env->children_count >= 0)
 	{
-		if (!env->exit_code)
-			set_exit_code((wait_pid == env->last_pid)
-				* (WIFEXITED(status) * WEXITSTATUS(status)
-				+ WIFSIGNALED(status) * (128 + WTERMSIG(status))), env);
 		wait_pid = wait(&status);
+		if (!env->exit_code && env->last_pid != -1 && wait_pid == env->last_pid)
+			set_exit_code((WIFEXITED(status) * WEXITSTATUS(status)
+							+ WIFSIGNALED(status) * (128 + WTERMSIG(status))),
+							env);
 	}
+	if (wait_pid == -1)
+		create_error("wait()", SYS_ERR, env);
 }
 
 void	raboushell(char *input, t_env *env)
@@ -74,8 +76,10 @@ void	raboushell(char *input, t_env *env)
 	cmd_list = NULL;
 	if (!get_cmd_line(input, &cmd_list, &cmd_list_len, env))
 	{
+		env->children_count = 0;
 		exec_cmd_line(cmd_list, cmd_list_len, env);
-		wait_children(env);
+		if (!env->in_fork)
+			wait_children(env);
 	}
 	free_cmd_list(cmd_list, cmd_list_len);
 }

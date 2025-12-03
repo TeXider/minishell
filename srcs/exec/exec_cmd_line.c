@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 08:54:12 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/02 18:59:36 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/02 21:50:02 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ static inline void	exec_cmd(t_cmd *cmd, pid_t *pid, t_env *env)
 			create_error("execve()", SYS_ERR, env);
 		}
 	}
+	env->children_count += (*pid != -1);
 }
 
 static inline void	exec_single_builtin(t_cmd *cmd, t_env *env)
@@ -81,12 +82,12 @@ void	exec_cmd_line(t_cmd *cmd_list, size_t cmd_list_len, t_env *env)
 					+ (i + 1 != cmd_list_len), env)
 				&& *(cmd_list[i].argv)
 				&& !dup2_std(cmd_list[i].fd_in, cmd_list[i].fd_out, env))
-				{
-					if (i > 0)
-						safe_close(&cmd_list[i - 1].fd_out, FD_NULL);
-					exec_cmd(cmd_list + i, &pid, env);
-				}
-			reset_redirs(cmd_list + i, i, env);
+			{
+				if (i > 0)
+					safe_close(&cmd_list[i - 1].fd_out, FD_NULL);
+				exec_cmd(cmd_list + i, &pid, env);
+			}
+			reset_redirs(cmd_list, i, env);
 		}
 		env->last_pid = pid;
 	}

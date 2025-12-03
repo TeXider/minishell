@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/30 17:24:58 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/02 17:11:43 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/02 19:35:48 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,8 @@ static inline void set_err_culprit(char *err_msg, size_t *len, char *msg,
 {
 	if (env->err != UNCLOSED_QUOTES_ERR && env->err != UNEXPECTED_TOKEN_ERR)
 		add_culprit_err_msg(err_msg, len, env);
-	if (env->err != SYS_ERR && env->err != TERM_ERR)
+	if (env->err != SYS_ERR && env->err != TERM_ERR
+		&& env->err != FILE_ERR)
 	{	
 		while (*msg)
 		{
@@ -83,11 +84,14 @@ static inline void set_err_ctxt(char *err_msg, size_t *len, t_env *env)
 	
 	if (env->err == UNCLOSED_QUOTES_ERR || env->err == UNEXPECTED_TOKEN_ERR)
 		ctxt = ETXT"PARSING ERROR:"RST" ";
-	else if (env->err == FILE_ERR || env->err == AMBI_REDIR_ERR)
+	else if (env->err == FILE_ERR)
 		ctxt = ETXT"FILE ERROR:"RST" ";
+	else if (env->err == AMBI_REDIR_ERR)
+		ctxt = ETXT"REDIRECT ERROR:"RST" ";
 	else if (env->err == CMD_NOT_FOUND_ERR
 		|| env->err == CMD_FILE_NOT_FOUND_ERR
-		|| env->err == CMD_NOT_EXEC_ERR)
+		|| env->err == CMD_NOT_EXEC_ERR
+		|| env->err == CMD_IS_DIR_ERR)
 		ctxt = ETXT"EXECUTION ERROR:"RST" ";
 	else if (env->err == TERM_ERR)
 		ctxt = ETXT"TERMINAL ERROR:"RST" ";

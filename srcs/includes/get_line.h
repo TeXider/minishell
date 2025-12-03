@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 11:24:12 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/01 13:47:24 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/03 08:11:15 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include <stdbool.h>
 # include <stdlib.h>
 
-# define LINE_LEN 1024 
+# define LINE_LEN 5 
 # define ESC_CHAR 27
 # define RETURN 127
 # define ARROW_UP -1
@@ -70,9 +70,10 @@ typedef struct s_gl
 bool	end_get_line(t_line *line, char **dst, t_gl *env);
 bool	is_special_key(char c);
 void	safe_free_line(t_line **line);
+bool	dup_line(t_line *src, t_line **dst, t_gl *env);
 bool	safe_line_alloc(t_line **line, size_t len, t_gl *env);
 bool	safe_history_alloc(t_hist **history, t_gl *env);
-void	clear_history(t_gl *env);
+void	safe_free_history(t_gl *env);
 int		get_curr_col(size_t index, int term_cols, t_gl *env);
 bool	get_term_cols(int *term_cols, t_gl *env);
 void	move_cursor(ssize_t distance, size_t index, int term_cols, t_gl *env);
@@ -90,8 +91,8 @@ void	cpy_str(char *src, char *dst, size_t len);
 void	handle_get_line_error(t_gl *env);
 bool	new_history_entry(t_gl *env);
 void	remove_new_history_entry(t_gl *env);
-void	overwrite_new_history_entry(t_line *line, t_gl *env);
-void	update_history(t_line *line, t_gl *env);
+bool	overwrite_new_history_entry(t_line *line, t_gl *env);
+bool	update_history(t_line *line, t_gl *env);
 void	move_in_history(t_line **line, int term_cols, t_gl *env);
 void	go_to_last_history_entry(t_gl *env);
 bool	set_edit_line(t_line **line, t_gl *env);

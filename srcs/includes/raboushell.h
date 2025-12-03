@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 09:25:05 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/02 18:01:33 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/02 19:14:13 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,6 +141,7 @@ typedef struct s_env
 	int		saved_std_in;
 	int		saved_std_out;
 	/*ERROR HANDLING*/
+	int		children_count;
 	t_err	err;
 	char	culprit[CULPRIT_LENGTH];
 	t_uchar	exit_code;

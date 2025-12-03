@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 13:06:30 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/02 18:21:08 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/02 19:26:06 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,20 @@ bool	handle_pipes(t_cmd *cmd, t_cmd *next_cmd, t_env *env)
 			create_error("pipe()", SYS_ERR, env);
 			return (true);
 		}
-		cmd->fd_out += (pipe_fds[STD_OUT] - STD_OUT)
-			* (cmd->fd_out_type == STD);
-		next_cmd->fd_in += (pipe_fds[STD_IN] - STD_IN)
-			* (next_cmd->fd_in_type == STD);
-		cmd->fd_out_type += (PIPE - STD) * (cmd->fd_out_type == STD);
-		next_cmd->fd_in_type += (PIPE - STD) * (next_cmd->fd_in_type == STD);
+		if (cmd->fd_out_type == STD)
+		{
+			cmd->fd_out = pipe_fds[STD_OUT];
+			cmd->fd_out_type = PIPE;
+		}
+		else
+			close(pipe_fds[STD_OUT]);
+		if (next_cmd->fd_in_type == STD)
+		{
+			next_cmd->fd_in = pipe_fds[STD_IN];
+			next_cmd->fd_in_type = PIPE;
+		}
+		else
+			close(pipe_fds[STD_IN]);
 	}
 	return (false);
 }
