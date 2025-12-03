@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 08:35:29 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/01 09:47:36 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/03 11:22:20 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ inline bool	is_special_key(char c)
 	return (c < ' ' || c > '~');
 }
 
-inline int	get_curr_col(size_t index, int term_cols, t_gl *env)
+inline int	curr_col(size_t index, int term_cols, t_gl *env)
 {
 	return ((index + env->prompt_len) % term_cols);
 }

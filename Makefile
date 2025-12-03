@@ -6,7 +6,7 @@
 #    By: almighty <almighty@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/12/02 13:34:07 by almighty          #+#    #+#              #
-#    Updated: 2025/12/02 18:07:32 by almighty         ###   ########.fr        #
+#    Updated: 2025/12/03 13:34:43 by almighty         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -65,7 +65,8 @@ SRCS 	:=	$(DIR_SRCS)/main/create_error.c\
 			$(DIR_SRCS)/get_line/history.c\
 			$(DIR_SRCS)/get_line/line_editing.c\
 			$(DIR_SRCS)/get_line/memory.c\
-			$(DIR_SRCS)/get_line/output_editing.c\
+			$(DIR_SRCS)/get_line/move_cursor.c\
+			$(DIR_SRCS)/get_line/rewrite_line.c\
 
 OBJS 	:=	$(patsubst %.c, $(DIR_OBJS)/%.o, $(subst $(DIR_SRCS)/,,$(SRCS)))
 

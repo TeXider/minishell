@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 11:24:12 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/03 08:11:15 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/03 13:38:48 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,11 +74,9 @@ bool	dup_line(t_line *src, t_line **dst, t_gl *env);
 bool	safe_line_alloc(t_line **line, size_t len, t_gl *env);
 bool	safe_history_alloc(t_hist **history, t_gl *env);
 void	safe_free_history(t_gl *env);
-int		get_curr_col(size_t index, int term_cols, t_gl *env);
+int		curr_col(size_t index, int term_cols, t_gl *env);
 bool	get_term_cols(int *term_cols, t_gl *env);
 void	move_cursor(ssize_t distance, size_t index, int term_cols, t_gl *env);
-void	reset_line_output(t_line *line, int term_cols, t_gl *env);
-void	show_line_output(t_line *line, int term_cols, t_gl *env);
 void	rewrite_line(t_line *line, int term_cols, t_gl *env);
 bool	get_line(char **dst, char *prompt, t_gl *env);
 bool	delete_char(t_line **line, t_gl *env);

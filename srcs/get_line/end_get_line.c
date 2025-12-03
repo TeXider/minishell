@@ -6,19 +6,11 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/28 17:14:17 by tpanou-d          #+#    #+#             */
-/*   Updated: 2025/12/03 07:47:16 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/03 11:17:25 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/get_line.h"
-
-inline void	handle_get_line_error(t_gl *env)
-{
-	write(1, "\n", 1);
-	if (tcsetattr(STD_IN, TCSANOW, &env->old_term))
-		create_error("tcsetattr()", TERM_ERR, env->main_env);
-	remove_new_history_entry(env);
-}
 
 static inline char	*create_truncated_buff(t_line *line, t_gl *env)
 {
@@ -49,4 +41,12 @@ bool	end_get_line(t_line *line, char **dst, t_gl *env)
 		return (true);
 	}
 	return (update_history(line, env));
+}
+
+void	handle_get_line_error(t_gl *env)
+{
+	write(1, "\n", 1);
+	if (tcsetattr(STD_IN, TCSANOW, &env->old_term))
+		create_error("tcsetattr()", TERM_ERR, env->main_env);
+	remove_new_history_entry(env);
 }
