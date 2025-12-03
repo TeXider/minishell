@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/28 17:14:17 by tpanou-d          #+#    #+#             */
-/*   Updated: 2025/12/03 11:17:25 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/03 20:51:16 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,11 @@ bool	end_get_line(t_line *line, char **dst, t_gl *env)
 	if (tcsetattr(STD_IN, TCSANOW, &env->old_term))
 	{
 		create_error("tcsetattr()", TERM_ERR, env->main_env);
+		return (true);
+	}
+	if (g_sig)
+	{
+		remove_new_history_entry(env);
 		return (true);
 	}
 	*dst = create_truncated_buff(line, env);

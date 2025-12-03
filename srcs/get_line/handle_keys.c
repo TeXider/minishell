@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/28 17:17:31 by tpanou-d          #+#    #+#             */
-/*   Updated: 2025/12/03 11:31:15 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/03 20:48:43 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,11 @@ bool	handle_keys(t_line **line, t_gl *env)
 {
 	int	term_cols;
 
+	if ((*line)->curr_char == CTRL_D && !(*line)->count)
+	{
+		g_sig = SIGNAL_EXIT;
+		return (false);
+	}
 	if (get_term_cols(&term_cols, env))
 		return (true);
 	if (is_special_key((*line)->curr_char))

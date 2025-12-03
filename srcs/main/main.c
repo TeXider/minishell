@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/10 10:53:41 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/02 19:12:43 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/03 20:55:52 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,16 +45,18 @@ int	main(int argc, char **argv, char **envp)
 	(void) argv;
 	if (!init_env(&env, envp))
 	{
-		while (!env.in_fork && !env.end_of_raboushell)
+		while (!g_sig && !env.in_fork && !env.end_of_raboushell)
 		{
 			if (!get_line(&input, "raboushell> ", &env.get_line_env))
 			{
 				raboushell(input, &env);
-				throw_error(&env);
+				if (env.err)
+					throw_error(&env);
 				free(input);
 			}
 		}
 	}
-	throw_error(&env);
+	if (env.err)
+		throw_error(&env);
 	exit_raboushell(&env);
 }

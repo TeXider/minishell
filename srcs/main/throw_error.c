@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/30 17:24:58 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/02 19:35:48 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/03 20:56:20 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,20 +109,17 @@ void	throw_error(t_env *env)
 	char	err_msg[CULPRIT_LENGTH + 100];
 	size_t	err_msg_len;
 
-	if (env->err)
+	if (env->err != BUILTIN_ERR)
 	{
-		if (env->err != BUILTIN_ERR)
-		{
-			err_msg_len = 0;
-			set_err_ctxt(err_msg, &err_msg_len, env);
-			set_err_msg(err_msg, &err_msg_len, env);
-			print_raboushell();
-			write(2, err_msg, err_msg_len);
-			if (env->err == SYS_ERR || env->err == TERM_ERR
-				|| env->err == FILE_ERR)
-				perror(NULL);
-		}
-		env->err = SUCCESS;
-		write(2, RST, 4);
+		err_msg_len = 0;
+		set_err_ctxt(err_msg, &err_msg_len, env);
+		set_err_msg(err_msg, &err_msg_len, env);
+		print_raboushell();
+		write(2, err_msg, err_msg_len);
+		if (env->err == SYS_ERR || env->err == TERM_ERR
+			|| env->err == FILE_ERR)
+			perror(NULL);
 	}
+	env->err = SUCCESS;
+	write(2, RST, 4);
 }

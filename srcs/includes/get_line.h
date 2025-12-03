@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 11:24:12 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/03 20:13:33 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/03 20:47:39 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 # define CTRL_ARROW -8
 # define LEFT -1
 # define RIGHT 1
+# define CTRL_D '\004'
 
 bool	end_get_line(t_line *line, char **dst, t_gl *env);
 bool	is_special_key(char c);

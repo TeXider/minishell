@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 09:25:05 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/03 20:15:05 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/03 20:48:36 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,9 @@
 
 typedef unsigned char	t_uchar;
 
-# define SIGNAL_INT 1
-# define SIGNAL_QUIT 2
+# define SIGNAL_EXIT 1
+# define SIGNAL_INT 2
+# define SIGNAL_QUIT 3
 
 extern int				g_sig;
 
