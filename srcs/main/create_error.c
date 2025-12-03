@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_error.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 08:14:55 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/01 11:56:18 by tpanou-d         ###   ########.fr       */
+/*   Updated: 2025/12/03 15:13:26 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,10 @@ void	create_error(char *culprit, t_err err, t_env *env)
 			env->culprit[i] = culprit[i];
 		if (i == CULPRIT_LENGTH && culprit[i])
 		{
-			env->culprit[i - 1] = '.';
+			env->culprit[i - 1] = '\0';
 			env->culprit[i - 2] = '.';
 			env->culprit[i - 3] = '.';
+			env->culprit[i - 4] = '.';
 		}
 	}
 	env->culprit[i] = '\0';
