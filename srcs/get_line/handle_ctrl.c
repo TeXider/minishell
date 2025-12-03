@@ -6,11 +6,27 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/28 17:21:04 by tpanou-d          #+#    #+#             */
-/*   Updated: 2025/11/28 13:43:24 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/03 15:26:32 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/get_line.h"
+
+static inline void	ctrl_move_cursor_right(size_t jump_len, t_line *line,
+	int term_cols, t_gl *env)
+{
+	move_cursor(jump_len * (line->index < line->count), line->index, term_cols,
+		env);
+	line->index += jump_len * (line->index < line->count);
+}
+
+static inline void	ctrl_move_cursor_left(size_t jump_len, t_line *line,
+	int term_cols, t_gl *env)
+{
+	move_cursor(-jump_len * (line->index > 0), line->index, term_cols,
+		env);
+	line->index -= jump_len * (line->index > 0);
+}
 
 static inline size_t	get_jump_len(t_line *line)
 {
@@ -45,19 +61,19 @@ bool	handle_ctrl(t_line **line, int term_cols, t_gl *env)
 	if (!(*line)->count || !(*line)->curr_char)
 		return (false);
 	jump_len = get_jump_len(*line);
-	i = -1;
-	while (++i < jump_len)
-	{
-		if ((*line)->curr_char == ARROW_LEFT
-			|| (*line)->curr_char == ARROW_RIGHT)
-			handle_lr_arrows(*line, term_cols, env);
-		else if ((*line)->curr_char == CTRL_DEL
+	if ((*line)->curr_char == ARROW_RIGHT)
+		ctrl_move_cursor_right(jump_len, *line, term_cols, env);
+	else if ((*line)->curr_char == ARROW_LEFT)
+		ctrl_move_cursor_left(jump_len, *line, term_cols, env);
+	else if ((*line)->curr_char == CTRL_DEL
 			|| (*line)->curr_char == CTRL_RETURN)
-		{
+	{
+		i = -1;
+		while (++i < jump_len)
 			if (delete_char(line, env))
 				return (true);
-		}
 	}
+
 	if ((*line)->curr_char == CTRL_DEL || (*line)->curr_char == CTRL_RETURN)
 		rewrite_line(*line, term_cols, env);
 	return (false);
