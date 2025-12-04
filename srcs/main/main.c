@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/10 10:53:41 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/03 20:55:52 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/04 09:33:07 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ static inline bool	init_env(t_env *env, char **envp)
 	env->exportp_len = 0;
 	env->saved_std_in = FD_NULL;
 	env->saved_std_out = FD_NULL;
+	init_signals();
 	if (safe_lalloc(&env->envp, 1, env)
 		|| safe_lalloc(&env->exportp, 1, env)
 		|| ((*envp) && builtin_export(envp, env)))
@@ -45,7 +46,7 @@ int	main(int argc, char **argv, char **envp)
 	(void) argv;
 	if (!init_env(&env, envp))
 	{
-		while (!g_sig && !env.in_fork && !env.end_of_raboushell)
+		while (g_sig != SIGNAL_EXIT && !env.in_fork && !env.end_of_raboushell)
 		{
 			if (!get_line(&input, "raboushell> ", &env.get_line_env))
 			{
@@ -54,6 +55,8 @@ int	main(int argc, char **argv, char **envp)
 					throw_error(&env);
 				free(input);
 			}
+			if (g_sig == SIGNAL_INT)
+				handle_sigint(&env);
 		}
 	}
 	if (env.err)
