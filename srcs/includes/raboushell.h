@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 09:25:05 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/03 20:48:36 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/04 09:33:00 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,8 @@
 # define ETXT	"\033[1;4;31m"
 # define RST	"\033[0m"
 
-typedef unsigned char	t_uchar;
+typedef unsigned char		t_uchar;
+typedef unsigned short int	t_usint;
 
 # define SIGNAL_EXIT 1
 # define SIGNAL_INT 2
@@ -123,6 +124,9 @@ bool	safe_malloc(void **dst, size_t len, t_env *env);
 //
 void	exec_cmd_line(t_cmd *cmd_list, size_t cmd_list_len, t_env *env);
 //
+void	init_signals(void);
+void	handle_sigint(t_env *env);
+//
 bool	get_line(char **dst, char *prompt, t_gl *env);
 void	safe_free_history(t_gl *env);
 //
@@ -131,6 +135,7 @@ void	print_raboushell(void);
 void	print_str(char *str);
 void	set_exit_code(t_uchar exit_code, t_env *env);
 void	safe_close(int *fd, int new_fd);
+void	print_ushort(t_usint num);
 //
 void	create_error(char *culprit, t_err err, t_env *env);
 void	throw_error(t_env *env);
