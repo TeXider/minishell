@@ -6,7 +6,7 @@
 #    By: almighty <almighty@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/12/02 13:34:07 by almighty          #+#    #+#              #
-#    Updated: 2025/12/04 10:32:04 by almighty         ###   ########.fr        #
+#    Updated: 2025/12/04 12:24:32 by almighty         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -78,7 +78,7 @@ $(DIR_OBJS)/%.o: $(DIR_SRCS)/%.c
 	@mkdir -p $(dir $@)
 	@$(CC) $(CFLAGS) -c $< -o $@
 	@curr=$$(find objs -iname "*.o" | wc -l); \
-	total=$$(find srcs -iname "*.c" | wc -l); \
+	total=$$(find srcs -iname *.c -not -iname .*.c | wc -l); \
 	printf "\e[?25l\rCompiling : \e[1m⟬"; \
 	printf "%s" "$$(printf "\e[107m%*s\e[0m" $$curr "")"; \
 	printf "%*s" $$(($$total - $$curr)); \
