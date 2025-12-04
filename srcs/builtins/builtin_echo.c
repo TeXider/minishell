@@ -6,16 +6,16 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 18:40:50 by tpanou-d          #+#    #+#             */
-/*   Updated: 2025/12/04 10:08:41 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/04 11:40:14 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/builtins.h"
 
-static inline bool	check_new_line_option(char *arg)
+static inline bool	check_no_new_line_option(char *arg)
 {
 	if (*arg != '-')
-		return (true);
+		return (false);
 	arg++;
 	while (*arg == 'n')
 		arg++;
@@ -32,7 +32,7 @@ void	builtin_echo(char **args)
 		return ;
 	}
 	has_new_line = true;
-	while (!g_sig && *args && check_new_line_option(*args))
+	while (!g_sig && *args && check_no_new_line_option(*args))
 	{
 		has_new_line = false;
 		args++;
