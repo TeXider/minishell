@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/03 21:35:05 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/04 09:19:24 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/04 09:44:32 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	init_signals(void)
 	sa.sa_handler = sig_int;
 	sigaction(SIGINT, &sa, NULL);
 	sa.sa_handler = SIG_IGN;
-	sigaction(SIGINT, &sa, NULL);
+	sigaction(SIGQUIT, &sa, NULL);
 }
 
 void	handle_sigint(t_env *env)
