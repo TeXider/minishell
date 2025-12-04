@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/21 14:18:30 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/02 12:39:10 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/04 10:09:39 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ bool	builtin_unset(char **args, t_env *env)
 {
 	t_var_info	var_info;
 
-	while (*args)
+	while (!g_sig && *args)
 	{
 		if (is_valid_var(*args))
 		{

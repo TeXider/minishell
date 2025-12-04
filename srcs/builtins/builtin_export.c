@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/20 09:43:51 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/02 11:49:36 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/04 10:09:30 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ bool	builtin_export(char **args, t_env *env)
 		return (false);
 	}
 	has_error = false;
-	while (*args)
+	while (!g_sig && *args)
 	{
 		if (check_export_parsing(*args, &var_info))
 		{

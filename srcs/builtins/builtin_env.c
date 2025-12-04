@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/20 11:54:05 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/01 13:24:55 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/04 10:09:14 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	builtin_env(t_env *env)
 	size_t	i;
 
 	i = 0;
-	while (env->envp[i])
+	while (!g_sig && env->envp[i])
 	{
 		print_str(env->envp[i]);
 		write(1, "\n", 1);
