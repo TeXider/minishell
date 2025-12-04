@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/03 21:35:05 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/04 09:44:32 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/04 10:51:29 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	init_signals(void)
 
 void	handle_sigint(t_env *env)
 {
-	write(1, "^C\n", 3 * !env->in_fork);
+	write(1, "\n", 3 * !env->in_fork);
 	set_exit_code(130, env);
 	g_sig = 0;
 }

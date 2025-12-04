@@ -6,7 +6,7 @@
 #    By: almighty <almighty@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/12/02 13:34:07 by almighty          #+#    #+#              #
-#    Updated: 2025/12/04 09:38:55 by almighty         ###   ########.fr        #
+#    Updated: 2025/12/04 10:32:04 by almighty         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,6 +25,8 @@ SRCS	:=	$(DIR_SRCS)/main/create_error.c\
 			$(DIR_SRCS)/main/throw_error.c\
 			$(DIR_SRCS)/main/utils.c\
 			$(DIR_SRCS)/main/memory.c\
+			$(DIR_SRCS)/main/signal.c\
+			$(DIR_SRCS)/main/utils2.c\
 			$(DIR_SRCS)/parsing/cmd_funcs.c\
 			$(DIR_SRCS)/parsing/expand_utils.c\
 			$(DIR_SRCS)/parsing/expand.c\
@@ -42,7 +44,7 @@ SRCS	:=	$(DIR_SRCS)/main/create_error.c\
 			$(DIR_SRCS)/exec/get_path.c\
 			$(DIR_SRCS)/exec/redirs.c\
 			$(DIR_SRCS)/exec/handle_pipes.c\
-			$(DIR_SRCS)/exec/dup_utils.c\
+			$(DIR_SRCS)/exec/exec_utils.c\
 			$(DIR_SRCS)/builtins/builtin_cd.c\
 			$(DIR_SRCS)/builtins/builtin_echo.c\
 			$(DIR_SRCS)/builtins/builtin_env.c\
@@ -76,11 +78,11 @@ $(DIR_OBJS)/%.o: $(DIR_SRCS)/%.c
 	@mkdir -p $(dir $@)
 	@$(CC) $(CFLAGS) -c $< -o $@
 	@curr=$$(find objs -iname "*.o" | wc -l); \
-	total=$$(echo $$srcs | wc -w); \
-	printf "\e[?25l\rCompiling : ["; \
+	total=$$(find srcs -iname "*.c" | wc -l); \
+	printf "\e[?25l\rCompiling : \e[1m⟬"; \
 	printf "%s" "$$(printf "\e[107m%*s\e[0m" $$curr "")"; \
 	printf "%*s" $$(($$total - $$curr)); \
-	printf "] %d/%d" $$curr $$total;
+	printf "\e[1m⟭\e[0m %d/%d" $$curr $$total;
 	
 $(NAME): $(OBJS)
 	@$(CC) $(CFLAGS) $(OBJS) -o $@
