@@ -6,11 +6,26 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 08:55:49 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/02 12:00:09 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/04 09:54:54 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/parsing.h"
+
+void	print_hdoc_warning(char *del, t_env *env)
+{
+	size_t	del_len;
+
+	print_raboushell();
+	write(1, "\n\e[1m\e[38;5;202mwarning: \e[0mhere-document at line ", 51);
+	print_ushort(env->get_line_env.line_count);
+	write(1, " delimited by end-of-file (wanted `", 35);
+	del_len = 0;
+	while (del[del_len])
+		del_len++;
+	write(1, del, del_len);
+	write(1, "'\n", 2);
+}
 
 static void	write_in_hdoc(t_cmd_parsing *cmdp, bool has_expand, int write_fd,
 	t_env *env)
@@ -62,7 +77,8 @@ bool	get_hdoc(t_cmd_parsing *cmdp, bool has_expand, t_env *env)
 		create_error("pipe()", SYS_ERR, env);
 		return (true);
 	}
-	if (open_hdoc(cmdp->curr_redir->name, hdoc_fds[P_WRITE], has_expand, env))
+	if (open_hdoc(cmdp->curr_redir->name, hdoc_fds[P_WRITE], has_expand, env)
+		&& g_sig != SIGNAL_EXIT)
 	{
 		safe_free((void **) &cmdp->curr_redir->name);
 		close(hdoc_fds[P_READ]);
@@ -72,6 +88,11 @@ bool	get_hdoc(t_cmd_parsing *cmdp, bool has_expand, t_env *env)
 	cmdp->cmd->fd_in = hdoc_fds[P_READ];
 	cmdp->cmd->fd_in_type = HDOC;
 	close(hdoc_fds[P_WRITE]);
+	if (g_sig == SIGNAL_EXIT)
+	{
+		print_hdoc_warning(cmdp->curr_redir->name, env);
+		g_sig = 0;
+	}
 	safe_free((void **) &cmdp->curr_redir->name);
 	return (false);
 }
