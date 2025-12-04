@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/10 10:53:41 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/04 09:33:07 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/04 09:52:16 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ static inline bool	init_env(t_env *env, char **envp)
 	env->get_line_env.is_ctrl = false;
 	env->get_line_env.update_history = true;
 	env->get_line_env.main_env = env;
+	env->get_line_env.line_count = 0;
 	env->in_fork = false;
 	env->envp_len = 0;
 	env->exportp_len = 0;

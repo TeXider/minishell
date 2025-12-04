@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/03 20:10:39 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/03 20:11:38 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/04 10:01:48 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@
 # include <termios.h>
 # include "raboushell.h"
 
-typedef struct termios	t_term;
+typedef struct termios		t_term;
+typedef unsigned int		t_uint;
 
 typedef struct s_line
 {
@@ -46,6 +47,7 @@ typedef struct s_gl
 	size_t	prev_line_index;
 	bool	update_history;
 	bool	is_ctrl;
+	t_uint	line_count;
 	void	*main_env;
 }	t_gl;
 

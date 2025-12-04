@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 09:25:05 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/04 09:33:00 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/04 09:59:49 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@
 # define RST	"\033[0m"
 
 typedef unsigned char		t_uchar;
-typedef unsigned short int	t_usint;
+typedef unsigned int		t_uint;
 
 # define SIGNAL_EXIT 1
 # define SIGNAL_INT 2
@@ -135,7 +135,7 @@ void	print_raboushell(void);
 void	print_str(char *str);
 void	set_exit_code(t_uchar exit_code, t_env *env);
 void	safe_close(int *fd, int new_fd);
-void	print_ushort(t_usint num);
+void	print_ushort(t_uint num);
 //
 void	create_error(char *culprit, t_err err, t_env *env);
 void	throw_error(t_env *env);
