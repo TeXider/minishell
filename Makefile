@@ -6,19 +6,19 @@
 #    By: almighty <almighty@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/12/02 13:34:07 by almighty          #+#    #+#              #
-#    Updated: 2025/12/03 20:01:04 by almighty         ###   ########.fr        #
+#    Updated: 2025/12/04 09:38:55 by almighty         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME            := minishell
-CC                      := cc
-CFLAGS          := -Wall -Wextra -Werror -g
+NAME	:= minishell
+CC		:= cc
+CFLAGS  := -Wall -Wextra -Werror -g
 
 
-DIR_SRCS                := srcs
-DIR_OBJS                := objs
+DIR_SRCS	:= srcs
+DIR_OBJS	:= objs
 
-SRCS 	:=	$(DIR_SRCS)/main/create_error.c\
+SRCS	:=	$(DIR_SRCS)/main/create_error.c\
 			$(DIR_SRCS)/main/main.c\
 			$(DIR_SRCS)/main/raboushell.c\
 			$(DIR_SRCS)/main/exit_raboushell.c\
@@ -68,7 +68,7 @@ SRCS 	:=	$(DIR_SRCS)/main/create_error.c\
 			$(DIR_SRCS)/get_line/move_cursor.c\
 			$(DIR_SRCS)/get_line/rewrite_line.c\
 
-OBJS 	:=	$(patsubst %.c, $(DIR_OBJS)/%.o, $(subst $(DIR_SRCS)/,,$(SRCS)))
+OBJS	:=	$(patsubst %.c, $(DIR_OBJS)/%.o, $(subst $(DIR_SRCS)/,,$(SRCS)))
 
 all : $(NAME)
 
@@ -76,14 +76,15 @@ $(DIR_OBJS)/%.o: $(DIR_SRCS)/%.c
 	@mkdir -p $(dir $@)
 	@$(CC) $(CFLAGS) -c $< -o $@
 	@curr=$$(find objs -iname "*.o" | wc -l); \
-	printf "\rCompiling : ["; \
-	printf "%s" "$$(printf "%*s" $$curr "" | tr " " "#")"; \
-	printf "%*s" $$((49 - $$curr)); \
-	printf "] %d/49" $$curr;
+	total=$$(echo $$srcs | wc -w); \
+	printf "\e[?25l\rCompiling : ["; \
+	printf "%s" "$$(printf "\e[107m%*s\e[0m" $$curr "")"; \
+	printf "%*s" $$(($$total - $$curr)); \
+	printf "] %d/%d" $$curr $$total;
 	
 $(NAME): $(OBJS)
 	@$(CC) $(CFLAGS) $(OBJS) -o $@
-	@echo -e "\n✅ Compilation completed: $(NAME)"
+	@echo -e "\n✅ Compilation completed: $(NAME)\e[?25h"
 
 clean :
 	@rm -rf $(DIR_OBJS)
