@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 08:54:12 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/02 21:50:02 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/03 21:30:17 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	exec_cmd_line(t_cmd *cmd_list, size_t cmd_list_len, t_env *env)
 	else
 	{
 		i = -1;
-		while (++i < cmd_list_len && !env->in_fork && env->err != SYS_ERR)
+		while (!is_end_of_exec(++i, cmd_list_len, env))
 		{
 			if (!set_redirs(cmd_list + i, env)
 				&& !handle_pipes(cmd_list + i, cmd_list + i

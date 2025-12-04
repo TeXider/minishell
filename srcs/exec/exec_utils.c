@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   dup_utils.c                                        :+:      :+:    :+:   */
+/*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/02 16:02:11 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/02 17:23:17 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/04 09:30:50 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,4 +32,10 @@ inline bool	dup2_std(int new_std_in, int new_std_out, t_env *env)
 		return (true);
 	}
 	return (false);
+}
+
+inline bool	is_end_of_exec(size_t cmd_list_i, size_t cmd_list_len, t_env *env)
+{
+	return (g_sig || cmd_list_i >= cmd_list_len || env->in_fork
+		|| env->err == SYS_ERR);
 }
