@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/02 16:02:11 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/04 09:30:50 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/04 13:18:25 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,4 +38,24 @@ inline bool	is_end_of_exec(size_t cmd_list_i, size_t cmd_list_len, t_env *env)
 {
 	return (g_sig || cmd_list_i >= cmd_list_len || env->in_fork
 		|| env->err == SYS_ERR);
+}
+
+inline bool	get_path_var(char **path_var, t_env *env)
+{
+	size_t	i;
+
+	i = -1;
+	while (env->envp[++i])
+	{
+		if (env->envp[i][0] == 'P'
+			&& env->envp[i][1] == 'A'
+			&& env->envp[i][2] == 'T'
+			&& env->envp[i][3] == 'H'
+			&& env->envp[i][4] == '=')
+		{
+			*path_var = env->envp[i] + 5;
+			return (**path_var == '\0');
+		}
+	}
+	return (true);
 }

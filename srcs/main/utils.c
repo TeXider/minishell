@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 11:38:44 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/01 14:08:37 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/04 12:44:48 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,14 @@ inline void	print_str(char *str)
 
 inline void	set_exit_code(t_uchar exit_code, t_env *env)
 {
+	t_uint	len;
+
 	env->exit_code = exit_code;
-	env->exit_code_str[0] = exit_code / 100 + '0';
-	env->exit_code_str[1] = (exit_code / 10) % 10 + '0';
-	env->exit_code_str[2] = exit_code % 10 + '0';
+	len = 1 + (exit_code > 9) + (exit_code > 99);
+	env->exit_code_str[len - 1] = exit_code % 10 + '0';
+	env->exit_code_str[len - 2 * (len > 1)] = (exit_code / 10) % 10 + '0';
+	env->exit_code_str[len - 3 * (len > 2)] = (exit_code / 100) % 10 + '0';
+	env->exit_code_str[len] = '\0';
 }
 
 inline void	safe_close(int *fd, int new_fd)

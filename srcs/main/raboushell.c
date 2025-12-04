@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 13:59:03 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/03 08:17:19 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/04 13:09:47 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static inline void	wait_children(t_env *env)
 	while (wait_pid > -1 && --env->children_count >= 0)
 	{
 		wait_pid = wait(&status);
-		if (!env->exit_code && env->last_pid != -1 && wait_pid == env->last_pid)
+		if (!env->err && env->last_pid != -1 && wait_pid == env->last_pid)
 			set_exit_code((WIFEXITED(status) * WEXITSTATUS(status)
 							+ WIFSIGNALED(status) * (128 + WTERMSIG(status))),
 							env);
@@ -79,7 +79,12 @@ void	raboushell(char *input, t_env *env)
 		env->children_count = 0;
 		exec_cmd_line(cmd_list, cmd_list_len, env);
 		if (!env->in_fork)
+		{
+			if ((size_t) env->children_count == cmd_list_len
+				&& g_sig == SIGNAL_INT)
+				g_sig = 0;
 			wait_children(env);
+		}
 	}
 	free_cmd_list(cmd_list, cmd_list_len);
 }

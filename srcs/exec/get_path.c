@@ -6,11 +6,23 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/14 13:41:55 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/02 19:47:38 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/04 13:22:30 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/execution.h"
+
+static inline bool	is_executable(t_cmd *cmd, t_env *env)
+{
+	if (!access(cmd->path, X_OK))
+	{
+		env->err = SUCCESS;
+		return (true);
+	}
+	else
+		create_error(cmd->path, CMD_NOT_EXEC_ERR, env);
+	return (false);
+}
 
 static inline bool	is_correct_path(t_cmd *cmd, t_env *env)
 {
@@ -20,13 +32,7 @@ static inline bool	is_correct_path(t_cmd *cmd, t_env *env)
 	if (!access(cmd->path, F_OK))
 	{
 		if (tmp_fd == -1)
-		{
-			if (!access(cmd->path, X_OK))
-			{
-				env->err = SUCCESS;
-				return (true);
-			}
-		}
+			return (is_executable(cmd, env));
 		else
 		{
 			close(tmp_fd);
@@ -81,26 +87,6 @@ static inline bool	join_path(char **path_dst, char **path_var, char *cmd_name,
 	}
 	*path_var += path_len + (*(*path_var + path_len) == ':');
 	return (false);
-}
-
-static inline bool	get_path_var(char **path_var, t_env *env)
-{
-	size_t	i;
-
-	i = -1;
-	while (env->envp[++i])
-	{
-		if (env->envp[i][0] == 'P'
-			&& env->envp[i][1] == 'A'
-			&& env->envp[i][2] == 'T'
-			&& env->envp[i][3] == 'H'
-			&& env->envp[i][4] == '=')
-		{
-			*path_var = env->envp[i] + 5;
-			return (**path_var == '\0');
-		}
-	}
-	return (true);
 }
 
 bool	get_path(t_cmd *cmd, t_env *env)

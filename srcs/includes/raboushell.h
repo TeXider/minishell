@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 09:25:05 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/04 10:59:34 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/04 12:31:00 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ typedef struct s_env
 	t_err	err;
 	char	culprit[CULPRIT_LENGTH];
 	t_uchar	exit_code;
-	char	exit_code_str[3];
+	char	exit_code_str[4];
 	bool	end_of_raboushell;
 }	t_env;
 

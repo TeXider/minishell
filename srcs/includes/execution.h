@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 13:10:11 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/03 21:29:56 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/04 13:18:42 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,5 +42,6 @@ void	reset_redirs(t_cmd *cmd_list, size_t cmd_list_i, t_env *env);
 /* UTILS */
 
 bool	is_end_of_exec(size_t cmd_list_i, size_t cmd_list_len, t_env *env);
+bool	get_path_var(char **path_var, t_env *env);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 08:31:47 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/28 13:52:16 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/04 12:45:06 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,14 @@ static bool	check_var_eq(char **str, char **var)
 	return (res);
 }
 
+static void	expand_exit_code(t_cmd_parsing *cmdp, t_env *env)
+{
+	cmdp->str++;
+	cmdp->saved_str = cmdp->str;
+	cmdp->str = env->exit_code_str;
+	cmdp->in_expand = true;
+}
+
 void	expand(t_cmd_parsing *cmdp, t_env *env)
 {
 	char	*tmp_str;
@@ -35,6 +43,11 @@ void	expand(t_cmd_parsing *cmdp, t_env *env)
 	size_t	i;
 
 	cmdp->str += (*(cmdp->str) == '$');
+	if (*(cmdp->str) == '?')
+	{
+		expand_exit_code(cmdp, env);
+		return ;
+	}
 	tmp_str = cmdp->str;
 	i = -1;
 	while (!cmdp->in_expand && env->envp[++i])

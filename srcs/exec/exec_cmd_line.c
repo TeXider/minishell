@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 08:54:12 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/03 21:30:17 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/04 13:13:11 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ static inline void	exec_builtin(t_cmd *cmd, t_env *env)
 		builtin_echo(cmd->argv + 1);
 	else if (cmd->builtin == ENV_BUILTIN)
 		builtin_env(env);
+	if (!env->err && cmd->builtin != EXIT_BUILTIN)
+		set_exit_code(0, env);
 }
 
 static inline void	exec_cmd(t_cmd *cmd, pid_t *pid, t_env *env)
@@ -69,7 +71,7 @@ void	exec_cmd_line(t_cmd *cmd_list, size_t cmd_list_len, t_env *env)
 	pid_t	pid;
 	size_t	i;
 
-	pid = -1;
+	env->last_pid = -1;
 	if (cmd_list_len == 1 && cmd_list->builtin)
 		exec_single_builtin(cmd_list, env);
 	else

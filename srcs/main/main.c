@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/10 10:53:41 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/04 10:49:08 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/04 12:50:03 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static inline bool	init_env(t_env *env, char **envp)
 	env->children_count = 0;
 	env->end_of_raboushell = false;
 	env->err = SUCCESS;
-	env->exit_code = 0;
+	set_exit_code(0, env);
 	return (false);
 }
 
