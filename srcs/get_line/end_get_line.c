@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/28 17:14:17 by tpanou-d          #+#    #+#             */
-/*   Updated: 2025/12/03 20:51:16 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/04 10:59:26 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ bool	end_get_line(t_line *line, char **dst, t_gl *env)
 	}
 	if (g_sig)
 	{
+		write(1, "^C", 2 * (g_sig == SIGNAL_INT));
 		remove_new_history_entry(env);
 		return (true);
 	}

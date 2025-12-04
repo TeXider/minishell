@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 11:23:11 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/03 20:46:00 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/04 11:56:40 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ static inline bool	init_get_line(t_line **line, char **dst, t_gl *env)
 	env->term = env->old_term;
 	env->term.c_iflag &= ~(INLCR | IGNCR | ICRNL);
 	env->term.c_lflag &= ~(ECHO | ECHONL | ICANON | IEXTEN);
+	env->term.c_cc[VMIN]  = 0;
+    env->term.c_cc[VTIME] = 1;
 	if (tcsetattr(STD_IN, TCSANOW, &env->term))
 	{
 		create_error("tcsetattr()", TERM_ERR, env->main_env);
@@ -42,6 +44,7 @@ static inline bool	init_get_line(t_line **line, char **dst, t_gl *env)
 bool	get_line(char **dst, char *prompt, t_gl *env)
 {
 	t_line	*line;
+	char	read_res;
 
 	if (init_get_line(&line, dst, env))
 		return (true);
@@ -50,13 +53,14 @@ bool	get_line(char **dst, char *prompt, t_gl *env)
 	{
 		env->prev_line_count = line->count;
 		env->prev_line_index = line->index;
-		if (read(0, &line->curr_char, 1) == -1)
+		read_res = read(0, &line->curr_char, 1);
+		if (read_res == -1)
 		{
 			create_error("read()", SYS_ERR, env->main_env);
 			handle_get_line_error(env);
 			return (true);
 		}
-		if (handle_keys(&line, env))
+		if (read_res && handle_keys(&line, env))
 		{
 			handle_get_line_error(env);
 			return (true);
