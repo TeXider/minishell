@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/03 21:35:05 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/04 10:51:29 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/04 14:37:24 by tpanou-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	init_signals(void)
 
 void	handle_sigint(t_env *env)
 {
-	write(1, "\n", 3 * !env->in_fork);
+	write(1, "\n", !env->in_fork);
 	set_exit_code(130, env);
 	g_sig = 0;
 }
