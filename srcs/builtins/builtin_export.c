@@ -3,22 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_export.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/20 09:43:51 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/04 10:09:30 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/04 13:42:32 by tpanou-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/builtins.h"
-
-static inline void	replace_var(char **list, size_t index, char *new_var,
-	bool free_var)
-{
-	if (free_var)
-		free(list[index]);
-	list[index] = new_var;
-}
 
 static inline bool	compute_export(char *exp, t_var_info *var_info,
 	t_env *env)
