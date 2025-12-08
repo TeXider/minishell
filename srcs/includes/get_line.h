@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_line.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 11:24:12 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/03 20:47:39 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/04 16:59:08 by tpanou-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include <sys/ioctl.h>
 # include "raboushell.h"
 
-# define LINE_LEN 5 
+# define LINE_LEN 1025 
 # define ESC_CHAR 27
 # define RETURN 127
 # define ARROW_UP -1
