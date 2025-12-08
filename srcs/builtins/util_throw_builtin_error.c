@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   util_throw_builtin_error.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/25 13:51:42 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/01 13:51:56 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/04 15:58:06 by tpanou-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	throw_builtin_error(char *culprit, t_builtin_err err,
 	print_raboushell();
 	print_err_origin(err);
 	print_err_ctxt(culprit, err_ctxt);
-	env->exit_code = 1 + (err_ctxt != INTERNAL_BERR
-		|| err_ctxt != HOME_NOT_SET_BERR);
+	set_exit_code(1 + (err_ctxt != INTERNAL_BERR
+		&& err_ctxt != HOME_NOT_SET_BERR), env);
 	env->err = BUILTIN_ERR;
 }
