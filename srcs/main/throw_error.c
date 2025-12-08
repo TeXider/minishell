@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   throw_error.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/30 17:24:58 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/04 13:42:02 by tpanou-d         ###   ########.fr       */
+/*   Updated: 2025/12/08 12:46:33 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static inline void set_err_culprit(char *err_msg, size_t *len, char *msg,
 	if (env->err != UNCLOSED_QUOTES_ERR && env->err != UNEXPECTED_TOKEN_ERR)
 		add_culprit_err_msg(err_msg, len, env);
 	if (env->err != SYS_ERR && env->err != TERM_ERR
-		&& env->err != FILE_ERR)
+		&& env->err != FILE_ERR && env->err != FATAL_SYS_ERR)
 	{	
 		while (*msg)
 		{
@@ -95,10 +95,12 @@ static inline void set_err_ctxt(char *err_msg, size_t *len, t_env *env)
 		|| env->err == CMD_NOT_EXEC_ERR
 		|| env->err == CMD_IS_DIR_ERR)
 		ctxt = ETXT"EXECUTION ERROR:"RST" ";
-	else if (env->err == TERM_ERR)
-		ctxt = ETXT"TERMINAL ERROR:"RST" ";
 	else if (env->err == SYS_ERR)
 		ctxt = ETXT"SYSTEM ERROR:"RST" ";
+	else if (env->err == TERM_ERR)
+		ctxt = ETXT"TERMINAL ERROR:"RST" ";
+	else if (env->err == FATAL_SYS_ERR)
+		ctxt = ETXT"FATAL SYSTEM ERROR:"RST" ";
 	while (ctxt[*len])
 	{
 		err_msg[*len] = ctxt[*len];
@@ -108,18 +110,18 @@ static inline void set_err_ctxt(char *err_msg, size_t *len, t_env *env)
 
 void	throw_error(t_env *env)
 {
-	char	err_msg[CULPRIT_LENGTH + 100];
+	char	err_msg[CULPRIT_LENGTH + 105];
 	size_t	err_msg_len;
 
-	if (env->err != BUILTIN_ERR)
+	if (env->err && env->err != BUILTIN_ERR)
 	{
 		err_msg_len = 0;
 		set_err_ctxt(err_msg, &err_msg_len, env);
 		set_err_msg(err_msg, &err_msg_len, env);
 		print_raboushell();
 		write(2, err_msg, err_msg_len);
-		if (env->err == SYS_ERR || env->err == TERM_ERR
-			|| env->err == FILE_ERR)
+		if (env->err == FILE_ERR || env->err == SYS_ERR || env->err == TERM_ERR
+			|| env->err == FATAL_SYS_ERR)
 			perror(NULL);
 	}
 	env->err = SUCCESS;

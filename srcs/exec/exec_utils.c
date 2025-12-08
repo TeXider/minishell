@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/02 16:02:11 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/04 14:14:14 by tpanou-d         ###   ########.fr       */
+/*   Updated: 2025/12/08 12:30:32 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@ inline bool	dup2_std(int new_std_in, int new_std_out, t_env *env)
 
 inline bool	is_end_of_exec(size_t cmd_list_i, size_t cmd_list_len, t_env *env)
 {
-	return (g_sig || cmd_list_i >= cmd_list_len || env->in_fork
-		|| env->err == SYS_ERR);
+	return (g_sig || env->in_fork || cmd_list_i >= cmd_list_len
+		|| env->err == FATAL_SYS_ERR || env->err == SYS_ERR);
 }
 
 inline bool	get_path_var(char **path_var, t_env *env)

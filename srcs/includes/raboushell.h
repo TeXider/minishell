@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raboushell.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 09:25:05 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/04 14:53:18 by tpanou-d         ###   ########.fr       */
+/*   Updated: 2025/12/08 10:39:31 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,8 +80,9 @@ typedef enum e_err
 	CMD_IS_DIR_ERR,
 	CMD_FILE_NOT_FOUND_ERR,
 	BUILTIN_ERR,
-	TERM_ERR,
 	SYS_ERR,
+	TERM_ERR,
+	FATAL_SYS_ERR,
 }	t_err;
 
 typedef struct s_env

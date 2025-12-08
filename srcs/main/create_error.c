@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 08:14:55 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/03 15:13:26 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/08 12:47:12 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,6 @@ void	create_error(char *culprit, t_err err, t_env *env)
 		}
 	}
 	env->culprit[i] = '\0';
-	env->end_of_raboushell = (err == SYS_ERR || err == TERM_ERR);
+	env->end_of_raboushell = (err == FATAL_SYS_ERR || err == TERM_ERR);
 	create_exit_code(env);
 }

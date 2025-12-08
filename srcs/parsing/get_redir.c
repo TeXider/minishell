@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_redir.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/29 10:02:10 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/04 17:36:34 by tpanou-d         ###   ########.fr       */
+/*   Updated: 2025/12/08 12:28:18 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static int	get_redir_name(t_cmd_parsing *cmdp, bool is_hdoc, t_env *env)
 	if (get_redir_name_len(cmdp, &len, is_hdoc, env))
 		return (AMBI_REDIR_ERR);
 	if (safe_challoc(&cmdp->curr_redir->name, len, env))
-		return (SYS_ERR);
+		return (FATAL_SYS_ERR);
 	has_quotes = false;
 	redir_name_i = 0;
 	while (!is_end_of_redir(cmdp))
@@ -75,7 +75,7 @@ bool	get_redir(t_cmd_parsing *cmdp, t_env *env)
 
 	init_get_redir(cmdp, &type);
 	status = get_redir_name(cmdp, (type == HDOC), env);
-	if (status == SYS_ERR)
+	if (status == FATAL_SYS_ERR)
 		return (true);
 	if (status == AMBI_REDIR_ERR)
 	{

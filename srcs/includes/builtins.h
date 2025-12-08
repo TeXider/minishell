@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 12:26:23 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/01 13:23:58 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/08 10:22:26 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ typedef struct s_var_info
 
 void	builtin_echo(char **args);
 void	builtin_env(t_env *env);
-bool	builtin_cd(char **args, t_env *env);
+void	builtin_cd(char **args, t_env *env);
 bool	builtin_exit(char **args, t_env *env);
 bool	builtin_export(char **args, t_env *env);
 bool	builtin_pwd(t_env *env);

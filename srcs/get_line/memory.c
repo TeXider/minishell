@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 10:15:39 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/03 08:07:49 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/08 12:19:45 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,13 @@ inline bool safe_line_alloc(t_line **line, size_t len, t_gl *env)
 	*line = malloc(sizeof(t_line));
 	if (!*line)
 	{
-		create_error("malloc()", SYS_ERR, env->main_env);
+		create_error("malloc()", FATAL_SYS_ERR, env->main_env);
 		return (true);
 	}
 	if (safe_challoc(&(*line)->buffer, len, env->main_env))
 	{
 		free(*line);
-		create_error("malloc()", SYS_ERR, env->main_env);
+		create_error("malloc()", FATAL_SYS_ERR, env->main_env);
 		return (true);
 	}
 	(*line)->len = len;
@@ -63,14 +63,14 @@ inline bool safe_history_alloc(t_hist **history, t_gl *env)
 	*history = malloc(sizeof(t_hist));
 	if (!*history)
 	{
-		create_error("malloc()", SYS_ERR, env->main_env);
+		create_error("malloc()", FATAL_SYS_ERR, env->main_env);
 		return (true);
 	}
 	if (safe_line_alloc(&(*history)->og_line, LINE_LEN, env))
 	{
 		free(*history);
 		*history = NULL;
-		create_error("malloc()", SYS_ERR, env->main_env);
+		create_error("malloc()", FATAL_SYS_ERR, env->main_env);
 		return (true);
 	}
 	(*history)->og_line->len = LINE_LEN;

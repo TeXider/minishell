@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   util_throw_builtin_error.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/25 13:51:42 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/04 15:58:06 by tpanou-d         ###   ########.fr       */
+/*   Updated: 2025/12/08 12:27:30 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static inline void	print_err_origin(t_builtin_err err)
 void	throw_builtin_error(char *culprit, t_builtin_err err,
 	t_builtin_err_ctxt err_ctxt, t_env *env)
 {
-	if (env->err == SYS_ERR)
+	if (env->err == SYS_ERR || env->err == FATAL_SYS_ERR)
 		return ;
 	print_raboushell();
 	print_err_origin(err);
