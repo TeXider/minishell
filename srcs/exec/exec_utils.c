@@ -3,19 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/02 16:02:11 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/04 13:18:25 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/04 14:14:14 by tpanou-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/execution.h"
 
-inline bool	safe_dup(int dup_fd, int *dst, t_env *env)
+inline bool	save_std_fds(t_env *env)
 {
-	*dst = dup(dup_fd);
-	if (*dst == -1)
+	if (env->saved_std_out != FD_NULL || env->saved_std_out != FD_NULL)
+		return (false);
+	env->saved_std_in = dup(STD_IN);
+	env->saved_std_out = dup(STD_OUT);
+	if (env->saved_std_out == FD_NULL || env->saved_std_out == FD_NULL)
 	{
 		create_error("dup()", SYS_ERR, env);
 		return (true);
