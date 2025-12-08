@@ -6,7 +6,7 @@
 #    By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/12/02 13:34:07 by almighty          #+#    #+#              #
-#    Updated: 2025/12/04 13:45:52 by tpanou-d         ###   ########.fr        #
+#    Updated: 2025/12/08 09:45:03 by tpanou-d         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -79,8 +79,8 @@ $(DIR_OBJS)/%.o: $(DIR_SRCS)/%.c
 	@$(CC) $(CFLAGS) -c $< -o $@
 	@curr=$$(find objs -iname "*.o" | wc -l); \
 	total=$$(find srcs -iname *.c -not -iname .*.c | wc -l); \
-	printf "\e[?25l\rCompiling : \e[1m⟬"; \
-	printf "%s" "$$(printf "\e[107m%*s\e[0m" $$curr "")"; \
+	printf "\r\e[?25l\rCompiling : \e[1m⟬"; \
+	printf "\e[107m%*s\e[0m" $$curr; \
 	printf "%*s" $$(($$total - $$curr)); \
 	printf "\e[1m⟭\e[0m %d/%d" $$curr $$total;
 	
