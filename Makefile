@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: almighty <almighty@student.42.fr>          +#+  +:+       +#+         #
+#    By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/12/02 13:34:07 by almighty          #+#    #+#              #
-#    Updated: 2025/12/04 12:24:32 by almighty         ###   ########.fr        #
+#    Updated: 2025/12/04 13:45:52 by tpanou-d         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -86,7 +86,7 @@ $(DIR_OBJS)/%.o: $(DIR_SRCS)/%.c
 	
 $(NAME): $(OBJS)
 	@$(CC) $(CFLAGS) $(OBJS) -o $@
-	@echo -e "\n✅ Compilation completed: $(NAME)\e[?25h"
+	@printf "\n✅ Compilation completed: $(NAME)\e[?25h\n"
 
 clean :
 	@rm -rf $(DIR_OBJS)
