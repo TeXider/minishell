@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raboushell.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 09:25:05 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/04 12:31:00 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/04 14:53:18 by tpanou-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ typedef struct s_env
 	pid_t	last_pid;
 	int		saved_std_in;
 	int		saved_std_out;
+	int		discarded_pipe_fd;
 	/*ERROR HANDLING*/
 	int		children_count;
 	t_err	err;
@@ -109,19 +110,11 @@ typedef struct s_env
 
 void	raboushell(char *input, t_env *env);
 //
-void	set_new_cmd(t_cmd *cmd, t_env *env);
-bool	is_empty_cmd(t_cmd *cmd);
-//
-bool	get_cmd_line(char *line, t_cmd **cmd_list, size_t *cmd_list_len,
-			t_env *env);
-//
 void	safe_free(void **ptr);
 void	free_data(t_cmd *cmd, char *line, t_env *env);
 bool	safe_challoc(char **dst, size_t len, t_env *env);
 bool	safe_lalloc(char ***dst, size_t len, t_env *env);
 bool	safe_malloc(void **dst, size_t len, t_env *env);
-//
-void	exec_cmd_line(t_cmd *cmd_list, size_t cmd_list_len, t_env *env);
 //
 void	init_signals(void);
 void	handle_sigint(t_env *env);

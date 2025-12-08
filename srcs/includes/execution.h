@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 13:10:11 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/04 13:18:42 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/04 14:55:15 by tpanou-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,10 @@ typedef struct s_pipes
 	int		fd_write;
 }	t_pipes;
 
+/* EXECUTION */
+
+void	exec_cmd_line(t_cmd *cmd_list, size_t cmd_list_len, t_env *env);
+
 /* PIPES */
 
 bool	handle_pipes(t_cmd *cmd, t_cmd *next_cmd, t_env *env);
@@ -34,9 +38,10 @@ bool	get_path(t_cmd *cmd, t_env *env);
 
 /* REDIRS */
 
-bool	safe_dup(int dup_fd, int *dst, t_env *env);
+bool	save_std_fds(t_env *env);
 bool	dup2_std(int new_std_in, int new_std_out, t_env *env);
 bool	set_redirs(t_cmd *cmd, t_env *env);
+void	close_redirs(t_cmd *cmd_list, size_t cmd_list_i, t_env *env);
 void	reset_redirs(t_cmd *cmd_list, size_t cmd_list_i, t_env *env);
 
 /* UTILS */
