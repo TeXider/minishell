@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_redir_name_len.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/07 14:50:26 by tpanou-d          #+#    #+#             */
-/*   Updated: 2025/11/28 13:53:03 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/04 17:34:18 by tpanou-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static void	update_sep(t_cmd_parsing *cmdp, bool *has_arg)
 	cmdp->str++;
 }
 
-bool	get_redir_name_len(char *redir, size_t *len, bool is_hdoc,
+bool	get_redir_name_len(t_cmd_parsing *cmdp, size_t *len, bool is_hdoc,
 	t_env *env)
 {
 	t_cmd_parsing	tmp_cmdp;
@@ -38,7 +38,7 @@ bool	get_redir_name_len(char *redir, size_t *len, bool is_hdoc,
 	*len = 0;
 	end_of_redir = false;
 	has_arg = false;
-	init_cmd_parsing(&tmp_cmdp, redir);
+	tmp_cmdp = *cmdp;
 	while (!is_end_of_redir(&tmp_cmdp))
 	{
 		if (end_of_redir && *(tmp_cmdp.str) != ' ')

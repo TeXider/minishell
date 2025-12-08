@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_arg.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 09:44:15 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/28 13:52:27 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/04 17:35:36 by tpanou-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,14 @@ static void	update_sep(t_cmd_parsing *cmdp, bool *has_arg)
 	cmdp->str++;
 }
 
-static bool	get_arg_len(char *str, size_t *len, t_env *env)
+static bool	get_arg_len(t_cmd_parsing *cmdp, size_t *len, t_env *env)
 {
 	t_cmd_parsing	tmp_cmdp;
 	bool			has_arg;
 
 	*len = 0;
 	has_arg = false;
-	init_cmd_parsing(&tmp_cmdp, str);
+	tmp_cmdp = *cmdp;
 	while ((!has_arg && tmp_cmdp.in_expand) || !is_end_of_arg(&tmp_cmdp))
 	{
 		if (change_of_sep(&tmp_cmdp))
@@ -62,7 +62,7 @@ bool	get_arg(t_cmd_parsing *cmdp, t_env *env)
 	size_t	len;
 	size_t	arg_i;
 
-	if (get_arg_len(cmdp->str, &len, env))
+	if (get_arg_len(cmdp, &len, env))
 	{
 		go_to_end_of_arg(cmdp, env);
 		return (false);
