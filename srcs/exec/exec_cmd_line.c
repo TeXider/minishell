@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 08:54:12 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/04 13:13:11 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/04 14:55:37 by tpanou-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,24 +33,31 @@ static inline void	exec_builtin(t_cmd *cmd, t_env *env)
 		set_exit_code(0, env);
 }
 
-static inline void	exec_cmd(t_cmd *cmd, pid_t *pid, t_env *env)
+static inline void	exec_cmd(t_cmd *cmd_list, size_t cmd_list_i,
+	pid_t *pid, t_env *env)
 {
+	t_cmd	*cmd;
+
 	*pid = fork();
 	if (*pid == -1)
 		create_error("fork()", SYS_ERR, env);
 	else if (!*pid)
 	{
 		env->in_fork = true;
-		if (!cmd->builtin && get_path(cmd, env))
-			return ;
-		safe_close(&cmd->fd_in, FD_NULL);
-		safe_close(&cmd->fd_out, FD_NULL);
-		if (cmd->builtin)
-			exec_builtin(cmd, env);
-		else
+		cmd = cmd_list + cmd_list_i;
+		if (!set_redirs(cmd, env) && *(cmd->argv)
+			&& !dup2_std(cmd->fd_in, cmd->fd_out, env))
 		{
-			execve(cmd->path, cmd->argv, env->envp);
-			create_error("execve()", SYS_ERR, env);
+			if (!cmd->builtin && get_path(cmd, env))
+				return ;
+			if (cmd->builtin)
+				exec_builtin(cmd, env);
+			else
+			{
+				close_redirs(cmd_list, cmd_list_i, env);
+				execve(cmd->path, cmd->argv, env->envp);
+				create_error("execve()", SYS_ERR, env);
+			}
 		}
 	}
 	env->children_count += (*pid != -1);
@@ -71,6 +78,8 @@ void	exec_cmd_line(t_cmd *cmd_list, size_t cmd_list_len, t_env *env)
 	pid_t	pid;
 	size_t	i;
 
+	if (save_std_fds(env))
+		return ;
 	env->last_pid = -1;
 	if (cmd_list_len == 1 && cmd_list->builtin)
 		exec_single_builtin(cmd_list, env);
@@ -79,16 +88,9 @@ void	exec_cmd_line(t_cmd *cmd_list, size_t cmd_list_len, t_env *env)
 		i = -1;
 		while (!is_end_of_exec(++i, cmd_list_len, env))
 		{
-			if (!set_redirs(cmd_list + i, env)
-				&& !handle_pipes(cmd_list + i, cmd_list + i
-					+ (i + 1 != cmd_list_len), env)
-				&& *(cmd_list[i].argv)
-				&& !dup2_std(cmd_list[i].fd_in, cmd_list[i].fd_out, env))
-			{
-				if (i > 0)
-					safe_close(&cmd_list[i - 1].fd_out, FD_NULL);
-				exec_cmd(cmd_list + i, &pid, env);
-			}
+			if (!handle_pipes(cmd_list + i, cmd_list + i
+					+ (i + 1 != cmd_list_len), env))
+				exec_cmd(cmd_list, i, &pid, env);
 			reset_redirs(cmd_list, i, env);
 		}
 		env->last_pid = pid;
