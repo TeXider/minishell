@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_hdoc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 08:55:49 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/04 09:54:54 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/04 16:25:07 by tpanou-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,14 @@ void	print_hdoc_warning(char *del, t_env *env)
 	size_t	del_len;
 
 	print_raboushell();
-	write(1, "\n\e[1m\e[38;5;202mwarning: \e[0mhere-document at line ", 51);
+	write(1, "\e[1m\e[38;5;202mwarning: \e[0mhere-document at line ", 51);
 	print_ushort(env->get_line_env.line_count);
 	write(1, " delimited by end-of-file (wanted `", 35);
 	del_len = 0;
 	while (del[del_len])
 		del_len++;
 	write(1, del, del_len);
-	write(1, "'\n", 2);
+	write(1, "')\n", 3);
 }
 
 static void	write_in_hdoc(t_cmd_parsing *cmdp, bool has_expand, int write_fd,
@@ -61,7 +61,10 @@ static bool	open_hdoc(char *del, int write_fd, bool has_expand, t_env *env)
 		write_in_hdoc(&tmp_cmdp, has_expand, write_fd, env);
 		safe_free((void **) &line);
 		if (get_line(&line, "> ", &env->get_line_env))
+		{
+			env->get_line_env.update_history = true;
 			return (true);
+		}
 	}
 	safe_free((void **) &line);
 	env->get_line_env.update_history = true;
@@ -72,6 +75,7 @@ bool	get_hdoc(t_cmd_parsing *cmdp, bool has_expand, t_env *env)
 {
 	int		hdoc_fds[2];
 
+	safe_close(&cmdp->cmd->fd_in, STD_IN);
 	if (pipe(hdoc_fds))
 	{
 		create_error("pipe()", SYS_ERR, env);
@@ -86,7 +90,6 @@ bool	get_hdoc(t_cmd_parsing *cmdp, bool has_expand, t_env *env)
 		return (true);
 	}
 	cmdp->cmd->fd_in = hdoc_fds[P_READ];
-	cmdp->cmd->fd_in_type = HDOC;
 	close(hdoc_fds[P_WRITE]);
 	if (g_sig == SIGNAL_EXIT)
 	{
