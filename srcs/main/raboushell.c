@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   raboushell.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 13:59:03 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/04 13:09:47 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/04 17:37:35 by tpanou-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/raboushell.h"
+#include "../includes/parsing.h"
+#include "../includes/execution.h"
 
 static inline void	free_redirs(t_cmd *cmd)
 {
