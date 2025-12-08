@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 09:50:16 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/03 21:05:42 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/08 10:07:41 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ bool	get_cmd_line(char *line, t_cmd **cmd_list, size_t *cmd_list_len,
 	cmd_list_index = 0;
 	while (!g_sig && *(cmdp.str) && *(cmdp.str) != '\n')
 	{
-		set_new_cmd(*cmd_list + cmd_list_index, env);
+		set_new_cmd(*cmd_list + cmd_list_index);
 		reset_cmd_parsing(&cmdp, *cmd_list + cmd_list_index);
 		if (get_cmd(&cmdp, env))
 			return (true);

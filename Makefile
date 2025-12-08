@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+         #
+#    By: almighty <almighty@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/12/02 13:34:07 by almighty          #+#    #+#              #
-#    Updated: 2025/12/08 09:45:03 by tpanou-d         ###   ########.fr        #
+#    Updated: 2025/12/08 10:08:06 by almighty         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,6 @@ SRCS	:=	$(DIR_SRCS)/main/create_error.c\
 			$(DIR_SRCS)/main/memory.c\
 			$(DIR_SRCS)/main/signal.c\
 			$(DIR_SRCS)/main/utils2.c\
-			$(DIR_SRCS)/parsing/cmd_funcs.c\
 			$(DIR_SRCS)/parsing/expand_utils.c\
 			$(DIR_SRCS)/parsing/expand.c\
 			$(DIR_SRCS)/parsing/get_arg.c\

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 12:55:43 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/04 17:36:15 by tpanou-d         ###   ########.fr       */
+/*   Updated: 2025/12/08 10:07:27 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ bool	go_to_end_of_cmd(t_cmd_parsing *cmdp, size_t *cmd_list_len,
 
 /* UTILS */
 
-void	set_new_cmd(t_cmd *cmd, t_env *env);
+void	set_new_cmd(t_cmd *cmd);
 bool	is_end_of_cmd(t_cmd_parsing *cmdp);
 bool	is_end_of_arg(t_cmd_parsing *cmdp);
 bool	is_end_of_redir(t_cmd_parsing *cmdp);

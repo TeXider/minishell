@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/10 13:40:22 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/02 10:57:54 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/08 10:06:32 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,4 +57,16 @@ inline bool	get_raw_arg(char **dst, t_cmd_parsing *cmdp, t_env *env)
 		(*dst)[i++] = *(cmdp->str++);
 	}
 	return (false);
+}
+
+inline void	set_new_cmd(t_cmd *cmd)
+{
+	cmd->path = NULL;
+	cmd->cmd_name_is_path = false;
+	cmd->argv = NULL;
+	cmd->redirv = NULL;
+	cmd->redirv_len = 0;
+	cmd->fd_in = STD_IN;
+	cmd->fd_out = STD_OUT;
+	cmd->is_fd_in_hdoc = false;
 }
