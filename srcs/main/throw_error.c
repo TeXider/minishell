@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   throw_error.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/30 17:24:58 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/03 20:56:20 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/04 13:42:02 by tpanou-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ static inline void set_err_msg(char *err_msg, size_t *len, t_env *env)
 {
 	char	*msg;
 
+	msg = NULL;
 	if (env->err == UNCLOSED_QUOTES_ERR)
 		msg = "unclosed quote ";
 	else if (env->err == UNEXPECTED_TOKEN_ERR)
@@ -81,7 +82,8 @@ static inline void set_err_msg(char *err_msg, size_t *len, t_env *env)
 static inline void set_err_ctxt(char *err_msg, size_t *len, t_env *env)
 {
 	char	*ctxt;
-	
+
+	ctxt = NULL;
 	if (env->err == UNCLOSED_QUOTES_ERR || env->err == UNEXPECTED_TOKEN_ERR)
 		ctxt = ETXT"PARSING ERROR:"RST" ";
 	else if (env->err == FILE_ERR)
