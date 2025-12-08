@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/10 10:53:41 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/04 12:50:03 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/04 14:57:19 by tpanou-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ static inline bool	init_env(t_env *env, char **envp)
 	env->exportp_len = 0;
 	env->saved_std_in = FD_NULL;
 	env->saved_std_out = FD_NULL;
+	env->discarded_pipe_fd = FD_NULL;
 	init_signals();
 	if (safe_lalloc(&env->envp, 1, env)
 		|| safe_lalloc(&env->exportp, 1, env)

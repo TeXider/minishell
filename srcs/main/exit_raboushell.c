@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit_raboushell.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/30 12:39:56 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/03 15:20:35 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/04 14:54:43 by tpanou-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	exit_raboushell(t_env *env)
 	safe_free_history(&env->get_line_env);
 	safe_close(&env->saved_std_in, FD_NULL);
 	safe_close(&env->saved_std_out, FD_NULL);
+	safe_close(&env->discarded_pipe_fd, FD_NULL);
 	write(1, "\n\e[38;5;214mShutting down raboushell...\n"RST,
 		44 * !env->in_fork);
 	close(STD_IN);
