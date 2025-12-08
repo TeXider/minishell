@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_redir.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/29 10:02:10 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/02 11:00:07 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/04 17:36:34 by tpanou-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static int	get_redir_name(t_cmd_parsing *cmdp, bool is_hdoc, t_env *env)
 	size_t	redir_name_i;
 	bool	has_quotes;
 
-	if (get_redir_name_len(cmdp->str, &len, is_hdoc, env))
+	if (get_redir_name_len(cmdp, &len, is_hdoc, env))
 		return (AMBI_REDIR_ERR);
 	if (safe_challoc(&cmdp->curr_redir->name, len, env))
 		return (SYS_ERR);
@@ -86,8 +86,9 @@ bool	get_redir(t_cmd_parsing *cmdp, t_env *env)
 	}
 	if (type == HDOC && get_hdoc(cmdp, (status != HAS_QUOTES), env))
 		return (true);
-	if ((type == IN || type == AMBI_REDIR) && cmdp->cmd->fd_in_type == HDOC)
+	if ((type == IN || type == AMBI_REDIR) && cmdp->cmd->is_fd_in_hdoc)
 		safe_close(&cmdp->cmd->fd_in, STD_IN);
+	cmdp->cmd->is_fd_in_hdoc = (type == HDOC);
 	cmdp->curr_redir->type = type * (type != HDOC);
 	cmdp->redirv_i += (type != HDOC);
 	return (false);

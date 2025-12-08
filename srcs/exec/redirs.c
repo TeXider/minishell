@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirs.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/14 09:54:07 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/02 19:51:12 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/04 15:10:07 by tpanou-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,12 @@ static inline bool	open_redir(char *name, int *fd, t_rtype type, t_env *env)
 
 static inline bool	set_cmd_fds(t_cmd *cmd, size_t redir_i, t_env *env)
 {
-	if (cmd->fd_in_type != HDOC && cmd->redirv[redir_i].type == IN)
+	if (!cmd->is_fd_in_hdoc && cmd->redirv[redir_i].type == IN)
 	{
 		safe_close(&cmd->fd_in, STD_IN);
 		if (open_redir(cmd->redirv[redir_i].name, &cmd->fd_in,
 				cmd->redirv[redir_i].type, env))
 			return (true);
-		cmd->fd_in_type = cmd->redirv[redir_i].type;
 	}
 	else if (cmd->redirv[redir_i].type == OUT
 		|| cmd->redirv[redir_i].type == APPND)
@@ -44,7 +43,6 @@ static inline bool	set_cmd_fds(t_cmd *cmd, size_t redir_i, t_env *env)
 		if (open_redir(cmd->redirv[redir_i].name, &cmd->fd_out,
 				cmd->redirv[redir_i].type, env))
 			return (true);
-		cmd->fd_out_type = cmd->redirv[redir_i].type;
 	}
 	return (false);
 }
@@ -53,17 +51,12 @@ bool	set_redirs(t_cmd *cmd, t_env *env)
 {
 	size_t	i;
 
-	if (env->saved_std_in == FD_NULL && env->saved_std_out == FD_NULL
-		&& (safe_dup(STD_IN, &env->saved_std_in, env)
-			|| safe_dup(STD_OUT, &env->saved_std_out, env)))
-			return (true);
 	i = -1;
 	while (++i < cmd->redirv_len)
 	{
 		if (cmd->redirv[i].type == AMBI_REDIR)
 		{
 			create_error(cmd->redirv[i].name, AMBI_REDIR_ERR, env);
-			throw_error(env);
 			return (true);
 		}
 		if (set_cmd_fds(cmd, i, env))
@@ -72,7 +65,7 @@ bool	set_redirs(t_cmd *cmd, t_env *env)
 	return (false);
 }
 
-void	reset_redirs(t_cmd *cmd_list, size_t cmd_list_i, t_env *env)
+void	close_redirs(t_cmd *cmd_list, size_t cmd_list_i, t_env *env)
 {
 	if (cmd_list_i > 0)
 	{
@@ -81,5 +74,11 @@ void	reset_redirs(t_cmd *cmd_list, size_t cmd_list_i, t_env *env)
 	}
 	safe_close(&cmd_list[cmd_list_i].fd_in, FD_NULL);
 	safe_close(&cmd_list[cmd_list_i].fd_out, FD_NULL);
+	safe_close(&env->discarded_pipe_fd, FD_NULL);
+}
+
+void	reset_redirs(t_cmd *cmd_list, size_t cmd_list_i, t_env *env)
+{
+	close_redirs(cmd_list, cmd_list_i, env);
 	dup2_std(env->saved_std_in, env->saved_std_out, env);
 }

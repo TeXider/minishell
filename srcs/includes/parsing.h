@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 12:55:43 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/02 10:58:35 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/04 17:36:15 by tpanou-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,11 @@ typedef struct s_cmd_parsing
 	char	sep;
 }	t_cmd_parsing;
 
+/* PARSING */
+
+bool	get_cmd_line(char *line, t_cmd **cmd_list, size_t *cmd_list_len,
+		t_env *env);
+
 /* ARGV AND REDIRV */
 
 bool	get_argv_redirv(t_cmd_parsing *cmdp, t_env *env);
@@ -47,7 +52,8 @@ bool	is_end_of_expand(t_cmd_parsing *cmdp);
 
 /* REDIRS */
 
-bool	get_redir_name_len(char *redir, size_t *len, bool is_hdoc, t_env *env);
+bool	get_redir_name_len(t_cmd_parsing *cmdp, size_t *len, bool is_hdoc,
+			t_env *env);
 bool	get_redir(t_cmd_parsing *cmdp, t_env *env);
 bool	get_hdoc(t_cmd_parsing *cmdp, bool has_expand, t_env *env);
 void	safe_close(int *fd, int new_fd);
@@ -61,6 +67,7 @@ bool	go_to_end_of_cmd(t_cmd_parsing *cmdp, size_t *cmd_list_len,
 
 /* UTILS */
 
+void	set_new_cmd(t_cmd *cmd, t_env *env);
 bool	is_end_of_cmd(t_cmd_parsing *cmdp);
 bool	is_end_of_arg(t_cmd_parsing *cmdp);
 bool	is_end_of_redir(t_cmd_parsing *cmdp);

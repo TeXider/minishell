@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_struct.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/03 20:09:09 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/03 20:10:02 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/04 15:08:25 by tpanou-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,6 @@ typedef enum e_rtype
 	IN,
 	OUT,
 	APPND,
-	PIPE,
-	STD,
 	AMBI_REDIR
 }	t_rtype;
 
@@ -54,8 +52,7 @@ typedef struct s_cmd
 	size_t		redirv_len;
 	int			fd_in;
 	int			fd_out;
-	t_rtype		fd_in_type;
-	t_rtype		fd_out_type;
+	bool		is_fd_in_hdoc;
 	t_builtin	builtin;
 }	t_cmd;
 
