@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 08:54:12 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/04 14:55:37 by tpanou-d         ###   ########.fr       */
+/*   Updated: 2025/12/08 12:29:35 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@ static inline void	exec_cmd(t_cmd *cmd_list, size_t cmd_list_i,
 
 static inline void	exec_single_builtin(t_cmd *cmd, t_env *env)
 {
+	if (cmd->builtin == EXIT_BUILTIN)
+		write(1, "exit\n", 6);
 	if (!set_redirs(cmd, env)
 		&& !dup2_std(cmd->fd_in, cmd->fd_out, env))
 		exec_builtin(cmd, env);
