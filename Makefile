@@ -6,7 +6,7 @@
 #    By: almighty <almighty@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/12/02 13:34:07 by almighty          #+#    #+#              #
-#    Updated: 2025/12/08 10:08:06 by almighty         ###   ########.fr        #
+#    Updated: 2025/12/09 11:51:32 by almighty         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,7 @@ DIR_OBJS	:= objs
 SRCS	:=	$(DIR_SRCS)/main/create_error.c\
 			$(DIR_SRCS)/main/main.c\
 			$(DIR_SRCS)/main/raboushell.c\
+			$(DIR_SRCS)/main/get_prompt.c\
 			$(DIR_SRCS)/main/exit_raboushell.c\
 			$(DIR_SRCS)/main/throw_error.c\
 			$(DIR_SRCS)/main/utils.c\
