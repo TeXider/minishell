@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   gen_prompt.c                                       :+:      :+:    :+:   */
+/*   get_prompt.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/08 12:53:31 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/08 14:14:44 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/09 12:10:24 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static inline size_t	prompt_len(char *user_var, char *pwd_var)
 		usr_len += (user_var[usr_len] != '\0');
 		pwd_len += (pwd_var[pwd_len] != '\0');
 	}
-	return (usr_len + pwd_len + 40);
+	return (usr_len + pwd_len + 37);
 }
 
 static inline char	*find_pwd_var(char **envp)
