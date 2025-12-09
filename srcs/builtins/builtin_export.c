@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_export.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/20 09:43:51 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/04 13:42:32 by tpanou-d         ###   ########.fr       */
+/*   Updated: 2025/12/09 12:51:02 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static inline bool	compute_export(char *exp, t_var_info *var_info,
 
 static inline bool	check_export_parsing(char *exp, t_var_info *var_info)
 {
-	if (!*exp || *exp == '=' ||(*exp >= '0' && *exp <= '9'))
+	if (!*exp || *exp == '=' || (*exp >= '0' && *exp <= '9'))
 		return (true);
 	while (is_var_char(*exp))
 		exp++;

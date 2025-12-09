@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 11:23:11 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/04 11:56:40 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/09 12:49:18 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ static inline bool	init_get_line(t_line **line, char **dst, t_gl *env)
 	env->term = env->old_term;
 	env->term.c_iflag &= ~(INLCR | IGNCR | ICRNL);
 	env->term.c_lflag &= ~(ECHO | ECHONL | ICANON | IEXTEN);
-	env->term.c_cc[VMIN]  = 0;
-    env->term.c_cc[VTIME] = 1;
+	env->term.c_cc[VMIN] = 0;
+	env->term.c_cc[VTIME] = 1;
 	if (tcsetattr(STD_IN, TCSANOW, &env->term))
 	{
 		create_error("tcsetattr()", TERM_ERR, env->main_env);

@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 12:26:23 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/08 10:22:26 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/09 12:52:14 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ typedef enum e_builtin_err_ctxt
 	HOME_NOT_SET_BERR,
 	INTERNAL_BERR,
 }	t_builtin_err_ctxt;
-
 
 typedef struct s_var_info
 {
@@ -67,4 +66,4 @@ void	throw_builtin_error(char *culprit, t_builtin_err err,
 			t_builtin_err_ctxt err_ctxt, t_env *env);
 bool	safe_getcwd(char **dst, t_env *env);
 
-# endif
+#endif

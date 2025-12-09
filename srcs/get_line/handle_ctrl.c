@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/28 17:21:04 by tpanou-d          #+#    #+#             */
-/*   Updated: 2025/12/03 15:26:32 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/09 12:48:39 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,14 +66,13 @@ bool	handle_ctrl(t_line **line, int term_cols, t_gl *env)
 	else if ((*line)->curr_char == ARROW_LEFT)
 		ctrl_move_cursor_left(jump_len, *line, term_cols, env);
 	else if ((*line)->curr_char == CTRL_DEL
-			|| (*line)->curr_char == CTRL_RETURN)
+		|| (*line)->curr_char == CTRL_RETURN)
 	{
 		i = -1;
 		while (++i < jump_len)
 			if (delete_char(line, env))
 				return (true);
 	}
-
 	if ((*line)->curr_char == CTRL_DEL || (*line)->curr_char == CTRL_RETURN)
 		rewrite_line(*line, term_cols, env);
 	return (false);

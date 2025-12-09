@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   execution.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 13:10:11 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/04 14:55:15 by tpanou-d         ###   ########.fr       */
+/*   Updated: 2025/12/09 12:52:42 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXECUTION_H
 # define EXECUTION_H
 
-#include "raboushell.h"
+# include "raboushell.h"
 
 typedef struct s_pipes
 {

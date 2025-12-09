@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/25 13:51:42 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/08 13:58:44 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/09 12:50:47 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,6 @@ void	throw_builtin_error(char *culprit, t_builtin_err err,
 	print_err_origin(err);
 	print_err_ctxt(culprit, err_ctxt);
 	set_exit_code(1 + (err_ctxt != INTERNAL_BERR
-		&& err_ctxt != HOME_NOT_SET_BERR), env);
+			&& err_ctxt != HOME_NOT_SET_BERR), env);
 	env->err = BUILTIN_ERR;
 }

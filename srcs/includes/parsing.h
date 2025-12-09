@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 12:55:43 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/08 10:07:27 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/09 12:52:31 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ typedef struct s_cmd_parsing
 /* PARSING */
 
 bool	get_cmd_line(char *line, t_cmd **cmd_list, size_t *cmd_list_len,
-		t_env *env);
+			t_env *env);
 
 /* ARGV AND REDIRV */
 

@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 13:59:03 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/09 11:43:23 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/09 12:55:06 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,8 @@ static inline void	wait_children(t_env *env)
 		wait_pid = wait(&status);
 		if (!env->err && env->last_pid != -1 && wait_pid == env->last_pid)
 			set_exit_code((WIFEXITED(status) * WEXITSTATUS(status)
-							+ WIFSIGNALED(status) * (128 + WTERMSIG(status))),
-							env);
+					+ WIFSIGNALED(status) * (128 + WTERMSIG(status))),
+				env);
 	}
 	if (wait_pid == -1)
 		create_error("wait()", SYS_ERR, env);

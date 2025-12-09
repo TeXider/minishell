@@ -6,13 +6,13 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/30 17:24:58 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/08 13:28:26 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/09 12:54:49 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/raboushell.h"
 
-static inline void add_culprit_err_msg(char *err_msg, size_t *len, t_env *env)
+static inline void	add_culprit_err_msg(char *err_msg, size_t *len, t_env *env)
 {
 	size_t	i;
 
@@ -38,14 +38,14 @@ static inline void add_culprit_err_msg(char *err_msg, size_t *len, t_env *env)
 	}
 }
 
-static inline void set_err_culprit(char *err_msg, size_t *len, char *msg,
+static inline void	set_err_culprit(char *err_msg, size_t *len, char *msg,
 	t_env *env)
 {
 	if (env->err != UNCLOSED_QUOTES_ERR && env->err != UNEXPECTED_TOKEN_ERR)
 		add_culprit_err_msg(err_msg, len, env);
 	if (env->err != SYS_ERR && env->err != TERM_ERR
 		&& env->err != FILE_ERR && env->err != FATAL_SYS_ERR)
-	{	
+	{
 		while (*msg)
 		{
 			err_msg[*len] = *msg;
@@ -57,7 +57,7 @@ static inline void set_err_culprit(char *err_msg, size_t *len, char *msg,
 		add_culprit_err_msg(err_msg, len, env);
 }
 
-static inline void set_err_msg(char *err_msg, size_t *len, t_env *env)
+static inline void	set_err_msg(char *err_msg, size_t *len, t_env *env)
 {
 	char	*msg;
 
@@ -79,7 +79,7 @@ static inline void set_err_msg(char *err_msg, size_t *len, t_env *env)
 	set_err_culprit(err_msg, len, msg, env);
 }
 
-static inline void set_err_ctxt(char *err_msg, size_t *len, t_env *env)
+static inline void	set_err_ctxt(char *err_msg, size_t *len, t_env *env)
 {
 	char	*ctxt;
 
