@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raboushell.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 13:59:03 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/04 17:37:35 by tpanou-d         ###   ########.fr       */
+/*   Updated: 2025/12/09 11:43:23 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,13 +69,17 @@ static inline void	wait_children(t_env *env)
 		create_error("wait()", SYS_ERR, env);
 }
 
-void	raboushell(char *input, t_env *env)
+void	raboushell(t_env *env)
 {
+	char	*prompt;
+	char	*input;
 	t_cmd	*cmd_list;
 	size_t	cmd_list_len;
 
 	cmd_list = NULL;
-	if (!get_cmd_line(input, &cmd_list, &cmd_list_len, env))
+	if (!get_prompt(&prompt, env)
+		&& !get_line(&input, prompt, &env->get_line_env)
+		&& !get_cmd_line(input, &cmd_list, &cmd_list_len, env))
 	{
 		env->children_count = 0;
 		exec_cmd_line(cmd_list, cmd_list_len, env);
@@ -88,4 +92,6 @@ void	raboushell(char *input, t_env *env)
 		}
 	}
 	free_cmd_list(cmd_list, cmd_list_len);
+	safe_free((void **) &prompt);
+	safe_free((void **) &input);
 }

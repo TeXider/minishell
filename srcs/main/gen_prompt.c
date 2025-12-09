@@ -6,13 +6,13 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/08 12:53:31 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/08 14:13:07 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/08 14:14:44 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/raboushell.h"
 
-void	write_on_prompt(char *str, char *prompt, size_t *prompt_i)
+static inline void	write_on_prompt(char *str, char *prompt, size_t *prompt_i)
 {
 	while (*str)
 	{
@@ -22,7 +22,7 @@ void	write_on_prompt(char *str, char *prompt, size_t *prompt_i)
 	}
 }
 
-size_t	prompt_len(char *user_var, char *pwd_var)
+static inline size_t	prompt_len(char *user_var, char *pwd_var)
 {
 	size_t	usr_len;
 	size_t	pwd_len;
@@ -38,7 +38,7 @@ size_t	prompt_len(char *user_var, char *pwd_var)
 	return (usr_len + pwd_len + 40);
 }
 
-char *find_pwd_var(char **envp)
+static inline char	*find_pwd_var(char **envp)
 {
 	while (*envp)
 	{
@@ -52,7 +52,7 @@ char *find_pwd_var(char **envp)
 	return ("\0");
 }
 
-char *find_user_var(char **envp)
+static inline char	*find_user_var(char **envp)
 {
 	while (*envp)
 	{

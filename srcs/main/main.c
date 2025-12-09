@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/10 10:53:41 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/04 14:57:19 by tpanou-d         ###   ########.fr       */
+/*   Updated: 2025/12/09 11:41:24 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ static inline bool	init_env(t_env *env, char **envp)
 int	main(int argc, char **argv, char **envp)
 {
 	t_env	env;
-	char	*input;
 
 	(void) argc;
 	(void) argv;
@@ -51,13 +50,9 @@ int	main(int argc, char **argv, char **envp)
 	{
 		while (g_sig != SIGNAL_EXIT && !env.in_fork && !env.end_of_raboushell)
 		{
-			if (!get_line(&input, "raboushell> ", &env.get_line_env))
-			{
-				raboushell(input, &env);
-				if (env.err)
-					throw_error(&env);
-				free(input);
-			}
+			raboushell(&env);
+			if (env.err)
+				throw_error(&env);
 			if (g_sig == SIGNAL_INT)
 				handle_sigint(&env);
 		}
