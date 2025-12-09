@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/10 10:53:41 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/09 11:41:24 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/09 12:35:47 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,25 @@
 
 int	g_sig = 0;
 
+static inline void	print_banner(void)
+{
+	write (1, RABOU"\t██████╗  █████╗ ██████╗  ██████╗ ██╗   ██╗"
+		SHELL"███████╗██╗  ██╗███████╗██╗     ██╗\n"
+		RABOU"\t██╔══██╗██╔══██╗██╔══██╗██╔═══██╗██║   ██║"
+		SHELL"██╔════╝██║  ██║██╔════╝██║     ██║\n"
+		RABOU"\t██████╔╝███████║██████╔╝██║   ██║██║   ██║"
+		SHELL"███████╗███████║█████╗  ██║     ██║\n"
+		RABOU"\t██╔══██╗██╔══██║██╔══██╗██║   ██║██║   ██║"
+		SHELL"╚════██║██╔══██║██╔══╝  ██║     ██║\n", 901);
+	write(1, RABOU"\t██║  ██║██║  ██║██████╔╝╚██████╔╝╚██████╔╝"
+		SHELL"███████║██║  ██║███████╗███████╗███████╗\n", 255);
+	write(1, RABOU"\t╚═╝  ╚═╝╚═╝  ╚═╝╚═════╝  ╚═════╝  ╚═════╝ "
+		SHELL"╚══════╝╚═╝  ╚═╝╚══════╝╚══════╝╚══════╝\n\n\n"RST, 251);
+}
+
 static inline bool	init_env(t_env *env, char **envp)
 {
+	print_banner();
 	env->get_line_env.history = NULL;
 	env->get_line_env.is_ctrl = false;
 	env->get_line_env.update_history = true;
