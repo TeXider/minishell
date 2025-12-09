@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_line.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 11:24:12 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/04 16:59:08 by tpanou-d         ###   ########.fr       */
+/*   Updated: 2025/12/09 15:16:03 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ bool	handle_keys(t_line **line, t_gl *env);
 void	handle_lr_arrows(t_line *line, int term_cols, t_gl *env);
 bool	add_char(t_line **line, t_gl *env);
 bool	handle_ctrl(t_line **line, int term_cols, t_gl *env);
-size_t	print_strl(char *str);
+size_t	print_prompt(char *str);
 void	cpy_str(char *src, char *dst, size_t len);
 void	handle_get_line_error(t_gl *env);
 bool	new_history_entry(t_gl *env);

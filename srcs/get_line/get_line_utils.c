@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 08:35:29 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/03 11:22:20 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/09 15:47:50 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,14 +35,24 @@ inline bool	get_term_cols(int *term_cols, t_gl *env)
 	return (false);
 }
 
-inline size_t	print_strl(char *str)
+inline size_t	print_prompt(char *str)
 {
+	bool	in_esc_seq;
 	size_t	len;
+	size_t	printed_len;
 
+	in_esc_seq = false;
 	len = 0;
+	printed_len = 0;
 	while (str[len])
-		write(1, str + len++, 1);
-	return (len);
+	{
+		in_esc_seq |= (str[len] == '\e');
+		printed_len += !in_esc_seq;
+		len += 1 + (str[len + 1] == 'm' && in_esc_seq);
+		in_esc_seq &= (str[len - (len > 0)] != 'm');
+	}
+	write(1, str, len);
+	return (printed_len);
 }
 
 inline void	cpy_str(char *src, char *dst, size_t len)
