@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 11:38:44 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/08 13:52:28 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/09 12:39:57 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 inline void	print_raboushell(void)
 {
-	write(2, BOLD"["RST GREEN"rabou"RST BOLD SGREEN"shell"RST BOLD"] "RST, 48);
+	write(2, BOLD"["RABOU"rabou"SHELL"shell"RST BOLD"] "RST, 48);
 }
 
 inline void	print_str(char *str)
