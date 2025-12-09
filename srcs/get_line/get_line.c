@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 11:23:11 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/09 12:49:18 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/09 16:10:34 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ bool	get_line(char **dst, char *prompt, t_gl *env)
 
 	if (init_get_line(&line, dst, env))
 		return (true);
-	env->prompt_len = print_strl(prompt);
+	env->prompt_len = print_prompt(prompt);
 	while (!g_sig && line->curr_char != '\r')
 	{
 		env->prev_line_count = line->count;
