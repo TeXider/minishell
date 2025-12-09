@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 11:38:44 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/04 12:44:48 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/08 13:52:28 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,12 @@ inline void	print_raboushell(void)
 
 inline void	print_str(char *str)
 {
-	while (*str)
-		write(1, str++, 1);
+	size_t	len;
+
+	len = 0;
+	while (str[len])
+		len++;
+	write(1, str, len);
 }
 
 inline void	set_exit_code(t_uchar exit_code, t_env *env)
