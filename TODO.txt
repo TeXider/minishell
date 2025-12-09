@@ -1,0 +1,2 @@
+fix get_line stack smashing
+handle `new line' token error
