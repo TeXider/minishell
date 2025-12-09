@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_hdoc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 08:55:49 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/04 16:25:07 by tpanou-d         ###   ########.fr       */
+/*   Updated: 2025/12/08 14:18:13 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,14 @@ void	print_hdoc_warning(char *del, t_env *env)
 	size_t	del_len;
 
 	print_raboushell();
-	write(1, "\e[1m\e[38;5;202mwarning: \e[0mhere-document at line ", 51);
+	write(2, "\e[1m\e[38;5;202mwarning: \e[0mhere-document at line ", 51);
 	print_ushort(env->get_line_env.line_count);
-	write(1, " delimited by end-of-file (wanted `", 35);
+	write(2, " delimited by end-of-file (wanted `", 35);
 	del_len = 0;
 	while (del[del_len])
 		del_len++;
-	write(1, del, del_len);
-	write(1, "')\n", 3);
+	write(2, del, del_len);
+	write(2, "')\n", 3);
 }
 
 static void	write_in_hdoc(t_cmd_parsing *cmdp, bool has_expand, int write_fd,
