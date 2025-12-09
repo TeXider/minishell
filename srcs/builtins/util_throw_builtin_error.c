@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/25 13:51:42 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/08 12:27:30 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/08 13:58:44 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,12 @@
 
 static inline void	print_str_err(char *str)
 {
-	while (*str)
-		write(2, str++, 1);
+	size_t	len;
+
+	len = 0;
+	while (str[len])
+		len++;
+	write(2, str, len);
 }
 
 static inline void	print_err_ctxt(char *culprit, t_builtin_err_ctxt err_ctxt)
