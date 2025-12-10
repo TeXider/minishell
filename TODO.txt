@@ -1,3 +1,2 @@
 fix get_line stack smashing
 handle `new line' token error
-fix get_line colored prompt incorrect length
