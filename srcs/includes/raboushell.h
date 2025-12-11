@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 09:25:05 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/09 12:56:05 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/11 12:38:00 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@
 
 typedef unsigned char		t_uchar;
 typedef unsigned int		t_uint;
+typedef short int			t_sint;
 
 # define SIGNAL_EXIT 1
 # define SIGNAL_INT 2

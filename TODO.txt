@@ -1,2 +1,3 @@
 fix get_line stack smashing
 handle `new line' token error
+malloc err msg to avoid stack overflow
