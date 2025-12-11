@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_struct.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/03 20:09:09 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/04 15:08:25 by tpanou-d         ###   ########.fr       */
+/*   Updated: 2025/12/11 19:12:50 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,5 +55,20 @@ typedef struct s_cmd
 	bool		is_fd_in_hdoc;
 	t_builtin	builtin;
 }	t_cmd;
+
+typedef enum e_cmd_op_type
+{
+	EMPTY_OP,
+	PIPE_OP,
+	AND_OP,
+	OR_OP
+}	t_cmd_op_type;
+
+typedef struct s_cmd_op
+{
+	void			*op;
+	bool			is_subshell;
+	t_cmd_op_type	op_type;
+}	t_cmd_op;
 
 #endif
