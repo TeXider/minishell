@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 08:14:55 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/11 19:03:58 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/11 19:16:47 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,10 @@ static inline void	set_special_culprit(char *culprit, t_env *env)
 		env->culprit = "`||'";
 	else if (*culprit == '&')
 		env->culprit = "`&&'";
+	else if (*culprit == '(')
+		env->culprit = "`('";
+	else if (*culprit == ')')
+		env->culprit = "`)'";
 	else if (*culprit == '\n')
 		env->culprit = "`newline'";
 }
