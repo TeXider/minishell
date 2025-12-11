@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 09:25:05 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/11 18:42:39 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/11 19:45:14 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,7 +146,7 @@ void	print_raboushell(void);
 void	print_str(char *str);
 void	set_exit_code(t_uchar exit_code, t_env *env);
 void	safe_close(int *fd, int new_fd);
-void	print_ushort(t_uint num);
+void	print_uint(t_uint num);
 
 /* ERROR HANDLING */
 

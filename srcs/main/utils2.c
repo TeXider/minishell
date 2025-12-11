@@ -6,13 +6,13 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/03 21:15:23 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/09 12:54:35 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/11 19:45:14 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/raboushell.h"
 
-inline void	print_ushort(t_uint num)
+inline void	print_uint(t_uint num)
 {
 	char	res[9];
 	int		len;

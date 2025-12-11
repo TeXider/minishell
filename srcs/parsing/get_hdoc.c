@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 08:55:49 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/08 14:18:13 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/11 19:45:14 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	print_hdoc_warning(char *del, t_env *env)
 
 	print_raboushell();
 	write(2, "\e[1m\e[38;5;202mwarning: \e[0mhere-document at line ", 51);
-	print_ushort(env->get_line_env.line_count);
+	print_uint(env->get_line_env.line_count);
 	write(2, " delimited by end-of-file (wanted `", 35);
 	del_len = 0;
 	while (del[del_len])
