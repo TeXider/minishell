@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 09:25:05 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/11 12:38:00 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/11 18:42:39 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,24 +24,25 @@
 # include "cmd_struct.h"
 # include "get_line_struct.h"
 
-# define READ 1
-# define HAS_QUOTES -1
-# define IS_HDOC -1
-# define IS_EMPTY true
-# define STD_IN 0
-# define STD_OUT 1
-# define FD_ERR 2
-# define FD_NULL -1
-# define P_READ 0
-# define P_WRITE 1
-# define CULPRIT_LENGTH 32
+# define READ				1
+# define HAS_QUOTES			-1
+# define IS_HDOC			-1
+# define IS_EMPTY			true
+# define STD_IN				0
+# define STD_OUT			1
+# define FD_ERR				2
+# define FD_NULL			-1
+# define P_READ				0
+# define P_WRITE			1
+# define CULPRIT_LENGTH		32
+# define RABOUSHELL_LENGTH	48
 
-# define VAR_INEXISTANT 0
-# define VAR_IN_EXPORTP 1
-# define VAR_IN_ENVP 2
-# define TO_EXPORTP 0
-# define TO_ENVP 1
-# define TO_ENVP_APPND 2
+# define VAR_INEXISTANT	0
+# define VAR_IN_EXPORTP	1
+# define VAR_IN_ENVP	2
+# define TO_EXPORTP		0
+# define TO_ENVP		1
+# define TO_ENVP_APPND	2
 
 # define BLACK	"\e[30m"
 # define RED	"\e[31m"
@@ -64,8 +65,8 @@ typedef unsigned char		t_uchar;
 typedef unsigned int		t_uint;
 typedef short int			t_sint;
 
-# define SIGNAL_EXIT 1
-# define SIGNAL_INT 2
+# define SIGNAL_EXIT	1
+# define SIGNAL_INT		2
 
 extern int					g_sig;
 
@@ -107,36 +108,49 @@ typedef struct s_env
 	/*ERROR HANDLING*/
 	int		children_count;
 	t_err	err;
-	char	culprit[CULPRIT_LENGTH];
+	char	*culprit;
+	char	*err_msg;
 	t_uchar	exit_code;
 	char	exit_code_str[4];
 	bool	end_of_raboushell;
 }	t_env;
 
+/* RABOUSHELL */
+
 void	raboushell(t_env *env);
-//
+void	exit_raboushell(t_env *env);
+
+/* MEMORY */
+
 void	safe_free(void **ptr);
 void	free_data(t_cmd *cmd, char *line, t_env *env);
 bool	safe_challoc(char **dst, size_t len, t_env *env);
 bool	safe_lalloc(char ***dst, size_t len, t_env *env);
 bool	safe_malloc(void **dst, size_t len, t_env *env);
-//
+
+/* SIGNALS */
+
 void	init_signals(void);
 void	handle_sigint(t_env *env);
-//
+
+/* GET_LINE */
+
 bool	get_prompt(char **dst, t_env *env);
 bool	get_line(char **dst, char *prompt, t_gl *env);
 void	safe_free_history(t_gl *env);
-//
+
+/* UTILS */
+
 bool	is_var_char(char c);
 void	print_raboushell(void);
 void	print_str(char *str);
 void	set_exit_code(t_uchar exit_code, t_env *env);
 void	safe_close(int *fd, int new_fd);
 void	print_ushort(t_uint num);
-//
+
+/* ERROR HANDLING */
+
 void	create_error(char *culprit, t_err err, t_env *env);
 void	throw_error(t_env *env);
-void	exit_raboushell(t_env *env);
 
 #endif

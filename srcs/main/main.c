@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/10 10:53:41 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/09 12:35:47 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/11 18:38:35 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,17 +34,17 @@ static inline void	print_banner(void)
 static inline bool	init_env(t_env *env, char **envp)
 {
 	print_banner();
-	env->get_line_env.history = NULL;
-	env->get_line_env.is_ctrl = false;
-	env->get_line_env.update_history = true;
-	env->get_line_env.main_env = env;
-	env->get_line_env.line_count = 0;
 	env->in_fork = false;
 	env->envp_len = 0;
 	env->exportp_len = 0;
 	env->saved_std_in = FD_NULL;
 	env->saved_std_out = FD_NULL;
 	env->discarded_pipe_fd = FD_NULL;
+	env->get_line_env.history = NULL;
+	env->get_line_env.is_ctrl = false;
+	env->get_line_env.update_history = true;
+	env->get_line_env.main_env = env;
+	env->get_line_env.line_count = 0;
 	init_signals();
 	if (safe_lalloc(&env->envp, 1, env)
 		|| safe_lalloc(&env->exportp, 1, env)
@@ -68,8 +68,6 @@ int	main(int argc, char **argv, char **envp)
 		while (g_sig != SIGNAL_EXIT && !env.in_fork && !env.end_of_raboushell)
 		{
 			raboushell(&env);
-			if (env.err)
-				throw_error(&env);
 			if (g_sig == SIGNAL_INT)
 				handle_sigint(&env);
 		}

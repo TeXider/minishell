@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 08:14:55 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/08 12:47:12 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/11 18:41:53 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,30 +23,33 @@ static inline void	create_exit_code(t_env *env)
 	set_exit_code(env->exit_code, env);
 }
 
+static inline void	set_special_culprit(char *culprit, t_env *env)
+{
+	if (*culprit == '\'')
+		env->culprit = "`''";
+	else if (*culprit == '"')
+		env->culprit = "`\"'";
+	else if (*culprit == '>')
+		env->culprit = "`>'";
+	else if (*culprit == '<')
+		env->culprit = "`<'";
+	else if (*culprit == '|' && *(culprit + 1) != '|')
+		env->culprit = "`|'";
+	else if (*culprit == '|' && *(culprit + 1) == '|')
+		env->culprit = "`||'";
+	else if (*culprit == '&')
+		env->culprit = "`&&'";
+	else if (*culprit == '\n')
+		env->culprit = "`new line'";
+}
+
 void	create_error(char *culprit, t_err err, t_env *env)
 {
-	size_t	i;
-
 	env->err = err;
 	if (err == UNCLOSED_QUOTES_ERR || err == UNEXPECTED_TOKEN_ERR)
-	{
-		env->culprit[0] = *culprit;
-		i = 1;
-	}
+		set_special_culprit(culprit, env);
 	else
-	{
-		i = -1;
-		while (++i < CULPRIT_LENGTH && culprit[i])
-			env->culprit[i] = culprit[i];
-		if (i == CULPRIT_LENGTH && culprit[i])
-		{
-			env->culprit[i - 1] = '\0';
-			env->culprit[i - 2] = '.';
-			env->culprit[i - 3] = '.';
-			env->culprit[i - 4] = '.';
-		}
-	}
-	env->culprit[i] = '\0';
+		env->culprit = culprit;
 	env->end_of_raboushell = (err == FATAL_SYS_ERR || err == TERM_ERR);
 	create_exit_code(env);
 }

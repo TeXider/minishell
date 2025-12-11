@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 11:24:12 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/11 12:43:46 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/11 18:06:36 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,20 +16,20 @@
 # include <sys/ioctl.h>
 # include "raboushell.h"
 
-# define LINE_LEN 1025 
-# define ESC_CHAR 27
-# define RETURN 127
-# define ARROW_UP -1
-# define ARROW_DOWN -2
-# define ARROW_RIGHT -3
-# define ARROW_LEFT -4
-# define DEL -5
-# define CTRL_RETURN '\027'
-# define CTRL_DEL -7
-# define CTRL_ARROW -8
-# define LEFT -1
-# define RIGHT 1
-# define CTRL_D '\004'
+# define LINE_LEN		1025 
+# define ESC_CHAR		27
+# define RETURN			127
+# define ARROW_UP		-1
+# define ARROW_DOWN		-2
+# define ARROW_RIGHT	-3
+# define ARROW_LEFT		-4
+# define DEL			-5
+# define CTRL_RETURN	'\027'
+# define CTRL_DEL		-7
+# define CTRL_ARROW		-8
+# define LEFT			-1
+# define RIGHT			1
+# define CTRL_D			'\004'
 
 bool	end_get_line(t_line *line, char **dst, t_gl *env);
 bool	is_special_key(char c);

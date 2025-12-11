@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 13:59:03 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/09 15:38:04 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/11 13:41:46 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,8 @@ void	raboushell(t_env *env)
 			wait_children(env);
 		}
 	}
+	if (env->err)
+		throw_error(env);
 	free_cmd_list(cmd_list, cmd_list_len);
 	safe_free((void **) &prompt);
 	safe_free((void **) &input);
