@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/03 12:43:31 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/11 12:50:30 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/13 09:14:01 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,9 +93,9 @@ void	move_cursor(ssize_t distance, size_t index, int term_cols, t_gl *env)
 	esc_seq[0] = '\e';
 	esc_seq[1] = '[';
 	esc_seq_len = 2 + get_row_esc_seq(esc_seq + 2, short_distance, col,
-		term_cols);
+			term_cols);
 	write(1, esc_seq, esc_seq_len);
 	esc_seq_len = 2 + get_col_esc_seq(esc_seq + 2, short_distance, col,
-		term_cols);
+			term_cols);
 	write(1, esc_seq, esc_seq_len);
 }

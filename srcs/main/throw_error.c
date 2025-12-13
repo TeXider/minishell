@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/30 17:24:58 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/11 18:57:38 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/13 09:12:02 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,8 @@ static inline void	set_err_msg(char *err_msg, size_t *len, t_env *env)
 		msg = "Permission denied";
 	else if (env->err == CMD_IS_DIR_ERR)
 		msg = "Is a directory";
-	else if ((env->err == FILE_ERR || env->err == SYS_ERR
-		|| env->err == TERM_ERR || env->err == FATAL_SYS_ERR))
+	else if (env->err == FILE_ERR || env->err == SYS_ERR
+		|| env->err == TERM_ERR || env->err == FATAL_SYS_ERR)
 		msg = strerror(errno);
 	write_err_msg(err_msg, len, msg, env);
 }
@@ -121,9 +121,6 @@ void	throw_error(t_env *env)
 		set_err_msg(err_msg, &err_msg_len, env);
 		print_raboushell();
 		write(2, err_msg, err_msg_len);
-		// if (env->err == FILE_ERR || env->err == SYS_ERR || env->err == TERM_ERR
-		// 	|| env->err == FATAL_SYS_ERR)
-		// 	perror(NULL);
 	}
 	env->err = SUCCESS;
 	write(2, RST, 4);
