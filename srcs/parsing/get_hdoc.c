@@ -6,13 +6,13 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 08:55:49 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/11 19:45:14 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/13 11:24:49 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/parsing.h"
 
-void	print_hdoc_warning(char *del, t_env *env)
+static inline void	print_hdoc_warning(char *del, t_env *env)
 {
 	size_t	del_len;
 
@@ -27,7 +27,7 @@ void	print_hdoc_warning(char *del, t_env *env)
 	write(2, "')\n", 3);
 }
 
-static void	write_in_hdoc(t_cmd_parsing *cmdp, bool has_expand, int write_fd,
+static inline void	write_in_hdoc(t_cmd_parsing *cmdp, bool has_expand, int write_fd,
 	t_env *env)
 {
 	while (cmdp->str && (cmdp->in_expand

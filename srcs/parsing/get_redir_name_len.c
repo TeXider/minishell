@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   get_redir_name_len.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/07 14:50:26 by tpanou-d          #+#    #+#             */
-/*   Updated: 2025/12/04 17:34:18 by tpanou-d         ###   ########.fr       */
+/*   Updated: 2025/12/13 11:25:06 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/parsing.h"
 
-static void	increment_len(t_cmd_parsing *cmdp, size_t *len, bool *end_of_redir,
-	bool *has_arg)
+static inline void	increment_len(t_cmd_parsing *cmdp, size_t *len,
+	bool *end_of_redir, bool *has_arg)
 {
 	(*len) += (cmdp->sep != ' ' || *(cmdp->str) != ' ');
 	*has_arg = (*len != 0);
@@ -21,7 +21,7 @@ static void	increment_len(t_cmd_parsing *cmdp, size_t *len, bool *end_of_redir,
 	cmdp->str++;
 }
 
-static void	update_sep(t_cmd_parsing *cmdp, bool *has_arg)
+static inline void	update_sep(t_cmd_parsing *cmdp, bool *has_arg)
 {
 	set_sep(cmdp);
 	*has_arg = true;

@@ -6,13 +6,13 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 08:31:47 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/04 12:45:06 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/13 11:24:10 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/parsing.h"
 
-static bool	check_var_eq(char **str, char **var)
+static inline bool	check_var_eq(char **str, char **var)
 {
 	bool	res;
 
@@ -28,7 +28,7 @@ static bool	check_var_eq(char **str, char **var)
 	return (res);
 }
 
-static void	expand_exit_code(t_cmd_parsing *cmdp, t_env *env)
+static inline void	expand_exit_code(t_cmd_parsing *cmdp, t_env *env)
 {
 	cmdp->str++;
 	cmdp->saved_str = cmdp->str;

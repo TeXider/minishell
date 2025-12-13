@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/29 10:02:10 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/08 12:28:18 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/13 11:25:24 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static void	init_get_redir(t_cmd_parsing *cmdp, t_rtype *type)
 	skip_spaces(&cmdp->str);
 }
 
-static void	add_char_to_name(t_cmd_parsing *cmdp, size_t *redir_name_i)
+static inline void	add_char_to_name(t_cmd_parsing *cmdp, size_t *redir_name_i)
 {
 	if (cmdp->sep != ' ' || *(cmdp->str) != ' ')
 	{
@@ -35,14 +35,15 @@ static void	add_char_to_name(t_cmd_parsing *cmdp, size_t *redir_name_i)
 	cmdp->str++;
 }
 
-static void	update_sep(t_cmd_parsing *cmdp, bool *has_quotes)
+static inline void	update_sep(t_cmd_parsing *cmdp, bool *has_quotes)
 {
 	set_sep(cmdp);
 	*has_quotes = true;
 	cmdp->str++;
 }
 
-static int	get_redir_name(t_cmd_parsing *cmdp, bool is_hdoc, t_env *env)
+static inline int	get_redir_name(t_cmd_parsing *cmdp, bool is_hdoc,
+	t_env *env)
 {
 	size_t	len;
 	size_t	redir_name_i;

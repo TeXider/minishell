@@ -6,14 +6,14 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/03 21:35:05 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/09 12:53:06 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/13 11:23:22 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/raboushell.h"
 #include <signal.h>
 
-static void	sig_int(int sig)
+static inline void	sig_int(int sig)
 {
 	(void) sig;
 	g_sig = SIGNAL_INT;

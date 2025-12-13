@@ -6,13 +6,13 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 09:33:57 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/28 13:52:31 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/13 11:24:31 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/parsing.h"
 
-static bool	go_through_arg(t_cmd_parsing *cmdp, t_env *env)
+static inline bool	go_through_arg(t_cmd_parsing *cmdp, t_env *env)
 {
 	bool	is_empty;
 

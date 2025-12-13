@@ -6,13 +6,13 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 09:50:16 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/08 10:07:41 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/13 11:24:40 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/parsing.h"
 
-static t_builtin	builtin_type(char *cmd)
+static inline t_builtin	builtin_type(char *cmd)
 {
 	if (!(cmd))
 		return (NOT_BUILTIN);
@@ -32,7 +32,7 @@ static t_builtin	builtin_type(char *cmd)
 			&& cmd[3] == 'e' && cmd[4] == 't' && !cmd[5]));
 }
 
-static bool	get_cmd(t_cmd_parsing *cmdp, t_env *env)
+static inline bool	get_cmd(t_cmd_parsing *cmdp, t_env *env)
 {
 	if (get_argv_redirv(cmdp, env))
 		return (false);

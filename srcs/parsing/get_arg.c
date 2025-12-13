@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   get_arg.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 09:44:15 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/04 17:35:36 by tpanou-d         ###   ########.fr       */
+/*   Updated: 2025/12/13 11:24:24 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/parsing.h"
 
-static void	add_char_to_arg(t_cmd_parsing *cmdp, size_t *arg_i)
+static inline void	add_char_to_arg(t_cmd_parsing *cmdp, size_t *arg_i)
 {
 	if (cmdp->sep != ' ' || *(cmdp->str) != ' ')
 	{
@@ -23,7 +23,7 @@ static void	add_char_to_arg(t_cmd_parsing *cmdp, size_t *arg_i)
 	cmdp->str++;
 }
 
-static void	update_sep(t_cmd_parsing *cmdp, bool *has_arg)
+static inline void	update_sep(t_cmd_parsing *cmdp, bool *has_arg)
 {
 	set_sep(cmdp);
 	if (has_arg)
@@ -31,7 +31,7 @@ static void	update_sep(t_cmd_parsing *cmdp, bool *has_arg)
 	cmdp->str++;
 }
 
-static bool	get_arg_len(t_cmd_parsing *cmdp, size_t *len, t_env *env)
+static inline bool	get_arg_len(t_cmd_parsing *cmdp, size_t *len, t_env *env)
 {
 	t_cmd_parsing	tmp_cmdp;
 	bool			has_arg;
