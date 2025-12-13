@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/21 14:18:30 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/04 10:09:39 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/12 11:33:32 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ bool	builtin_unset(char **args, t_env *env)
 		if (is_valid_var(*args))
 		{
 			find_var(*args, &var_info, env);
-			if ((var_info.stat != VAR_INEXISTANT
+			if ((var_info.stat != VAR_NONEXISTENT
 					&& remove_from_exportp(var_info.exportp_index, env))
 				|| (var_info.stat == VAR_IN_ENVP
 					&& remove_from_envp(var_info.envp_index, env)))

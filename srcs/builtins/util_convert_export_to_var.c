@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/21 10:48:16 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/28 13:44:38 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/12 12:26:59 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,8 @@ static inline size_t	compute_var_len(char *exp, t_var_info *var_info,
 		&& var_info->operation == TO_ENVP_APPND)
 		var_len += str_len(env->envp[var_info->envp_index] + name_len + 1);
 	var_len += str_len(exp + name_len
-			+ (var_info->operation != TO_EXPORTP)
 			+ (var_info->operation == TO_ENVP_APPND));
-	return (var_len + (var_info->operation != TO_EXPORTP));
+	return (var_len);
 }
 
 bool	convert_export_to_var(char *exp, char **var_dst,
@@ -73,7 +72,7 @@ bool	convert_export_to_var(char *exp, char **var_dst,
 		exp += (!has_passed_operator && (*exp == '+'));
 		(*var_dst)[i] = *exp;
 		i++;
-		if (!has_passed_operator && ((*exp == '=')))
+		if (!has_passed_operator && *exp == '=')
 		{
 			has_passed_operator = true;
 			if (var_info->stat == VAR_IN_ENVP

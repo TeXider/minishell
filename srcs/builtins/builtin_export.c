@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/20 09:43:51 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/09 12:51:02 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/13 09:14:13 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,17 +20,18 @@ static inline bool	compute_export(char *exp, t_var_info *var_info,
 	if (exp[0] == '_' && !is_var_char(exp[1]))
 		return (false);
 	find_var(exp, var_info, env);
-	if (var_info->stat != VAR_INEXISTANT
+	if (var_info->stat != VAR_NONEXISTENT
 		&& var_info->operation == TO_EXPORTP)
 		return (false);
 	if (convert_export_to_var(exp, &new_var, var_info, env))
 		return (true);
 	if (var_info->stat != VAR_IN_ENVP
-		&& ((var_info->stat != VAR_IN_EXPORTP && add_to_exportp(new_var, env))
+		&& ((var_info->stat != VAR_IN_EXPORTP
+				&& add_to_exportp(new_var, env))
 			|| (var_info->operation != TO_EXPORTP
 				&& add_to_envp(new_var, env))))
 		return (true);
-	if (var_info->stat != VAR_INEXISTANT)
+	if (var_info->stat != VAR_NONEXISTENT)
 	{
 		free(env->exportp[var_info->exportp_index]);
 		env->exportp[var_info->exportp_index] = new_var;
@@ -96,9 +97,7 @@ bool	builtin_export(char **args, t_env *env)
 			throw_builtin_error(*args, EXPORT_ERR, INVALID_ID_BERR, env);
 			has_error = true;
 		}
-		else if (!(**args == '_' && (!*(*args + 1) || *(*args + 1) == '='
-					|| *(*args + 1) == '+'))
-			&& compute_export(*args, &var_info, env))
+		else if (compute_export(*args, &var_info, env))
 			return (true);
 		args++;
 	}

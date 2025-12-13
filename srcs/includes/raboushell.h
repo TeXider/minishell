@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 09:25:05 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/11 19:45:14 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/12 11:33:35 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,12 @@
 # define CULPRIT_LENGTH		32
 # define RABOUSHELL_LENGTH	48
 
-# define VAR_INEXISTANT	0
-# define VAR_IN_EXPORTP	1
-# define VAR_IN_ENVP	2
-# define TO_EXPORTP		0
-# define TO_ENVP		1
-# define TO_ENVP_APPND	2
+# define VAR_NONEXISTENT	0
+# define VAR_IN_EXPORTP		1
+# define VAR_IN_ENVP		2
+# define TO_EXPORTP			0
+# define TO_ENVP			1
+# define TO_ENVP_APPND		2
 
 # define BLACK	"\e[30m"
 # define RED	"\e[31m"

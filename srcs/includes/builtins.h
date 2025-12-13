@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 12:26:23 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/09 12:52:14 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/12 12:50:37 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,9 @@
 
 typedef enum e_builtin_err
 {
-	ECHO_ERR,
 	CD_ERR,
 	PWD_ERR,
 	EXPORT_ERR,
-	UNSET_ERR,
-	ENV_ERR,
 	EXIT_ERR
 }	t_builtin_err;
 
