@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 09:50:16 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/08 10:07:41 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/15 10:42:49 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static t_builtin	builtin_type(char *cmd)
 {
-	if (!(cmd))
+	if (!cmd)
 		return (NOT_BUILTIN);
 	return (NOT_BUILTIN
 		+ CD_BUILTIN * (cmd[0] == 'c' && cmd[1] == 'd' && !cmd[2])
@@ -32,85 +32,95 @@ static t_builtin	builtin_type(char *cmd)
 			&& cmd[3] == 'e' && cmd[4] == 't' && !cmd[5]));
 }
 
-static bool	get_cmd(t_cmd_parsing *cmdp, t_env *env)
+static bool	get_cmd(t_cmd *cmd, char **line, t_env *env)
 {
-	if (get_argv_redirv(cmdp, env))
+	t_cmd_parsing	cmdp;
+
+	init_cmd_parsing(&cmdp, *line);
+	cmdp.cmd = cmd;
+	if (get_argv_redirv(&cmdp, env))
 		return (false);
-	while (!is_end_of_cmd(cmdp))
+	while (!is_end_of_cmd(&cmdp))
 	{
-		if (!cmdp->in_expand && (*(cmdp->str) == '>' || *(cmdp->str) == '<'))
+		if (!cmdp.in_expand && (*(cmdp.str) == '>' || *(cmdp.str) == '<'))
 		{
-			if (cmdp->curr_redir->type == AMBI_REDIR)
-				go_to_end_of_redir(cmdp, env);
-			else if (get_redir(cmdp, env))
+			if (cmdp.curr_redir->type == AMBI_REDIR)
+				go_to_end_of_redir(&cmdp, env);
+			else if (get_redir(&cmdp, env))
 				return (true);
 		}
-		else if (*(cmdp->str) != ' ')
+		else if (*(cmdp.str) != ' ')
 		{
-			if (get_arg(cmdp, env))
+			if (get_arg(&cmdp, env))
 				return (true);
 		}
 		else
-			cmdp->str++;
-		if (is_end_of_expand(cmdp))
-			exit_expand(cmdp);
+			cmdp.str++;
+		if (is_end_of_expand(&cmdp))
+			exit_expand(&cmdp);
 	}
-	cmdp->cmd->builtin = builtin_type(*(cmdp->cmd->argv));
+	cmdp.cmd->builtin = builtin_type(*(cmdp.cmd->argv));
+	*line = cmdp.str;
 	return (false);
 }
 
-static bool	check_line_parsing(char *line, size_t *cmd_list_len, t_env *env)
+static inline void	set_op(t_shell_op *shell_op, char **line)
 {
-	t_cmd_parsing	tmp_cmdp;
-	bool			is_empty;
-	bool			has_cmd;
-
-	init_cmd_parsing(&tmp_cmdp, line);
-	has_cmd = false;
-	while (*(tmp_cmdp.str) && *(tmp_cmdp.str) != '\n')
-	{
-		is_empty = true;
-		if (go_to_end_of_cmd(&tmp_cmdp, cmd_list_len, &is_empty, env))
-			return (true);
-		has_cmd |= !is_empty;
-		if (has_cmd && is_empty)
-		{
-			create_error(tmp_cmdp.str, UNEXPECTED_TOKEN_ERR, env);
-			return (true);
-		}
-		tmp_cmdp.str += (*(tmp_cmdp.str) == '|');
-	}
-	if (has_cmd && (is_empty || (*(tmp_cmdp.str - 1) == '|')))
-	{
-		create_error(tmp_cmdp.str, UNEXPECTED_TOKEN_ERR, env);
-		return (true);
-	}
-	return (false);
+	skip_spaces(line);
+	shell_op->op_type += PIPE_OP * (**line == '|' && *(*line + 1) != '|')
+		+ AND_OP * (**line == '&')
+		+ OR_OP * (**line == '|' && *(*line + 1) == '|');
+	*line += !is_end_of_subshell(*line)
+		+ (shell_op->op_type == AND_OP || shell_op->op_type == OR_OP);
 }
 
-bool	get_cmd_line(char *line, t_cmd **cmd_list, size_t *cmd_list_len,
+static inline bool	increment_subshell_op(t_shell_op **subshell_op, char *line,
 	t_env *env)
 {
-	t_cmd_parsing	cmdp;
-	size_t			cmd_list_index;
-
-	*cmd_list_len = 0;
-	if (check_line_parsing(line, cmd_list_len, env))
+	if (!is_end_of_subshell(line) 
+		&& safe_shell_op_alloc(&(*subshell_op)->next, env))
 		return (true);
-	if (!*cmd_list_len)
-		return (false);
-	if (safe_malloc((void **) cmd_list, sizeof(t_cmd) * (*cmd_list_len), env))
-		return (true);
-	init_cmd_parsing(&cmdp, line);
-	cmd_list_index = 0;
-	while (!g_sig && *(cmdp.str) && *(cmdp.str) != '\n')
-	{
-		set_new_cmd(*cmd_list + cmd_list_index);
-		reset_cmd_parsing(&cmdp, *cmd_list + cmd_list_index);
-		if (get_cmd(&cmdp, env))
-			return (true);
-		cmdp.str += (*(cmdp.str) == '|');
-		cmd_list_index++;
-	}
+	*subshell_op = (*subshell_op)->next;
 	return (false);
+}
+
+static inline bool	get_subshell_op(char **line, t_shell_op *subshell_op,
+	t_env *env)
+{
+	while (!is_end_of_subshell(*line))
+	{
+		if (**line != ' ')
+		{
+			if (**line == '(')
+			{
+				if (safe_shell_op_alloc((t_shell_op **) &subshell_op->op, env))
+					return (true);
+				(*line)++;
+				subshell_op->is_subshell = true;
+				if (get_subshell_op(line, subshell_op->op, env))
+					return (true);
+			}
+			else if (safe_cmd_alloc((t_cmd **) &subshell_op->op, env)
+					|| get_cmd(subshell_op->op, line, env))
+					return (true);
+			set_op(subshell_op, line);
+			if (increment_subshell_op(&subshell_op, *line, env))
+				return (true);
+		}
+		else
+			(*line)++;
+	}
+	(*line) += (**line == ')');
+	return (false);
+}
+
+bool	get_shell_op_line(char **line, t_shell_op **shell_op, t_env *env)
+{
+	// char	*tmp_line;
+
+	// tmp_line = *line;
+	if (/*check_line_parsing(&tmp_line, env)
+		||*/ safe_shell_op_alloc(shell_op, env))
+		return (true);
+	return (get_subshell_op(line, *shell_op, env));
 }

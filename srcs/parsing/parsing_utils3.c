@@ -6,11 +6,17 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/10 13:40:22 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/08 10:06:32 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/14 21:43:00 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/parsing.h"
+
+inline void	skip_spaces(char **str)
+{
+	while (**str == ' ')
+		(*str)++;
+}
 
 inline bool	str_eq(char *str1, char *str2)
 {
@@ -59,14 +65,12 @@ inline bool	get_raw_arg(char **dst, t_cmd_parsing *cmdp, t_env *env)
 	return (false);
 }
 
-inline void	set_new_cmd(t_cmd *cmd)
+inline bool	is_shell_op(char *str)
 {
-	cmd->path = NULL;
-	cmd->cmd_name_is_path = false;
-	cmd->argv = NULL;
-	cmd->redirv = NULL;
-	cmd->redirv_len = 0;
-	cmd->fd_in = STD_IN;
-	cmd->fd_out = STD_OUT;
-	cmd->is_fd_in_hdoc = false;
+	return (*str == '|' || (*str == '&' && *(str + 1) == '&'));
+}
+
+inline bool	is_end_of_line(char *str)
+{
+	return (!*str || *str == '\n');
 }

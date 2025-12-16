@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 08:27:45 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/28 13:53:12 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/14 17:13:11 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,34 +43,4 @@ inline int	go_to_end_of_redir(t_cmd_parsing *cmdp, t_env *env)
 	if (go_to_end_of_arg(cmdp, env))
 		return (ERR);
 	return (IS_HDOC * is_hdoc);
-}
-
-inline bool	go_to_end_of_cmd(t_cmd_parsing *cmdp, size_t *cmd_list_len,
-	bool *is_empty, t_env *env)
-{
-	while (!is_end_of_cmd(cmdp))
-	{
-		if (*(cmdp->str) == '>' || *(cmdp->str) == '<')
-		{
-			if (go_to_end_of_redir(cmdp, env) == ERR)
-				return (true);
-			(*cmd_list_len) += *is_empty;
-			*is_empty = false;
-		}
-		else if (*(cmdp->str) != ' ')
-		{
-			if (go_to_end_of_arg(cmdp, env))
-				return (true);
-			(*cmd_list_len) += *is_empty;
-			*is_empty = false;
-		}
-		else
-			cmdp->str++;
-	}
-	if (*is_empty && (*(cmdp->str) == '|'))
-	{
-		create_error(cmdp->str, UNEXPECTED_TOKEN_ERR, env);
-		return (true);
-	}
-	return (false);
 }
