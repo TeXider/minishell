@@ -6,20 +6,37 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/02 16:02:11 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/09 12:51:13 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/18 13:26:12 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/execution.h"
 
-inline bool	save_std_fds(t_env *env)
+inline bool	is_end_of_exec(t_exec *exec, t_env *env)
 {
-	if (env->saved_std_out != FD_NULL || env->saved_std_out != FD_NULL)
-		return (false);
-	env->saved_std_in = dup(STD_IN);
-	env->saved_std_out = dup(STD_OUT);
-	if (env->saved_std_out == FD_NULL || env->saved_std_out == FD_NULL)
+	return (g_sig | !exec->shell_op || env->end_of_raboushell
+		|| env->err == FATAL_SYS_ERR || env->err == SYS_ERR);
+}
+
+inline bool	has_to_exec(t_exec *exec, t_env *env)
+{
+	return (exec->prev_op == EMPTY_OP || exec->prev_op == PIPE_OP
+		|| (env->exit_code && exec->prev_op == OR_OP)
+		|| (!env->exit_code && exec->prev_op == AND_OP));
+}
+
+inline bool	save_std_fds(t_exec *exec, t_env *env)
+{
+	exec->saved_std_in = dup(STD_IN);
+	if (exec->saved_std_in == FD_NULL)
 	{
+		create_error("dup()", SYS_ERR, env);
+		return (true);
+	}
+	exec->saved_std_out = dup(STD_OUT);
+	if (exec->saved_std_out == FD_NULL)
+	{
+		close(exec->saved_std_in);
 		create_error("dup()", SYS_ERR, env);
 		return (true);
 	}
@@ -35,12 +52,6 @@ inline bool	dup2_std(int new_std_in, int new_std_out, t_env *env)
 		return (true);
 	}
 	return (false);
-}
-
-inline bool	is_end_of_exec(size_t cmd_list_i, size_t cmd_list_len, t_env *env)
-{
-	return (g_sig || env->in_fork || cmd_list_i >= cmd_list_len
-		|| env->err == FATAL_SYS_ERR || env->err == SYS_ERR);
 }
 
 inline bool	get_path_var(char **path_var, t_env *env)
