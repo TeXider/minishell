@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 18:40:50 by tpanou-d          #+#    #+#             */
-/*   Updated: 2025/12/04 11:40:14 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/12 12:57:28 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,5 +43,5 @@ void	builtin_echo(char **args)
 		write(1, " ", *(args + 1) != NULL);
 		args++;
 	}
-	write(1, "\n", has_new_line * !g_sig);
+	write(1, "\n", has_new_line && !g_sig);
 }
