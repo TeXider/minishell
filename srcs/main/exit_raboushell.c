@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/30 12:39:56 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/09 12:52:52 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/14 21:22:42 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ void	exit_raboushell(t_env *env)
 	safe_close(&env->saved_std_in, FD_NULL);
 	safe_close(&env->saved_std_out, FD_NULL);
 	safe_close(&env->discarded_pipe_fd, FD_NULL);
+	if (env->free_culprit && env->culprit)
+		free(env->culprit);
 	write(1, "\n\e[38;5;214mShutting down raboushell...\n"RST,
 		44 * !env->in_fork);
 	close(STD_IN);
