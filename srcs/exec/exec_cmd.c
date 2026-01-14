@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 13:34:10 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/18 13:37:57 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/19 12:32:35 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,9 @@ static inline void	exec_builtin(t_cmd *cmd, t_env *env)
 
 void	exec_cmd(t_cmd *cmd, t_exec *exec, t_env *env)
 {
-	if (!open_cmd_redirs(cmd, env))
+	if (!*(cmd->argv) && !cmd->redirv[0].name)
+		set_exit_code(0, env);
+	else if (!open_cmd_redirs(cmd, env))
 	{
 		write(1, "exit\n", 6 * (cmd->builtin == EXIT_BUILTIN && !env->in_fork));
 		if (!set_redirs_to_std(cmd, exec, env))
