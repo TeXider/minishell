@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 08:14:55 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/11 19:16:47 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/19 11:37:33 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,17 @@ static inline void	set_special_culprit(char *culprit, t_env *env)
 		env->culprit = "`)'";
 	else if (*culprit == '\n')
 		env->culprit = "`newline'";
+	else
+		env->culprit = culprit;
 }
 
 void	create_error(char *culprit, t_err err, t_env *env)
 {
+	if (env->free_culprit)
+	{
+		safe_free((void **) &env->culprit);
+		env->free_culprit = false;
+	}
 	env->err = err;
 	if (err == UNCLOSED_QUOTES_ERR || err == UNEXPECTED_TOKEN_ERR)
 		set_special_culprit(culprit, env);
