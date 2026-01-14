@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 09:26:39 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/19 11:32:11 by almighty         ###   ########.fr       */
+/*   Updated: 2026/01/14 13:05:50 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ inline bool	is_end_of_arg(t_cmd_parsing *cmdp)
 {
 	return (*(cmdp->str) == '\0' || *(cmdp->str) == '\n' || (cmdp->sep == ' '
 			&& (*(cmdp->str) == ' ' || (!cmdp->in_expand
-				&& (*(cmdp->str) == '>'
-				|| *(cmdp->str) == '<' || is_end_of_cmd(cmdp))))));
+					&& (*(cmdp->str) == '>'
+						|| *(cmdp->str) == '<' || is_end_of_cmd(cmdp))))));
 }
 
 inline void	set_sep(t_cmd_parsing *cmdp)
@@ -40,7 +40,6 @@ inline void	set_sep(t_cmd_parsing *cmdp)
 			* (cmdp->sep == ' ' && (*(cmdp->str) == '\''
 					|| *(cmdp->str) == '"')));
 }
-
 
 inline bool	is_quote(char c)
 {

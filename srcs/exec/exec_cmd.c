@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 13:34:10 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/19 12:32:35 by almighty         ###   ########.fr       */
+/*   Updated: 2026/01/14 13:01:34 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,11 @@ void	exec_cmd(t_cmd *cmd, t_exec *exec, t_env *env)
 				&& *(cmd->argv)
 				&& !get_path(cmd, env))
 			{
-					close_pipes(exec);
-					safe_close(&cmd->fd_in, FD_NULL);
-					safe_close(&cmd->fd_out, FD_NULL);
-					execve(cmd->path, cmd->argv, env->envp);
-					create_error("execve()", SYS_ERR, env);
+				close_pipes(exec);
+				safe_close(&cmd->fd_in, FD_NULL);
+				safe_close(&cmd->fd_out, FD_NULL);
+				execve(cmd->path, cmd->argv, env->envp);
+				create_error("execve()", SYS_ERR, env);
 			}
 		}
 	}

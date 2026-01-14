@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/15 10:38:28 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/19 11:42:54 by almighty         ###   ########.fr       */
+/*   Updated: 2026/01/14 13:07:57 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@
 #define ARG	0b00010
 #define OP	0b00100
 // START OF SUBSHELL '('
-#define	SOS	0b01000
+#define SOS	0b01000
 // END OF SUBSHELL ')'
-#define	EOS	0b10000
+#define EOS	0b10000
 
 static inline bool	check_unexpected_token(char *line, char expected_tokens,
 	t_env *env)
@@ -78,12 +78,12 @@ static inline bool	check_shell_op_parsing(char **line, char *expected_tokens,
 {
 	if (is_control_op(*line))
 	{
-		*line += (**line == '|' &&  *(*line + 1) != '|')
-			+ 2 * ((**line == '|' && *(*line + 1) == '|') 
+		*line += (**line == '|' && *(*line + 1) != '|')
+			+ 2 * ((**line == '|' && *(*line + 1) == '|')
 				|| **line == '&');
 		*expected_tokens = (!EOL) | ARG | (!OP) | SOS | (!EOS);
 	}
-	else 
+	else
 	{
 		if (check_cmd_parsing(line, env))
 			return (true);
@@ -93,14 +93,14 @@ static inline bool	check_shell_op_parsing(char **line, char *expected_tokens,
 	return (false);
 }
 
-static inline bool	check_subshell_parsing(char **line, char *expected_tokens, 
+static inline bool	check_subshell_parsing(char **line, char *expected_tokens,
 	bool is_in_subshell, t_env *env)
 {
 	(*line)++;
 	if (check_shell_parsing(line, true, env))
 		return (true);
 	*expected_tokens = (EOL * !is_in_subshell) | (!ARG) | OP | (!SOS)
-			| (EOS * is_in_subshell);
+		| (EOS * is_in_subshell);
 	(*line)++;
 	return (false);
 }
@@ -113,17 +113,17 @@ bool	check_shell_parsing(char **line, bool is_in_subshell, t_env *env)
 	while (!is_end_of_shell(*line, expected_tokens & EOS))
 	{
 		if (check_unexpected_token(*line, expected_tokens, env))
-			return (true);	
+			return (true);
 		if (**line == '(')
 		{
 			if (check_subshell_parsing(line, &expected_tokens, is_in_subshell,
-				env))
+					env))
 				return (true);
 		}
 		else if (**line != ' ')
 		{
 			if (check_shell_op_parsing(line, &expected_tokens, is_in_subshell,
-				env))
+					env))
 				return (true);
 		}
 		else

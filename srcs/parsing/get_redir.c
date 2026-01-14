@@ -6,13 +6,13 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/29 10:02:10 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/19 11:42:25 by almighty         ###   ########.fr       */
+/*   Updated: 2026/01/14 13:04:53 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/parsing.h"
 
-# define HAS_QUOTES	-1
+#define HAS_QUOTES	-1
 
 static inline void	add_char_to_name(t_cmd_parsing *cmdp, size_t *redir_name_i)
 {

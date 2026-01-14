@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/14 09:54:07 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/19 08:42:09 by almighty         ###   ########.fr       */
+/*   Updated: 2026/01/14 13:01:22 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,10 +71,10 @@ bool	open_cmd_redirs(t_cmd *cmd, t_env *env)
 
 bool	set_redirs_to_std(t_cmd *cmd, t_exec *exec, t_env *env)
 {
-	return (dup2_std((cmd->fd_in - *exec->pipe_fd_read) * (cmd->fd_in != FD_NULL)
-		+ *exec->pipe_fd_read,
-		(cmd->fd_out - *exec->pipe_fd_write) * (cmd->fd_out != FD_NULL)
-		+ *exec->pipe_fd_write, env));
+	return (dup2_std((cmd->fd_in - *exec->pipe_fd_read)
+			* (cmd->fd_in != FD_NULL) + *exec->pipe_fd_read,
+			(cmd->fd_out - *exec->pipe_fd_write) * (cmd->fd_out != FD_NULL)
+			+ *exec->pipe_fd_write, env));
 }
 
 	// int	fd_in;

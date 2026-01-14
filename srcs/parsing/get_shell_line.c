@@ -6,14 +6,14 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 09:50:16 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/19 12:37:05 by almighty         ###   ########.fr       */
+/*   Updated: 2026/01/14 13:05:26 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/parsing.h"
 
 static bool	get_shell_op(char **line, t_shell_op *shell_op,
-			t_env *env);
+				t_env *env);
 
 static inline bool	increment_shell_op(t_shell_op **shell_op, char **line,
 	t_env *env)
@@ -24,7 +24,7 @@ static inline bool	increment_shell_op(t_shell_op **shell_op, char **line,
 		+ OR_OP * (**line == '|' && *(*line + 1) == '|');
 	*line += ((*shell_op)->op_type == PIPE_OP)
 		+ 2 * ((*shell_op)->op_type == AND_OP || (*shell_op)->op_type == OR_OP);
-	if (!is_end_of_shell(*line, true) 
+	if (!is_end_of_shell(*line, true)
 		&& safe_shell_op_alloc(&(*shell_op)->next, env))
 		return (true);
 	*shell_op = (*shell_op)->next;

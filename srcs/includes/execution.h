@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 13:10:11 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/18 13:36:47 by almighty         ###   ########.fr       */
+/*   Updated: 2026/01/14 13:02:39 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,5 @@ bool	has_to_exec(t_exec *exec, t_env *env);
 bool	get_path_var(char **path_var, t_env *env);
 bool	handle_fork(t_exec *exec, t_env *env);
 void	wait_children(t_exec *exec, t_env *env);
-
 
 #endif

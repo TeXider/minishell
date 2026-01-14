@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/30 17:24:58 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/16 15:36:48 by almighty         ###   ########.fr       */
+/*   Updated: 2026/01/14 13:03:24 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ static inline void	set_err_msg(char *err_msg, size_t *len, t_env *env)
 	else if (env->err == CMD_IS_DIR_ERR)
 		msg = "Is a directory";
 	else if ((env->err == FILE_ERR || env->err == SYS_ERR
-		|| env->err == TERM_ERR || env->err == FATAL_SYS_ERR))
+			|| env->err == TERM_ERR || env->err == FATAL_SYS_ERR))
 		msg = strerror(errno);
 	write_err_msg(err_msg, len, msg, env);
 }
