@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/03 20:09:09 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/11 19:12:50 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/13 11:30:13 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,19 +56,20 @@ typedef struct s_cmd
 	t_builtin	builtin;
 }	t_cmd;
 
-typedef enum e_cmd_op_type
+typedef enum e_shell_op_type
 {
 	EMPTY_OP,
 	PIPE_OP,
 	AND_OP,
 	OR_OP
-}	t_cmd_op_type;
+}	t_shell_op_type;
 
-typedef struct s_cmd_op
+typedef struct s_shell_op
 {
-	void			*op;
-	bool			is_subshell;
-	t_cmd_op_type	op_type;
-}	t_cmd_op;
+	void				*op;
+	bool				is_subshell;
+	t_shell_op_type		op_type;
+	struct s_shell_op	*next;
+}	t_shell_op;
 
 #endif
