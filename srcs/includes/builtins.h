@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 12:26:23 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/09 12:52:14 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/18 22:24:08 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,18 @@
 
 # include "raboushell.h"
 
+# define VAR_NONEXISTENT	0
+# define VAR_IN_EXPORTP		1
+# define VAR_IN_ENVP		2
+# define TO_EXPORTP			0
+# define TO_ENVP			1
+# define TO_ENVP_APPND		2
+
 typedef enum e_builtin_err
 {
-	ECHO_ERR,
 	CD_ERR,
 	PWD_ERR,
 	EXPORT_ERR,
-	UNSET_ERR,
-	ENV_ERR,
 	EXIT_ERR
 }	t_builtin_err;
 
