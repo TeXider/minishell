@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/10 13:40:22 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/14 21:43:00 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/19 11:41:42 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ inline void	reset_cmd_parsing(t_cmd_parsing *cmdp, t_cmd *cmd)
 	cmdp->cmd = cmd;
 }
 
-inline bool	get_raw_arg(char **dst, t_cmd_parsing *cmdp, t_env *env)
+inline bool	get_raw_arg(char **dst, t_cmd_parsing *cmdp, bool put_in_quotes,
+	t_env *env)
 {
 	char	*tmp_str;
 	size_t	i;
@@ -53,19 +54,23 @@ inline bool	get_raw_arg(char **dst, t_cmd_parsing *cmdp, t_env *env)
 		cmdp->str++;
 		i++;
 	}
-	if (safe_challoc(dst, i, env))
+	if (safe_challoc(dst, i + 2 * put_in_quotes, env))
 		return (true);
 	cmdp->str = tmp_str;
-	i = 0;
+	if (put_in_quotes)
+		(*dst)[0] = '`';
+	i = put_in_quotes;
 	while (!is_end_of_arg(cmdp))
 	{
 		set_sep(cmdp);
 		(*dst)[i++] = *(cmdp->str++);
 	}
+	if (put_in_quotes)
+		(*dst)[i] = '\'';
 	return (false);
 }
 
-inline bool	is_shell_op(char *str)
+inline bool	is_control_op(char *str)
 {
 	return (*str == '|' || (*str == '&' && *(str + 1) == '&'));
 }
