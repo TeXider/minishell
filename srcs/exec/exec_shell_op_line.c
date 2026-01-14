@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_cmd_line.c                                    :+:      :+:    :+:   */
+/*   exec_shell_op_line.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 08:54:12 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/18 13:33:58 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/19 12:24:30 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,8 @@ void	exec_shell_op_line(t_shell_op *shell_op, t_env *env)
 {
 	t_exec	exec;
 
-	if (save_std_fds(&exec, env))
+	if (!shell_op->op
+		|| save_std_fds(&exec, env))
 		return ;
 	init_exec(&exec, shell_op);
 	exec_shell_op(&exec, env);
