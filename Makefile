@@ -6,7 +6,7 @@
 #    By: almighty <almighty@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/12/02 13:34:07 by almighty          #+#    #+#              #
-#    Updated: 2025/12/11 12:54:04 by almighty         ###   ########.fr        #
+#    Updated: 2025/12/19 12:41:49 by almighty         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,23 +28,29 @@ SRCS	:=	$(DIR_SRCS)/main/create_error.c\
 			$(DIR_SRCS)/main/memory.c\
 			$(DIR_SRCS)/main/signal.c\
 			$(DIR_SRCS)/main/utils2.c\
+			$(DIR_SRCS)/parsing/check_shell_parsing.c\
 			$(DIR_SRCS)/parsing/expand_utils.c\
 			$(DIR_SRCS)/parsing/expand.c\
 			$(DIR_SRCS)/parsing/get_arg.c\
 			$(DIR_SRCS)/parsing/get_argv_redirv.c\
-			$(DIR_SRCS)/parsing/get_cmd_line.c\
+			$(DIR_SRCS)/parsing/get_shell_line.c\
+			$(DIR_SRCS)/parsing/get_cmd.c\
 			$(DIR_SRCS)/parsing/get_hdoc.c\
 			$(DIR_SRCS)/parsing/get_redir_name_len.c\
 			$(DIR_SRCS)/parsing/get_redir.c\
 			$(DIR_SRCS)/parsing/go_to_end_of.c\
+			$(DIR_SRCS)/parsing/memory.c\
 			$(DIR_SRCS)/parsing/parsing_utils.c\
 			$(DIR_SRCS)/parsing/parsing_utils2.c\
 			$(DIR_SRCS)/parsing/parsing_utils3.c\
-			$(DIR_SRCS)/exec/exec_cmd_line.c\
+			$(DIR_SRCS)/parsing/remove_redundant_subshells.c\
+			$(DIR_SRCS)/exec/exec_shell_op_line.c\
+			$(DIR_SRCS)/exec/exec_cmd.c\
 			$(DIR_SRCS)/exec/get_path.c\
+			$(DIR_SRCS)/exec/pipes.c\
 			$(DIR_SRCS)/exec/redirs.c\
-			$(DIR_SRCS)/exec/handle_pipes.c\
 			$(DIR_SRCS)/exec/exec_utils.c\
+			$(DIR_SRCS)/exec/exec_utils2.c\
 			$(DIR_SRCS)/builtins/builtin_cd.c\
 			$(DIR_SRCS)/builtins/builtin_echo.c\
 			$(DIR_SRCS)/builtins/builtin_env.c\
