@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 12:55:43 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/09 12:52:31 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/19 12:41:16 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 # define PARSING_H
 
 # include "raboushell.h"
+
+# define IS_HDOC	-1
 
 typedef struct s_cmd_parsing
 {
@@ -32,8 +34,9 @@ typedef struct s_cmd_parsing
 
 /* PARSING */
 
-bool	get_cmd_line(char *line, t_cmd **cmd_list, size_t *cmd_list_len,
-			t_env *env);
+bool	check_shell_parsing(char **line, bool is_in_subshell, t_env *env);
+bool	get_shell_line(char *line, t_shell_op **shell_op, t_env *env);
+bool	get_cmd(t_cmd **cmd, char **line, t_env *env);
 
 /* ARGV AND REDIRV */
 
@@ -62,12 +65,10 @@ void	safe_close(int *fd, int new_fd);
 
 bool	go_to_end_of_arg(t_cmd_parsing *cmdp, t_env *env);
 int		go_to_end_of_redir(t_cmd_parsing *cmdp, t_env *env);
-bool	go_to_end_of_cmd(t_cmd_parsing *cmdp, size_t *cmd_list_len,
-			bool *is_empty, t_env *env);
 
 /* UTILS */
 
-void	set_new_cmd(t_cmd *cmd);
+bool	is_end_of_shell(char *line, bool is_subshell);
 bool	is_end_of_cmd(t_cmd_parsing *cmdp);
 bool	is_end_of_arg(t_cmd_parsing *cmdp);
 bool	is_end_of_redir(t_cmd_parsing *cmdp);
@@ -75,11 +76,15 @@ bool	is_quote(char c);
 void	set_sep(t_cmd_parsing *cmdp);
 void	skip_spaces(char **str);
 void	simple_init_cmd_parsing(t_cmd_parsing *cmdp);
-void	init_cmd_parsing(t_cmd_parsing *cmdp, char *line);
+void	init_cmd_parsing(t_cmd_parsing *cmdp, t_cmd *cmd, char *line);
 bool	change_of_sep(t_cmd_parsing *cmdp);
 bool	is_end_of_hdoc(char *del, char *line);
 bool	str_eq(char *str1, char *str2);
 void	reset_cmd_parsing(t_cmd_parsing *cmdp, t_cmd *cmd);
-bool	get_raw_arg(char **dst, t_cmd_parsing *cmdp, t_env *env);
+bool	get_raw_arg(char **dst, t_cmd_parsing *cmdp, bool put_in_quotes,
+			t_env *env);
+bool	is_control_op(char *str);
+bool	is_end_of_line(char *str);
+void	remove_redundant_subshells(t_shell_op *shell_op);
 
 #endif
