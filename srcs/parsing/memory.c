@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/11 19:35:34 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/14 16:16:29 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/18 10:20:26 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@ inline bool	safe_cmd_alloc(t_cmd **dst, t_env *env)
 	(*dst)->argv = NULL;
 	(*dst)->redirv = NULL;
 	(*dst)->redirv_len = 0;
-	(*dst)->fd_in = STD_IN;
-	(*dst)->fd_out = STD_OUT;
+	(*dst)->fd_in = FD_NULL;
+	(*dst)->fd_out = FD_NULL;
 	(*dst)->is_fd_in_hdoc = false;
 	return (false);
 }
