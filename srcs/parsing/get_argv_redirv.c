@@ -6,11 +6,13 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 09:33:57 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/28 13:52:31 by almighty         ###   ########.fr       */
+/*   Updated: 2026/01/14 12:19:02 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/parsing.h"
+
+#define IS_EMPTY	true
 
 static bool	go_through_arg(t_cmd_parsing *cmdp, t_env *env)
 {
@@ -21,7 +23,7 @@ static bool	go_through_arg(t_cmd_parsing *cmdp, t_env *env)
 	while (!is_end_of_arg(cmdp))
 	{
 		set_sep(cmdp);
-		if (!cmdp->in_expand && cmdp->sep != '"' && is_var(cmdp))
+		if (cmdp->sep != '"' && is_var(cmdp))
 			expand(cmdp, env);
 		else
 		{
