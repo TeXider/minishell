@@ -6,94 +6,100 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 13:59:03 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/11 13:41:46 by almighty         ###   ########.fr       */
+/*   Updated: 2026/01/14 12:12:55 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/parsing.h"
 #include "../includes/execution.h"
 
-static inline void	free_redirs(t_cmd *cmd)
+static inline void	free_cmd(t_cmd *cmd)
 {
-	if (cmd->redirv_len)
-	{
-		while (--(cmd->redirv_len) != (size_t)(-1))
-		{
-			safe_free((void **) &cmd->redirv[cmd->redirv_len].name);
-			if (cmd->redirv[cmd->redirv_len].type == AMBI_REDIR)
-				break ;
-		}
-	}
-	safe_free((void **) &cmd->redirv);
-}
-
-static inline void	free_cmd_list(t_cmd *cmd_list, size_t len)
-{
-	t_cmd	*cmd;
 	size_t	i;
 
-	if (cmd_list && len)
+	if (cmd->argv && *(cmd->argv) != cmd->path)
+		safe_free((void **) &cmd->path);
+	i = -1;
+	while (cmd->argv && cmd->argv[++i])
+		free(cmd->argv[i]);
+	i = -1;
+	while (++i < cmd->redirv_len)
 	{
-		while (--len != (size_t)(-1))
-		{
-			cmd = cmd_list + len;
-			if (cmd->argv && *(cmd->argv) != cmd->path)
-				safe_free((void **) &cmd->path);
-			i = -1;
-			while (cmd->argv && cmd->argv[++i])
-				free(cmd->argv[i]);
-			safe_free((void **) &cmd->argv);
-			free_redirs(cmd);
-			safe_close(&cmd->fd_in, FD_NULL);
-			safe_close(&cmd->fd_out, FD_NULL);
-		}
+		safe_free((void **) &cmd->redirv[i].name);
+		if (cmd->redirv[i].type == AMBI_REDIR)
+			break ;
 	}
-	safe_free((void **) &cmd_list);
+	safe_free((void **) &cmd->redirv);
+	safe_free((void **) &cmd->argv);
+	safe_close(&cmd->fd_in, FD_NULL);
+	safe_close(&cmd->fd_out, FD_NULL);
+	free(cmd);
 }
 
-static inline void	wait_children(t_env *env)
+static inline void	free_shell_ops(t_shell_op *shell_op)
 {
-	pid_t	wait_pid;
-	int		status;
+	t_shell_op	*next;
 
-	wait_pid = 0;
-	while (wait_pid > -1 && --env->children_count >= 0)
+	while (shell_op)
 	{
-		wait_pid = wait(&status);
-		if (!env->err && env->last_pid != -1 && wait_pid == env->last_pid)
-			set_exit_code((WIFEXITED(status) * WEXITSTATUS(status)
-					+ WIFSIGNALED(status) * (128 + WTERMSIG(status))),
-				env);
+		if (shell_op->is_subshell)
+			free_shell_ops(shell_op->op);
+		else if (shell_op->op)
+			free_cmd(shell_op->op);
+		next = shell_op->next;
+		free(shell_op);
+		shell_op = next;
 	}
-	if (wait_pid == -1)
-		create_error("wait()", SYS_ERR, env);
 }
+
+// void	print_cmd_list(t_shell_op *cmd_list)
+// {
+// 	while (cmd_list)
+// 	{
+// 		if (cmd_list->is_subshell)
+// 		{
+// 			write(1, "[", 1);
+// 			print_cmd_list((t_shell_op *) cmd_list->op);
+// 			write(1, "]", 1);
+// 		}
+// 		else
+// 		{
+// 			t_cmd *cmd = cmd_list->op;
+// 			write(1, "{", 1);
+// 			for (int i = 0; cmd->argv[i]; i++)
+// 			{
+// 				print_str(cmd->argv[i]);
+// 				write(1, ", ", 2);
+// 			}
+// 			write(1, "} ", 2);
+// 		}
+// 		if (cmd_list->op_type == PIPE_OP)
+// 			write(1, "P", 1);
+// 		else if (cmd_list->op_type == AND_OP)
+// 			write(1, "AN", 2);
+// 		else if (cmd_list->op_type == OR_OP)
+// 			write(1, "OR", 2);
+// 		else if (cmd_list->op_type == EMPTY_OP)
+// 			write(1, "EM", 2);
+// 		write(1, " ", 1);
+// 		cmd_list = cmd_list->next;
+// 	}
+// }
 
 void	raboushell(t_env *env)
 {
-	char	*prompt;
-	char	*input;
-	t_cmd	*cmd_list;
-	size_t	cmd_list_len;
+	char		*prompt;
+	char		*input;
+	t_shell_op	*shell_op;
 
-	cmd_list = NULL;
+	shell_op = NULL;
 	if (!get_prompt(&prompt, env)
 		&& !get_line(&input, prompt, &env->get_line_env)
-		&& !get_cmd_line(input, &cmd_list, &cmd_list_len, env))
-	{
-		env->children_count = 0;
-		exec_cmd_line(cmd_list, cmd_list_len, env);
-		if (!env->in_fork)
-		{
-			if ((size_t) env->children_count == cmd_list_len
-				&& g_sig == SIGNAL_INT)
-				g_sig = 0;
-			wait_children(env);
-		}
-	}
+		&& !get_shell_line(input, &shell_op, env))
+		exec_shell_op_line(shell_op, env);
 	if (env->err)
 		throw_error(env);
-	free_cmd_list(cmd_list, cmd_list_len);
+	free_shell_ops(shell_op);
 	safe_free((void **) &prompt);
 	safe_free((void **) &input);
 }
