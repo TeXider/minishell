@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/07 09:01:12 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/28 13:53:19 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/18 14:30:01 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ inline void	simple_init_cmd_parsing(t_cmd_parsing *cmdp)
 	cmdp->sep = ' ';
 }
 
-inline void	init_cmd_parsing(t_cmd_parsing *cmdp, char *line)
+inline void	init_cmd_parsing(t_cmd_parsing *cmdp, t_cmd *cmd, char *line)
 {
 	cmdp->str = line;
 	cmdp->saved_str = NULL;
@@ -29,7 +29,7 @@ inline void	init_cmd_parsing(t_cmd_parsing *cmdp, char *line)
 	cmdp->argv_len = 0;
 	cmdp->redirv_i = 0;
 	cmdp->argv_i = 0;
-	cmdp->cmd = NULL;
+	cmdp->cmd = cmd;
 }
 
 inline bool	change_of_sep(t_cmd_parsing *cmdp)
