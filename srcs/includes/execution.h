@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 13:10:11 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/09 12:52:42 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/18 13:36:47 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,22 +15,31 @@
 
 # include "raboushell.h"
 
-typedef struct s_pipes
+typedef struct s_exec
 {
-	int		pipe_fds[2];
-	int		next_pipe_fds[2];
-	bool	is_next_pipe;
-	int		fd_read;
-	int		fd_write;
-}	t_pipes;
+	t_shell_op		*shell_op;
+	int				pipe_fds[2][2];
+	size_t			pipe_index;
+	int				*pipe_fd_read;
+	int				*pipe_fd_write;
+	bool			is_child;
+	t_cmd			*prev_cmd;
+	t_shell_op_type	prev_op;
+	int				children_count;
+	pid_t			last_pid;
+	int				saved_std_in;
+	int				saved_std_out;
+}	t_exec;
 
 /* EXECUTION */
 
-void	exec_cmd_line(t_cmd *cmd_list, size_t cmd_list_len, t_env *env);
+void	exec_shell_op_line(t_shell_op *shell_op, t_env *env);
+void	exec_cmd(t_cmd *cmd, t_exec *exec, t_env *env);
 
 /* PIPES */
 
-bool	handle_pipes(t_cmd *cmd, t_cmd *next_cmd, t_env *env);
+void	close_pipes(t_exec *exec);
+bool	open_pipe(t_exec *exec, t_env *env);
 
 /* PATH */
 
@@ -38,15 +47,19 @@ bool	get_path(t_cmd *cmd, t_env *env);
 
 /* REDIRS */
 
-bool	save_std_fds(t_env *env);
+bool	save_std_fds(t_exec *exec, t_env *env);
 bool	dup2_std(int new_std_in, int new_std_out, t_env *env);
-bool	set_redirs(t_cmd *cmd, t_env *env);
-void	close_redirs(t_cmd *cmd_list, size_t cmd_list_i, t_env *env);
-void	reset_redirs(t_cmd *cmd_list, size_t cmd_list_i, t_env *env);
+bool	open_cmd_redirs(t_cmd *cmd, t_env *env);
+bool	set_redirs_to_std(t_cmd *cmd, t_exec *exec, t_env *env);
 
 /* UTILS */
 
-bool	is_end_of_exec(size_t cmd_list_i, size_t cmd_list_len, t_env *env);
+void	init_exec(t_exec *exec, t_shell_op *shell_op);
+bool	is_end_of_exec(t_exec *exec, t_env *env);
+bool	has_to_exec(t_exec *exec, t_env *env);
 bool	get_path_var(char **path_var, t_env *env);
+bool	handle_fork(t_exec *exec, t_env *env);
+void	wait_children(t_exec *exec, t_env *env);
+
 
 #endif
