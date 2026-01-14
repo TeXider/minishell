@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 09:25:05 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/11 18:42:39 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/18 22:28:23 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,6 @@
 # include "cmd_struct.h"
 # include "get_line_struct.h"
 
-# define READ				1
-# define HAS_QUOTES			-1
-# define IS_HDOC			-1
-# define IS_EMPTY			true
 # define STD_IN				0
 # define STD_OUT			1
 # define FD_ERR				2
@@ -35,14 +31,6 @@
 # define P_READ				0
 # define P_WRITE			1
 # define CULPRIT_LENGTH		32
-# define RABOUSHELL_LENGTH	48
-
-# define VAR_INEXISTANT	0
-# define VAR_IN_EXPORTP	1
-# define VAR_IN_ENVP	2
-# define TO_EXPORTP		0
-# define TO_ENVP		1
-# define TO_ENVP_APPND	2
 
 # define BLACK	"\e[30m"
 # define RED	"\e[31m"
@@ -109,6 +97,7 @@ typedef struct s_env
 	int		children_count;
 	t_err	err;
 	char	*culprit;
+	bool	free_culprit;
 	char	*err_msg;
 	t_uchar	exit_code;
 	char	exit_code_str[4];
@@ -146,7 +135,12 @@ void	print_raboushell(void);
 void	print_str(char *str);
 void	set_exit_code(t_uchar exit_code, t_env *env);
 void	safe_close(int *fd, int new_fd);
-void	print_ushort(t_uint num);
+void	print_uint(t_uint num);
+
+/* MEMORY */
+
+bool	safe_shell_op_alloc(t_shell_op **dst, t_env *env);
+bool	safe_cmd_alloc(t_cmd **dst, t_env *env);
 
 /* ERROR HANDLING */
 
