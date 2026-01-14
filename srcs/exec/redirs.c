@@ -6,16 +6,18 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/14 09:54:07 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/18 13:26:53 by almighty         ###   ########.fr       */
+/*   Updated: 2025/12/19 08:42:09 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/execution.h"
 
+#define O_READ	1
+
 static inline bool	open_redir(char *name, int *fd, t_rtype type, t_env *env)
 {
 	*fd = open(name, O_RDONLY * (type == IN)
-			| (O_WRONLY * (type >= OUT) + READ * (type == APPND))
+			| (O_WRONLY * (type >= OUT) + O_READ * (type == APPND))
 			| O_APPEND * (type == APPND)
 			| O_CREAT * (type >= OUT)
 			| O_TRUNC * (type == OUT), 0664);
@@ -69,16 +71,17 @@ bool	open_cmd_redirs(t_cmd *cmd, t_env *env)
 
 bool	set_redirs_to_std(t_cmd *cmd, t_exec *exec, t_env *env)
 {
-	int	fd_in;
-	int	fd_out;
-
-	fd_in = (cmd->fd_in - *exec->pipe_fd_read) * (cmd->fd_in != FD_NULL)
-		+ *exec->pipe_fd_read;
-	fd_out = (cmd->fd_out - *exec->pipe_fd_write) * (cmd->fd_out != FD_NULL)
-		+ *exec->pipe_fd_write;
-	printf("%s: fd_in %d; fd_out %d\n", cmd->argv[0], fd_in, fd_out);
 	return (dup2_std((cmd->fd_in - *exec->pipe_fd_read) * (cmd->fd_in != FD_NULL)
 		+ *exec->pipe_fd_read,
 		(cmd->fd_out - *exec->pipe_fd_write) * (cmd->fd_out != FD_NULL)
 		+ *exec->pipe_fd_write, env));
 }
+
+	// int	fd_in;
+	// int	fd_out;
+
+	// fd_in = (cmd->fd_in - *exec->pipe_fd_read) * (cmd->fd_in != FD_NULL)
+	// 	+ *exec->pipe_fd_read;
+	// fd_out = (cmd->fd_out - *exec->pipe_fd_write) * (cmd->fd_out != FD_NULL)
+	// 	+ *exec->pipe_fd_write;
+	// printf("%s: fd_in %d; fd_out %d\n", cmd->argv[0], fd_in, fd_out);
