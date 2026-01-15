@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/29 10:02:10 by almighty          #+#    #+#             */
-/*   Updated: 2026/01/14 13:04:53 by almighty         ###   ########.fr       */
+/*   Updated: 2026/01/15 14:41:38 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static inline int	get_redir_name(t_cmd_parsing *cmdp, bool is_hdoc,
 	{
 		if (change_of_sep(cmdp))
 			update_sep(cmdp, &has_quotes);
-		else if (!is_hdoc && is_var(cmdp))
+		else if (!is_hdoc && is_expand(cmdp))
 			expand(cmdp, env);
 		else
 			add_char_to_name(cmdp, &redir_name_i);

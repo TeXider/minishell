@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 09:33:57 by almighty          #+#    #+#             */
-/*   Updated: 2026/01/14 12:19:02 by almighty         ###   ########.fr       */
+/*   Updated: 2026/01/15 14:41:38 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static bool	go_through_arg(t_cmd_parsing *cmdp, t_env *env)
 	while (!is_end_of_arg(cmdp))
 	{
 		set_sep(cmdp);
-		if (cmdp->sep != '"' && is_var(cmdp))
+		if (cmdp->sep != '"' && is_expand(cmdp))
 			expand(cmdp, env);
 		else
 		{

@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 09:50:16 by almighty          #+#    #+#             */
-/*   Updated: 2026/01/14 13:05:26 by almighty         ###   ########.fr       */
+/*   Updated: 2026/01/15 14:31:05 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,11 +69,19 @@ static bool	get_shell_op(char **line, t_shell_op *shell_op,
 
 bool	get_shell_line(char *line, t_shell_op **shell_op, t_env *env)
 {
-	char	*tmp_line;
+	// char	*tmp_line;
 
-	tmp_line = line;
-	if (check_shell_parsing(&tmp_line, false, env)
-		|| safe_shell_op_alloc(shell_op, env))
-		return (true);
-	return (get_shell_op(&line, *shell_op, env));
+	// tmp_line = line;
+	// if (check_shell_parsing(&tmp_line, false, env)
+	// 	|| safe_shell_op_alloc(shell_op, env))
+	// 	return (true);
+	// return (get_shell_op(&line, *shell_op, env));
+	t_cmd_parsing	cmdp;
+
+	(void) shell_op;
+	init_cmd_parsing(&cmdp, NULL, line);
+	init_wildcards(&cmdp, env);
+	while (*cmdp.file_list)
+		printf("%s\n", *(cmdp.file_list++));
+	return (false);
 }

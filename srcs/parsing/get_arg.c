@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_arg.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 09:44:15 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/04 17:35:36 by tpanou-d         ###   ########.fr       */
+/*   Updated: 2026/01/15 14:41:38 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static bool	get_arg_len(t_cmd_parsing *cmdp, size_t *len, t_env *env)
 	{
 		if (change_of_sep(&tmp_cmdp))
 			update_sep(&tmp_cmdp, &has_arg);
-		else if (is_var(&tmp_cmdp))
+		else if (is_expand(&tmp_cmdp))
 			expand(&tmp_cmdp, env);
 		else
 		{
@@ -75,7 +75,7 @@ bool	get_arg(t_cmd_parsing *cmdp, t_env *env)
 	{
 		if (change_of_sep(cmdp))
 			update_sep(cmdp, NULL);
-		else if (is_var(cmdp))
+		else if (is_expand(cmdp))
 			expand(cmdp, env);
 		else
 			add_char_to_arg(cmdp, &arg_i);

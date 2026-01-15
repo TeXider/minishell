@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/07 14:50:26 by tpanou-d          #+#    #+#             */
-/*   Updated: 2025/12/13 11:21:22 by almighty         ###   ########.fr       */
+/*   Updated: 2026/01/15 14:41:38 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ bool	get_redir_name_len(t_cmd_parsing *cmdp, size_t *len, bool is_hdoc,
 			return (true);
 		if (change_of_sep(&tmp_cmdp))
 			update_sep(&tmp_cmdp, &has_arg);
-		else if (!is_hdoc && is_var(&tmp_cmdp))
+		else if (!is_hdoc && is_expand(&tmp_cmdp))
 			expand(&tmp_cmdp, env);
 		else
 			increment_len(&tmp_cmdp, len, &end_of_redir, &has_arg);

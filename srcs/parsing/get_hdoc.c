@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 08:55:49 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/11 19:46:03 by almighty         ###   ########.fr       */
+/*   Updated: 2026/01/15 14:41:38 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static void	write_in_hdoc(t_cmd_parsing *cmdp, bool has_expand, int write_fd,
 	while (cmdp->str && (cmdp->in_expand
 			|| (*(cmdp->str) && *(cmdp->str) != '\n')))
 	{
-		if (has_expand && is_var(cmdp))
+		if (has_expand && is_expand(cmdp))
 			expand(cmdp, env);
 		else
 		{
