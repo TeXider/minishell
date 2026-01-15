@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 12:55:43 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/19 12:41:16 by almighty         ###   ########.fr       */
+/*   Updated: 2026/01/15 14:41:38 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,9 @@ typedef struct s_cmd_parsing
 {
 	char	*str;
 	char	*saved_str;
+	char	*saved_expand_str;
+	char	**file_list;
+	char	*wildcards_str;
 	bool	in_expand;
 	t_cmd	*cmd;
 	size_t	redirv_i;
@@ -50,8 +53,12 @@ bool	get_arg(t_cmd_parsing *cmdp, t_env *env);
 
 void	expand(t_cmd_parsing *cmdp, t_env *env);
 void	exit_expand(t_cmd_parsing *cmdp);
-bool	is_var(t_cmd_parsing *cmdp);
+bool	is_expand(t_cmd_parsing *cmdp);
 bool	is_end_of_expand(t_cmd_parsing *cmdp);
+
+/* WILDCARDS */
+
+bool	init_wildcards(t_cmd_parsing *cmdp, t_env *env);
 
 /* REDIRS */
 
