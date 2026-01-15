@@ -6,7 +6,7 @@
 #    By: almighty <almighty@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/12/02 13:34:07 by almighty          #+#    #+#              #
-#    Updated: 2025/12/19 12:41:49 by almighty         ###   ########.fr        #
+#    Updated: 2026/01/14 14:17:35 by almighty         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,7 +43,7 @@ SRCS	:=	$(DIR_SRCS)/main/create_error.c\
 			$(DIR_SRCS)/parsing/parsing_utils.c\
 			$(DIR_SRCS)/parsing/parsing_utils2.c\
 			$(DIR_SRCS)/parsing/parsing_utils3.c\
-			$(DIR_SRCS)/parsing/remove_redundant_subshells.c\
+			$(DIR_SRCS)/parsing/parsing_utils4.c\
 			$(DIR_SRCS)/exec/exec_shell_op_line.c\
 			$(DIR_SRCS)/exec/exec_cmd.c\
 			$(DIR_SRCS)/exec/get_path.c\
