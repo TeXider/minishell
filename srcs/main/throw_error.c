@@ -6,7 +6,7 @@
 /*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/30 17:24:58 by almighty          #+#    #+#             */
-/*   Updated: 2026/01/14 13:03:24 by almighty         ###   ########.fr       */
+/*   Updated: 2026/01/16 11:03:38 by almighty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,14 +114,11 @@ void	throw_error(t_env *env)
 	char	err_msg[CULPRIT_LENGTH + 150];
 	size_t	err_msg_len;
 
-	if (env->err != BUILTIN_ERR)
-	{
-		err_msg_len = 0;
-		set_err_ctxt(err_msg, &err_msg_len, env);
-		set_err_msg(err_msg, &err_msg_len, env);
-		print_raboushell();
-		write(2, err_msg, err_msg_len);
-	}
+	err_msg_len = 0;
+	set_err_ctxt(err_msg, &err_msg_len, env);
+	set_err_msg(err_msg, &err_msg_len, env);
+	print_raboushell();
+	write(2, err_msg, err_msg_len);
 	env->err = SUCCESS;
 	write(2, RST, 4);
 }
