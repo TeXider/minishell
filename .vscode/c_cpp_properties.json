@@ -5,7 +5,7 @@
             "includePath": [
                 "${workspaceFolder}/**"
             ],
-            "compilerPath": "/usr/bin/clang",
+            "compilerPath": "/usr/bin/cc",
 			"intelliSenseMode": "linux-gcc-x64",
 			"defines": [
 			  "_POSIX_C_SOURCE=200809L"
