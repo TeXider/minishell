@@ -1,0 +1,113 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_path_bonus.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/14 13:41:55 by almighty          #+#    #+#             */
+/*   Updated: 2026/01/16 15:02:08 by tpanou-d         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../includes/execution_bonus.h"
+
+static inline bool	is_executable(t_cmd *cmd, t_env *env)
+{
+	if (!access(cmd->path, X_OK))
+	{
+		env->err = SUCCESS;
+		return (true);
+	}
+	else
+		create_error(cmd->path, CMD_NOT_EXEC_ERR, env);
+	return (false);
+}
+
+static inline bool	is_correct_path(t_cmd *cmd, t_env *env)
+{
+	int	tmp_fd;
+
+	tmp_fd = open(cmd->path, __O_DIRECTORY);
+	if (!access(cmd->path, F_OK))
+	{
+		if (tmp_fd == -1)
+			return (is_executable(cmd, env));
+		else
+		{
+			close(tmp_fd);
+			create_error(cmd->argv[0], CMD_IS_DIR_ERR + (!cmd->cmd_name_is_path)
+				* (CMD_NOT_FOUND_ERR - CMD_IS_DIR_ERR), env);
+		}
+	}
+	else if (cmd->cmd_name_is_path)
+		create_error(cmd->argv[0], CMD_FILE_NOT_FOUND_ERR, env);
+	else
+		create_error(cmd->argv[0], CMD_NOT_FOUND_ERR, env);
+	return (false);
+}
+
+static inline void	get_join_path_lens(size_t *path_len, size_t *name_len,
+	char *path, char *name)
+{
+	*path_len = 0;
+	*name_len = 0;
+	while ((path[*path_len] && path[*path_len] != ':') || name[*name_len])
+	{
+		*path_len += (path[*path_len] && path[*path_len] != ':');
+		*name_len += (name[*name_len] != '\0');
+	}
+}
+
+static inline bool	join_path(char **path_dst, char **path_var, char *cmd_name,
+	t_env *env)
+{
+	size_t	path_len;
+	size_t	name_len;
+	size_t	i;
+
+	get_join_path_lens(&path_len, &name_len, *path_var, cmd_name);
+	if (!path_len)
+	{
+		*path_var += (**path_var == ':');
+		*path_dst = cmd_name;
+		return (false);
+	}
+	if (safe_challoc(path_dst, path_len + name_len + 1, env))
+		return (true);
+	i = -1;
+	while (++i < path_len + name_len + 1)
+	{
+		if (i < path_len)
+			(*path_dst)[i] = (*path_var)[i];
+		else if (i == path_len)
+			(*path_dst)[i] = '/';
+		else
+			(*path_dst)[i] = cmd_name[i - 1 - path_len];
+	}
+	*path_var += path_len + (*(*path_var + path_len) == ':');
+	return (false);
+}
+
+bool	get_path(t_cmd *cmd, t_env *env)
+{
+	char	*path_var;
+
+	if (cmd->cmd_name_is_path
+		|| get_path_var(&path_var, env))
+	{
+		cmd->path = cmd->argv[0];
+		return (!is_correct_path(cmd, env));
+	}
+	while (*path_var)
+	{
+		if (join_path(&cmd->path, &path_var, cmd->argv[0], env))
+			return (true);
+		if (is_correct_path(cmd, env))
+			return (false);
+		if (cmd->path != cmd->argv[0])
+			free(cmd->path);
+	}
+	cmd->path = NULL;
+	return (true);
+}
