@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   util_envp.c                                        :+:      :+:    :+:   */
+/*   util_envp_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/22 14:48:43 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/02 11:51:21 by almighty         ###   ########.fr       */
+/*   Updated: 2026/01/16 15:01:39 by tpanou-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/builtins.h"
+#include "../includes/builtins_bonus.h"
 
 bool	add_to_envp(char *new_var, t_env *env)
 {

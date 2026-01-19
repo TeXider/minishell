@@ -6,11 +6,11 @@
 /*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 18:40:50 by tpanou-d          #+#    #+#             */
-/*   Updated: 2026/01/16 14:57:10 by tpanou-d         ###   ########.fr       */
+/*   Updated: 2026/01/16 15:01:12 by tpanou-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/builtins.h"
+#include "../includes/builtins_bonus.h"
 
 static inline bool	check_no_new_line_option(char *arg)
 {

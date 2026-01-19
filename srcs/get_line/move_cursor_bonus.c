@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   move_cursor.c                                      :+:      :+:    :+:   */
+/*   move_cursor_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/03 12:43:31 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/18 14:41:21 by almighty         ###   ########.fr       */
+/*   Updated: 2026/01/16 15:02:43 by tpanou-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/get_line.h"
+#include "../includes/get_line_bonus.h"
 
 static inline t_uchar	get_col_esc_seq(char *esc_seq, t_sint distance,
 	int col, int term_cols)

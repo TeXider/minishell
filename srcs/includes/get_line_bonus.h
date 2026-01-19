@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_line.h                                         :+:      :+:    :+:   */
+/*   get_line_bonus.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 11:24:12 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/11 18:06:36 by almighty         ###   ########.fr       */
+/*   Updated: 2026/01/16 15:03:00 by tpanou-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define GET_LINE_H
 
 # include <sys/ioctl.h>
-# include "raboushell.h"
+# include "raboushell_bonus.h"
 
 # define LINE_LEN		1025 
 # define ESC_CHAR		27

@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   history_utils.c                                    :+:      :+:    :+:   */
+/*   history_utils_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/29 14:09:57 by tpanou-d          #+#    #+#             */
-/*   Updated: 2025/12/01 12:36:49 by almighty         ###   ########.fr       */
+/*   Updated: 2026/01/16 15:02:36 by tpanou-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/get_line.h"
+#include "../includes/get_line_bonus.h"
 
 inline void	go_to_last_history_entry(t_gl *env)
 {

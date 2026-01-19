@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cmd_struct.h                                       :+:      :+:    :+:   */
+/*   cmd_struct_bonus.h                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/03 20:09:09 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/13 11:30:13 by almighty         ###   ########.fr       */
+/*   Updated: 2026/01/16 15:02:53 by tpanou-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CMD_STRUCT_H
 # define CMD_STRUCT_H
 
-# include "raboushell.h"
+# include "raboushell_bonus.h"
 
 typedef enum e_builtin
 {

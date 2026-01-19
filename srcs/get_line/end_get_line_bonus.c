@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   end_get_line.c                                     :+:      :+:    :+:   */
+/*   end_get_line_bonus.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/28 17:14:17 by tpanou-d          #+#    #+#             */
-/*   Updated: 2025/12/04 10:59:26 by almighty         ###   ########.fr       */
+/*   Updated: 2026/01/16 15:02:16 by tpanou-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/get_line.h"
+#include "../includes/get_line_bonus.h"
 
 static inline char	*create_truncated_buff(t_line *line, t_gl *env)
 {

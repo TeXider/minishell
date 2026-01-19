@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   memory.c                                           :+:      :+:    :+:   */
+/*   memory_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/11 19:35:34 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/18 10:20:26 by almighty         ###   ########.fr       */
+/*   Updated: 2026/01/16 15:04:46 by tpanou-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/raboushell.h"
+#include "../includes/raboushell_bonus.h"
 
 inline bool	safe_shell_op_alloc(t_shell_op **dst, t_env *env)
 {

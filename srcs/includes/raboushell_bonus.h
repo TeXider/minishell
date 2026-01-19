@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   raboushell.h                                       :+:      :+:    :+:   */
+/*   raboushell_bonus.h                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 09:25:05 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/18 22:28:23 by almighty         ###   ########.fr       */
+/*   Updated: 2026/01/16 15:03:15 by tpanou-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@
 # include <fcntl.h>
 # include <sys/wait.h>
 # include <sys/types.h>
-# include "cmd_struct.h"
-# include "get_line_struct.h"
+# include "cmd_struct_bonus.h"
+# include "get_line_struct_bonus.h"
 
 # define STD_IN				0
 # define STD_OUT			1

@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   util_exportp.c                                     :+:      :+:    :+:   */
+/*   util_exportp_bonus.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/23 15:56:03 by almighty          #+#    #+#             */
-/*   Updated: 2025/11/28 13:44:53 by almighty         ###   ########.fr       */
+/*   Updated: 2026/01/16 15:01:45 by tpanou-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/builtins.h"
+#include "../includes/builtins_bonus.h"
 
 static inline size_t	is_alph_order(char *var_str, char *exportp_str)
 {

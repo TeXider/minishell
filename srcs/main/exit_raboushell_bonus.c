@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit_raboushell.c                                  :+:      :+:    :+:   */
+/*   exit_raboushell_bonus.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/30 12:39:56 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/14 21:22:42 by almighty         ###   ########.fr       */
+/*   Updated: 2026/01/16 15:03:32 by tpanou-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/raboushell.h"
+#include "../includes/raboushell_bonus.h"
 
 void	exit_raboushell(t_env *env)
 {

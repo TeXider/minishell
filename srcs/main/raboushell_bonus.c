@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   raboushell.c                                       :+:      :+:    :+:   */
+/*   raboushell_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 13:59:03 by almighty          #+#    #+#             */
-/*   Updated: 2026/01/14 12:12:55 by almighty         ###   ########.fr       */
+/*   Updated: 2026/01/16 15:03:52 by tpanou-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/parsing.h"
-#include "../includes/execution.h"
+#include "../includes/parsing_bonus.h"
+#include "../includes/execution_bonus.h"
 
 static inline void	free_cmd(t_cmd *cmd)
 {

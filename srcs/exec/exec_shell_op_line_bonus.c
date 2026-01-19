@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_shell_op_line.c                               :+:      :+:    :+:   */
+/*   exec_shell_op_line_bonus.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 08:54:12 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/19 12:24:30 by almighty         ###   ########.fr       */
+/*   Updated: 2026/01/16 15:02:00 by tpanou-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/execution.h"
-#include "../includes/builtins.h"
+#include "../includes/execution_bonus.h"
+#include "../includes/builtins_bonus.h"
 
 static void	exec_shell_op(t_exec *exec, t_env *env);
 

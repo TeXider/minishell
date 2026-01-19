@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing_utils4.c                                   :+:      :+:    :+:   */
+/*   parsing_utils4_bonus.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/19 12:40:52 by almighty          #+#    #+#             */
-/*   Updated: 2026/01/14 13:04:40 by almighty         ###   ########.fr       */
+/*   Updated: 2026/01/16 15:04:58 by tpanou-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/parsing.h"
+#include "../includes/parsing_bonus.h"
 
 inline void	remove_redundant_subshells(t_shell_op *shell_op)
 {

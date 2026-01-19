@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_line_struct.h                                  :+:      :+:    :+:   */
+/*   get_line_struct_bonus.h                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/03 20:10:39 by almighty          #+#    #+#             */
-/*   Updated: 2025/12/04 10:01:48 by almighty         ###   ########.fr       */
+/*   Updated: 2026/01/16 15:03:03 by tpanou-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define GET_LINE_STRUCT_H
 
 # include <termios.h>
-# include "raboushell.h"
+# include "raboushell_bonus.h"
 
 typedef struct termios		t_term;
 typedef unsigned int		t_uint;

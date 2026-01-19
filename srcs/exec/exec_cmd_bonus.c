@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_cmd.c                                         :+:      :+:    :+:   */
+/*   exec_cmd_bonus.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: almighty <almighty@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 13:34:10 by almighty          #+#    #+#             */
-/*   Updated: 2026/01/16 11:02:41 by almighty         ###   ########.fr       */
+/*   Updated: 2026/01/16 15:01:56 by tpanou-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/execution.h"
-#include "../includes/builtins.h"
+#include "../includes/execution_bonus.h"
+#include "../includes/builtins_bonus.h"
 
 static inline void	exec_builtin(t_cmd *cmd, t_env *env)
 {
