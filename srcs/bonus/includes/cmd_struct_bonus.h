@@ -6,12 +6,12 @@
 /*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/03 20:09:09 by almighty          #+#    #+#             */
-/*   Updated: 2026/01/16 15:02:53 by tpanou-d         ###   ########.fr       */
+/*   Updated: 2026/01/19 09:47:32 by tpanou-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CMD_STRUCT_H
-# define CMD_STRUCT_H
+#ifndef CMD_STRUCT_BONUS_H
+# define CMD_STRUCT_BONUS_H
 
 # include "raboushell_bonus.h"
 

@@ -6,12 +6,12 @@
 /*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 12:26:23 by almighty          #+#    #+#             */
-/*   Updated: 2026/01/16 15:02:51 by tpanou-d         ###   ########.fr       */
+/*   Updated: 2026/01/19 09:47:29 by tpanou-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BUILTINS_H
-# define BUILTINS_H
+#ifndef BUILTINS_BONUS_H
+# define BUILTINS_BONUS_H
 
 # include "raboushell_bonus.h"
 

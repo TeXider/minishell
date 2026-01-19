@@ -6,12 +6,12 @@
 /*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 11:24:12 by almighty          #+#    #+#             */
-/*   Updated: 2026/01/16 15:03:00 by tpanou-d         ###   ########.fr       */
+/*   Updated: 2026/01/19 09:47:39 by tpanou-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_LINE_H
-# define GET_LINE_H
+#ifndef GET_LINE_BONUS_H
+# define GET_LINE_BONUS_H
 
 # include <sys/ioctl.h>
 # include "raboushell_bonus.h"

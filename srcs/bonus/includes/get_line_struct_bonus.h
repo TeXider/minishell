@@ -6,12 +6,12 @@
 /*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/03 20:10:39 by almighty          #+#    #+#             */
-/*   Updated: 2026/01/16 15:03:03 by tpanou-d         ###   ########.fr       */
+/*   Updated: 2026/01/19 09:47:42 by tpanou-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_LINE_STRUCT_H
-# define GET_LINE_STRUCT_H
+#ifndef GET_LINE_STRUCT_BONUS_H
+# define GET_LINE_STRUCT_BONUS_H
 
 # include <termios.h>
 # include "raboushell_bonus.h"

@@ -6,12 +6,12 @@
 /*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 12:55:43 by almighty          #+#    #+#             */
-/*   Updated: 2026/01/16 15:03:06 by tpanou-d         ###   ########.fr       */
+/*   Updated: 2026/01/19 09:47:45 by tpanou-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSING_H
-# define PARSING_H
+#ifndef PARSING_BONUS_H
+# define PARSING_BONUS_H
 
 # include "raboushell_bonus.h"
 

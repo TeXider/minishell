@@ -6,12 +6,12 @@
 /*   By: tpanou-d <tpanou-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/23 09:25:05 by almighty          #+#    #+#             */
-/*   Updated: 2026/01/16 15:03:15 by tpanou-d         ###   ########.fr       */
+/*   Updated: 2026/01/19 09:47:48 by tpanou-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef RABOUSHELL_H
-# define RABOUSHELL_H
+#ifndef RABOUSHELL_BONUS_H
+# define RABOUSHELL_BONUS_H
 
 # include <stdlib.h>
 # include <unistd.h>
